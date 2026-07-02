@@ -5,14 +5,114 @@
   "stage": "high_school",
   "subject": "Information I",
   "status": "draft",
+  "review_status": "needs_human_review",
+  "source_refs": [
+    "src.mext.curriculum.general.v1"
+  ],
+  "notes": [
+    "This curriculum map is a planning baseline only.",
+    "No official curriculum alignment approval or official textbook status is claimed.",
+    "Alignment, pedagogy, copyright, accessibility, and release decisions require human review."
+  ],
   "units": [
     {
       "id": "unit.info1.programming.v1",
       "title": "Programming Basics",
+      "status": "draft",
       "lessons": [
-        "lesson.info1.programming.variables.v1",
-        "lesson.info1.programming.conditionals.v1",
-        "lesson.info1.programming.loops.v1"
+        {
+          "lesson_id": "lesson.info1.programming.variables.v1",
+          "title": "Variables and Assignment",
+          "issue": 4,
+          "ndjson_record": "data/collections/lessons.ndjson",
+          "body_ref": "lessons/highschool_information_i/programming/01_variables.md",
+          "record_note": "Existing draft lesson record.",
+          "learning_objectives": [
+            "Explain why variables are useful.",
+            "Assign a value to a variable in Python.",
+            "Predict the value of a variable after simple assignments."
+          ],
+          "prerequisites": [
+            "Basic idea of a computer program as ordered instructions.",
+            "Basic arithmetic expressions."
+          ],
+          "key_concepts": [
+            "variable",
+            "assignment statement",
+            "stored value",
+            "updating a value",
+            "output with print"
+          ],
+          "depends_on": [],
+          "review_status": "needs_human_review"
+        },
+        {
+          "lesson_id": "lesson.info1.programming.conditionals.v1",
+          "title": "Conditionals",
+          "issue": 5,
+          "ndjson_record": "data/collections/lessons.ndjson",
+          "record_note": "Planned draft lesson record for Issue #5.",
+          "learning_objectives": [
+            "Explain how a conditional chooses between actions.",
+            "Write a simple if statement using a Boolean condition.",
+            "Trace which branch runs for a given input value."
+          ],
+          "prerequisites": [
+            "Variables and assignment.",
+            "Comparing simple values."
+          ],
+          "key_concepts": [
+            "Boolean expression",
+            "comparison operator",
+            "if statement",
+            "else branch",
+            "control flow"
+          ],
+          "depends_on": [
+            "lesson.info1.programming.variables.v1"
+          ],
+          "review_status": "needs_human_review"
+        },
+        {
+          "lesson_id": "lesson.info1.programming.loops.v1",
+          "title": "Loops",
+          "issue": 6,
+          "ndjson_record": "data/collections/lessons.ndjson",
+          "record_note": "Planned draft lesson record for Issue #6.",
+          "learning_objectives": [
+            "Explain why loops are useful for repeated actions.",
+            "Trace a fixed-count loop and describe how the loop variable changes.",
+            "Write a simple loop with a clear stopping condition."
+          ],
+          "prerequisites": [
+            "Variables and assignment.",
+            "Conditionals and Boolean conditions."
+          ],
+          "key_concepts": [
+            "iteration",
+            "loop body",
+            "loop variable",
+            "fixed-count loop",
+            "condition-controlled loop",
+            "stopping condition"
+          ],
+          "depends_on": [
+            "lesson.info1.programming.conditionals.v1"
+          ],
+          "review_status": "needs_human_review"
+        }
+      ],
+      "lesson_dependency_graph": [
+        {
+          "from": "lesson.info1.programming.variables.v1",
+          "to": "lesson.info1.programming.conditionals.v1",
+          "relationship": "prerequisite"
+        },
+        {
+          "from": "lesson.info1.programming.conditionals.v1",
+          "to": "lesson.info1.programming.loops.v1",
+          "relationship": "prerequisite"
+        }
       ]
     }
   ],
