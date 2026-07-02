@@ -1,0 +1,15 @@
+# Generated artifacts
+build/
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__/
+.pytest_cache/
+.venv/
+.env
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/

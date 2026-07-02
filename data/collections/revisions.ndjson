@@ -1,0 +1,2 @@
+{"actor": "starter-kit", "change_type": "create", "created_at": "2026-07-02", "entity_id": "lesson.info1.programming.variables.v1", "id": "rev.20260702.0001", "reason": "Initial sample lesson record.", "schema_version": "1.0", "supersedes": null, "type": "revision"}
+{"actor": "starter-kit", "change_type": "create", "created_at": "2026-07-02", "entity_id": "prob.info1.variables.001.v1", "id": "rev.20260702.0002", "reason": "Initial sample problem record.", "schema_version": "1.0", "supersedes": null, "type": "revision"}

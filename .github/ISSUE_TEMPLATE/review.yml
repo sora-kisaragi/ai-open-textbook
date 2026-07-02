@@ -1,0 +1,23 @@
+name: Review task
+description: Review content, data, or release readiness.
+title: "Review: "
+labels: ["type:review"]
+body:
+  - type: dropdown
+    id: review_type
+    attributes:
+      label: Review type
+      options:
+        - pedagogy
+        - copyright
+        - accessibility
+        - data
+        - release
+    validations:
+      required: true
+  - type: textarea
+    id: target
+    attributes:
+      label: Target files or records
+    validations:
+      required: true

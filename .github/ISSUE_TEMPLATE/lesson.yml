@@ -1,0 +1,37 @@
+name: Lesson task
+description: Create or revise a lesson.
+title: "Lesson: "
+labels: ["type:lesson", "needs:planning"]
+body:
+  - type: input
+    id: lesson_id
+    attributes:
+      label: Lesson ID
+      placeholder: lesson.info1.programming.variables.v1
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: Learning objective
+    validations:
+      required: true
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Deliverables
+      value: |
+        - Student lesson
+        - Problem records
+        - Answer records
+        - Rubric records
+        - Teacher guide
+        - Revision record
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      value: |
+        - Validation passes
+        - Human review requested
+        - No unresolved source issues

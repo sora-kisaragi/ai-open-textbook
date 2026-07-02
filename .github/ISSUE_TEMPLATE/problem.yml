@@ -1,0 +1,18 @@
+name: Problem task
+description: Create or revise exercises.
+title: "Problem set: "
+labels: ["type:problem", "needs:review"]
+body:
+  - type: input
+    id: lesson_ref
+    attributes:
+      label: Lesson reference
+    validations:
+      required: true
+  - type: textarea
+    id: requirements
+    attributes:
+      label: Requirements
+      value: |
+        Include basic, standard, and advanced exercises.
+        Include answers, rubrics, and common mistakes.

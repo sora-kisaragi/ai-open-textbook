@@ -1,0 +1,307 @@
+[
+  {
+    "path": ".claude/agents/copyright-reviewer.md",
+    "sha256": "fff598680e323c2ace300838afdce343335344f679d88447bd915c7b1078b4cb",
+    "bytes": 612
+  },
+  {
+    "path": ".claude/agents/curriculum-planner.md",
+    "sha256": "4af21c9264ef1bff9abc3756b3019fe1fce9b9ba93bd5accb253a9904252371a",
+    "bytes": 642
+  },
+  {
+    "path": ".claude/agents/lesson-writer.md",
+    "sha256": "2e5d35ca14bf044dbcd1579d45fd1b2d521a59efd9881235191f6564bc8da478",
+    "bytes": 579
+  },
+  {
+    "path": ".claude/agents/pedagogy-reviewer.md",
+    "sha256": "9e6a5b49b1ba9de8540aad7a37b1f3473f1c9f528faa675eafc280a9b087ecb8",
+    "bytes": 602
+  },
+  {
+    "path": ".claude/agents/problem-writer.md",
+    "sha256": "82e3f188bdc962c4730e6c9abf2a786703b3ba37de44f060db5769c39d76eae8",
+    "bytes": 584
+  },
+  {
+    "path": ".claude/agents/release-editor.md",
+    "sha256": "a2d77901f4c3fce601b105de6f66cf02da437006b22d5969b2e0c785dc8e2267",
+    "bytes": 617
+  },
+  {
+    "path": ".claude/agents/schema-validator.md",
+    "sha256": "6b3ba66dc112b534e3c87a369176f041367e753eecf03a34bdee20bad63601ff",
+    "bytes": 608
+  },
+  {
+    "path": ".github/ISSUE_TEMPLATE/config.yml",
+    "sha256": "e71bea835ed1158881306294d96968f125b0b0c5eff66cd94df559336bd0b210",
+    "bytes": 45
+  },
+  {
+    "path": ".github/ISSUE_TEMPLATE/lesson.yml",
+    "sha256": "57e8e40a877f913a7637246b9af6967e416dc8c2f6e7950150878fc57088baa1",
+    "bytes": 864
+  },
+  {
+    "path": ".github/ISSUE_TEMPLATE/problem.yml",
+    "sha256": "dff641df3ffd4b77300812d8e1b1b26014554899a9eee96530029673d488a3ff",
+    "bytes": 458
+  },
+  {
+    "path": ".github/ISSUE_TEMPLATE/review.yml",
+    "sha256": "b894aafd6ca033a72122cd587ae6180e6238a598cc688a7848c031635a396c49",
+    "bytes": 477
+  },
+  {
+    "path": ".github/PULL_REQUEST_TEMPLATE.md",
+    "sha256": "73f784efdd0b4e0641823fb9e9db8eea88515144c38d25004ef2beb903ebe40c",
+    "bytes": 374
+  },
+  {
+    "path": ".github/workflows/validate.yml",
+    "sha256": "c6ce7050a866397da8a2f92ec026cef898533a05033e632b2ef5c0983e19f1bc",
+    "bytes": 340
+  },
+  {
+    "path": "AGENTS.md",
+    "sha256": "2ff2ee4bd8f5a2bb5e0a47d69979f62ea5c105b41dabe1d75e6301787b0a9bf0",
+    "bytes": 3611
+  },
+  {
+    "path": "CHANGELOG.md",
+    "sha256": "e969c5e15b0bae679ea8753185e3390591b46c77d59522c201166d703dede641",
+    "bytes": 200
+  },
+  {
+    "path": "CLAUDE.md",
+    "sha256": "a23472912e3b716ccdfc12be1368898c0d9ad30d759621ff69eac3089e95454a",
+    "bytes": 322
+  },
+  {
+    "path": "CODE_OF_CONDUCT.md",
+    "sha256": "7f3eb7ef805f6faecaafe14a994ac1e5416099cdab00d7ba2a8086b24251133f",
+    "bytes": 280
+  },
+  {
+    "path": "CONTRIBUTING.md",
+    "sha256": "c792caaaaded036f8a77fdc4dd0772a0ed0dfaa2f8d5e6812e639d92e33b6ee2",
+    "bytes": 824
+  },
+  {
+    "path": "GOVERNANCE.md",
+    "sha256": "7423d13ef65d5457433e2c36db9019d69a92f63606a2da780b667c35e854521a",
+    "bytes": 555
+  },
+  {
+    "path": "LICENSE-CODE-MIT.md",
+    "sha256": "fc4e9c613cb74b98fdb5e67f6644f52a38816f23f6aac32779ff9104c611d7d5",
+    "bytes": 1079
+  },
+  {
+    "path": "LICENSE-CONTENT-CC-BY-4.0.md",
+    "sha256": "75c6b1284d3309689400e1c1a33da04e26f72c091f2198f290527837855c8f1c",
+    "bytes": 378
+  },
+  {
+    "path": "MANIFEST.json",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "Makefile",
+    "sha256": "3dc77274d0b93756f656241a712738a2bad840416b12ce44dd99a8b528d95cb0",
+    "bytes": 147
+  },
+  {
+    "path": "README.md",
+    "sha256": "45385dd0031d242addc6a033a5a5e2cf7dd7a11f0608bac7d93c1e78e1e692ec",
+    "bytes": 1904
+  },
+  {
+    "path": "SECURITY.md",
+    "sha256": "6283078e78248f8abd62c98f500f1e8ca31f480575e0946b4b08c96a66913b81",
+    "bytes": 421
+  },
+  {
+    "path": "curriculum/highschool_information_i.curriculum.json",
+    "sha256": "e8ade80087127e9ef18d6dd326fc36a242d097d7f6216f8dd925808ee00096d9",
+    "bytes": 502
+  },
+  {
+    "path": "data/README.md",
+    "sha256": "e9db5f12670a8bbb3af6cf850194d8878ebd8b9baf7411ebc9b043952131d9bf",
+    "bytes": 268
+  },
+  {
+    "path": "data/collections/answers.ndjson",
+    "sha256": "ef3da3a68cdb217eb469421234c7e4ecd5a6dfe384db8f39d07a4dd671b782ea",
+    "bytes": 1250
+  },
+  {
+    "path": "data/collections/lessons.ndjson",
+    "sha256": "a77711bc775bd60a71a349d38d265c0c5fd1d5dff422a9a8d05e56fbee77e88a",
+    "bytes": 615
+  },
+  {
+    "path": "data/collections/problems.ndjson",
+    "sha256": "783b17e01a3a2faca47f2f875b0db439990a7627c4743f61ef6b45c6310b6a1c",
+    "bytes": 1335
+  },
+  {
+    "path": "data/collections/revisions.ndjson",
+    "sha256": "9e686c049e3496959eb3cf59c2d744aa52c4fd0a93d8e3016a00a82ae1ffe097",
+    "bytes": 525
+  },
+  {
+    "path": "data/collections/rubrics.ndjson",
+    "sha256": "65ea489a6a6192ddda61c7d25dfa1caef3bdf6b51ec66c61cb25c860b1483d16",
+    "bytes": 829
+  },
+  {
+    "path": "data/collections/sources.ndjson",
+    "sha256": "534797f690b1a7508997a03be83f621b0e98e2d211ff477f1f4734c693ac7730",
+    "bytes": 381
+  },
+  {
+    "path": "data/indexes/.gitkeep",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/ACCESSIBILITY_POLICY.md",
+    "sha256": "6a1f144337007b10b729b43890e3cee718638536b033c09fee4e1b71979f24b0",
+    "bytes": 442
+  },
+  {
+    "path": "docs/ADR/0001-use-ndjson-as-source-of-truth.md",
+    "sha256": "9ab361bf8b5111aa310926242bc61fd40addc0d4e40ad2fc0e1b1de899eca98e",
+    "bytes": 617
+  },
+  {
+    "path": "docs/ADR/0002-human-review-gates.md",
+    "sha256": "5ae376d946fed29a47635904b8d84816f27b6def9da13c9384519e99a81c8d0e",
+    "bytes": 496
+  },
+  {
+    "path": "docs/AI_USAGE_POLICY.md",
+    "sha256": "efc7f9b8efe9e0138e90830dc1b5e725993a3313a9e2b46750d117be63de6caf",
+    "bytes": 542
+  },
+  {
+    "path": "docs/COPYRIGHT_POLICY.md",
+    "sha256": "ddd9be7564764fcb3ee4464dceb675f605150622b8ec5fa8a72640b43e1fc586",
+    "bytes": 710
+  },
+  {
+    "path": "docs/DATA_MODEL.md",
+    "sha256": "29c7cc6fcdd46bf31de607492e308449c3c658aaa2bdd8cc14c8b5a1d190cb3b",
+    "bytes": 1800
+  },
+  {
+    "path": "docs/OPERATING_RULES.md",
+    "sha256": "7cc4e05d3eeb9ebb560ce5d0731ed4cc4b1892bb92b90895657e91518381183c",
+    "bytes": 1683
+  },
+  {
+    "path": "docs/PROCESS.md",
+    "sha256": "254194693a470ea113862c8927edcd8b4ead44f29eef84d799ad5a56642b587b",
+    "bytes": 1162
+  },
+  {
+    "path": "docs/RELEASE_POLICY.md",
+    "sha256": "5caabcb521e5abc5b4432e08ea5c5066a84ec1b8253e445c9b7f130ecca038e5",
+    "bytes": 445
+  },
+  {
+    "path": "docs/REVIEW_GUIDE.md",
+    "sha256": "4c0da1a0881a0043f4d14f6fb3e43cf50bb53033f198f41cfd943b0a811441df",
+    "bytes": 688
+  },
+  {
+    "path": "docs/STYLE_GUIDE.md",
+    "sha256": "499f174619d1e089ce2d86628bf11ec19dadac59a21a95b1810459b9b9ee40d9",
+    "bytes": 745
+  },
+  {
+    "path": "lessons/highschool_information_i/programming/01_variables.md",
+    "sha256": "b84fd559886f92221817c35854d29dd2c737a7ccbd6c40f8a800aee11935f114",
+    "bytes": 1126
+  },
+  {
+    "path": "prompts/fable-planner.md",
+    "sha256": "ebac2d3a3eb97db83158706f0f309e8f9882d562110d749b7240ed88e9437634",
+    "bytes": 488
+  },
+  {
+    "path": "prompts/opus-reviewer.md",
+    "sha256": "809b68430add70036ba6e8891ca3db84ac8ff11693f43ebc4c14fd4d2bb572d0",
+    "bytes": 310
+  },
+  {
+    "path": "prompts/sonnet-lesson-writer.md",
+    "sha256": "df00fdf4608d8669d1978f4528faeb28e1964f2c7623578639e3f62624403fd0",
+    "bytes": 389
+  },
+  {
+    "path": "pyproject.toml",
+    "sha256": "fad6ef7432db1cf2bdc3e7a2e28590f628f2a622c8ada90b6370b2d04976b6d4",
+    "bytes": 326
+  },
+  {
+    "path": "schemas/answer.schema.json",
+    "sha256": "fd7c63dd45c73b4411b90644b2c572dbee7135137566b13043a57b79341f4c60",
+    "bytes": 517
+  },
+  {
+    "path": "schemas/lesson.schema.json",
+    "sha256": "2fe7ddf8bf41c55ae032d79628d4282a2cdc247d7d5d0ae5785ef51761ad2dc1",
+    "bytes": 517
+  },
+  {
+    "path": "schemas/problem.schema.json",
+    "sha256": "54df1aaca30df0adac6c86aae85ae636834e7543c16d5df12d8b12f93601ba58",
+    "bytes": 519
+  },
+  {
+    "path": "schemas/revision.schema.json",
+    "sha256": "2938d22b6eb90b409a3c744b22fc4f0e94b8096d4ed5faaaaa06286f7a6f2ca7",
+    "bytes": 521
+  },
+  {
+    "path": "schemas/rubric.schema.json",
+    "sha256": "07401c520862713f61143d2e524ef7c839092753da9213c4f89455b5faf74f9e",
+    "bytes": 517
+  },
+  {
+    "path": "schemas/source.schema.json",
+    "sha256": "9c8d28b33eba4e6e87153ca748391192368c6df6e42479c25ab1ef74053cc07d",
+    "bytes": 517
+  },
+  {
+    "path": "scripts/build_sqlite_index.py",
+    "sha256": "fd7eb95f08bca86bb5371a8ae262545961040e25bf5294a41d979ad823603642",
+    "bytes": 2621
+  },
+  {
+    "path": "scripts/export_manifest.py",
+    "sha256": "b73c4bc1483a994cd45afc7a90fd4f051d4bde1a39af45f40b7ff263e90a7747",
+    "bytes": 797
+  },
+  {
+    "path": "scripts/validate_ndjson.py",
+    "sha256": "9f1abd0ffeb476494dafd7bc3b70a51356000719b8757b1bf247e8fc281a42b3",
+    "bytes": 3917
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/programming/01_variables.md",
+    "sha256": "235edf40790fc2625f8f7fc2f2128faf765dffe31d59b22b66857328844b2e18",
+    "bytes": 661
+  },
+  {
+    "path": "tests/test_validate_sample.py",
+    "sha256": "7945828e2f962f0c001369c248c0a8a98fa6085d9b5c35eee2055f868b3ed11a",
+    "bytes": 357
+  }
+]
