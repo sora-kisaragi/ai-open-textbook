@@ -15,3 +15,5 @@ jobs:
           python-version: '3.11'
       - run: python3 scripts/validate_ndjson.py
       - run: python3 scripts/build_sqlite_index.py
+      - name: Prose warnings
+        run: python3 scripts/check_prose_warnings.py --format github
