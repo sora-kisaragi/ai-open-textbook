@@ -141,6 +141,22 @@ inclusive language, or learner interaction.
 
 Maintainer review is required before treating this guide as release criteria.
 
+## Future Tooling Evaluation
+
+This guide does not vendor or adopt external humanizer, anti-slop, textlint,
+or CLI review tools. Future tooling evaluation should happen under Issue #24
+or later issues.
+
+The evaluation should check:
+
+- License compatibility.
+- Detector-bypass framing risk.
+- Japanese educational prose fit.
+- Meaning-preservation behavior.
+- False positive risk.
+- Maintainability.
+- Whether the tool should remain advisory or become warning-only CI.
+
 ## Relationship to Existing Policy
 
 Use this guide together with:
