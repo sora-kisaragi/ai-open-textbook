@@ -7,8 +7,8 @@ Review status: `needs_human_review`
 
 Provide one PR-ready review checklist for the MVP v0.1 materials. This
 checklist coordinates pedagogy, copyright/source, accessibility, data/model,
-Python/example-code, problem-bank, answer/rubric, teacher-guide, and release
-readiness review.
+content accuracy, Python/example-code, problem-bank, answer/rubric,
+teacher-guide, and release readiness review.
 
 Machine checks and checklist completion do not replace human review. This
 project remains an open educational material and must not be described as an
@@ -35,15 +35,27 @@ Out of scope:
 
 ## How to Use This Checklist in PR Reviews
 
-1. Add the relevant checklist sections to the PR body or a review comment.
+1. Link to this checklist from the PR body or a review comment.
 2. Mark each item as pass, non-blocking finding, blocking finding, or not
    applicable.
-3. Link concrete files, record IDs, and validation output when making a
+3. Include only the relevant findings, decisions, or evidence for the PR; do
+   not paste the entire checklist into every PR.
+4. Link concrete files, record IDs, and validation output when making a
    finding.
-4. Keep educational content in `draft`, `machine_checked`, or
+5. Record release-scope accessibility acceptance as PR review evidence or
+   release checklist evidence. Do not introduce new content `status` values.
+6. Keep educational content in `draft`, `machine_checked`, or
    `human_review_requested` until the required human review gate passes.
-5. Do not approve public release, official alignment claims, copyright-risk
+7. Do not approve public release, official alignment claims, copyright-risk
    decisions, or age-appropriateness decisions by machine review alone.
+
+## Checklist Reference in PRs
+
+PR authors should reference this file and provide only the checklist evidence
+that applies to the current change. A content PR might include pedagogy,
+copyright/source, accessibility, and content accuracy evidence; a data-only PR
+might include data/model consistency and validation evidence. The full
+checklist stays here as the shared review source.
 
 ## Pedagogy Checklist
 
@@ -72,6 +84,14 @@ Out of scope:
 - [ ] Source references are separated from curriculum alignment claims.
 - [ ] Quotations are minimized, attributed, and used only when necessary.
 - [ ] Public-release copyright/source decisions are left for human review.
+
+## Content Accuracy Checklist
+
+- [ ] Definitions are technically correct and appropriate for the lesson scope.
+- [ ] Answers and accepted variants are correct.
+- [ ] Edge cases required by the objective or problem are handled.
+- [ ] Executable examples run as intended when they are meant to run.
+- [ ] Factual, curriculum, legal, or technical claims cite sources when needed.
 
 ## Accessibility Checklist
 
@@ -134,6 +154,10 @@ Out of scope:
 
 - [ ] Teacher guides are supplemental support only.
 - [ ] Teacher guides are not described as official guidance.
+- [ ] Full teacher-guide inclusion in the v0.1 public preview remains a
+      maintainer decision.
+- [ ] Teacher-guide publication is not treated as a hidden requirement for
+      unrelated MVP work.
 - [ ] Lesson flow is clear and aligned with the lesson requirements.
 - [ ] Suggested questions support misconceptions and formative checks.
 - [ ] Timing guidance is realistic and marked as draft until reviewed.
@@ -150,6 +174,8 @@ Before public preview, the release review must confirm:
 - Required human review gates have passed.
 - Status values are appropriate.
 - Release notes include non-official positioning and copyright/source notes.
+- Release-scope accessibility acceptance is recorded as review evidence or
+  release checklist evidence.
 - No content is moved to `published` without maintainer approval.
 
 ## Reviewer Role Routing
@@ -211,6 +237,7 @@ Each PR should include:
 - Validation result for `python3 scripts/build_sqlite_index.py` or documented
   Windows fallback `python scripts/build_sqlite_index.py`.
 - `git diff --check` result.
+- Link to this checklist plus relevant MVP review evidence or findings.
 - AI usage summary.
 - Human review needs.
 - Copyright/source note.
@@ -219,11 +246,7 @@ Each PR should include:
 
 ## Open Questions
 
-- Should every content PR paste this whole checklist, or should PR authors link
-  this file and include only relevant findings?
-- Should the repository add a PR template section that maps directly to this
-  checklist?
-- Should release-scope accessibility acceptance be a separate named status
-  field or remain a review note?
+- Should the PR template prompts be adjusted after maintainers test this
+  checklist in real MVP content reviews?
 - Should teacher guides be included in the v0.1 public preview or handled as
   beta support material?
