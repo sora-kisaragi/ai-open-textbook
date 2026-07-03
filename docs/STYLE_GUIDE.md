@@ -17,6 +17,8 @@ Localized learner-facing output can be generated later.
   `docs/WRITING_QUALITY_POLICY.md`.
 - For draft Japanese educational prose cleanup guidance, see
   `prompts/japanese-educational-prose-cleanup.md`.
+- For draft prose-linting option evaluation, see
+  `docs/PROSE_LINTING_EVALUATION.md`.
 
 ## Code examples
 
