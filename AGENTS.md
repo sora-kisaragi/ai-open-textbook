@@ -126,3 +126,23 @@ Human approval is required for:
 - Sensitive social topics
 - Age-appropriateness decisions
 - Changes from `approved` to `published`
+
+## Agent Workflow Rules
+
+These notes clarify how agents should apply the repository rules during
+day-to-day work.
+
+- Treat `AGENTS.md` as the primary source of repository instructions.
+- Check `CLAUDE.md`, `docs/OPERATING_RULES.md`, `docs/DATA_MODEL.md`, and
+  task-specific issues or prompts when they are relevant.
+- Use concise English for repository files, prompts, GitHub Issues, PR text,
+  comments, code, schemas, and data fields.
+- Use Japanese for final user-facing progress reports, result summaries, and
+  questions to the project owner when the surrounding thread is Japanese.
+- Use short public reasoning artifacts only: assumptions, decision summaries,
+  trade-offs, validation evidence, risks, and open questions.
+- Work in small, reviewable steps: inspect rules and current files, state a
+  short plan before major edits, keep generated content in draft status unless
+  human review has approved it, and run validation before reporting completion.
+- Use GitHub Issues and PR-oriented work units when possible. If GitHub access
+  is unavailable, create local drafts and report the fallback honestly.
