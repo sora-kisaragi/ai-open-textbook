@@ -19,6 +19,8 @@ Localized learner-facing output can be generated later.
   `prompts/japanese-educational-prose-cleanup.md`.
 - For draft prose-linting option evaluation, see
   `docs/PROSE_LINTING_EVALUATION.md`.
+- For warning-only prose review prompts, see
+  `docs/PROSE_WARNING_CHECKS.md`.
 
 ## Code examples
 
