@@ -19,6 +19,18 @@ Do not use it to approve publication, official curriculum alignment, copyright
 risk, license policy changes, or final age-appropriateness decisions without
 explicit human maintainer approval.
 
+## PR Review Usage
+
+In each PR, reviewers should record pass, non-blocking finding, blocking
+finding, or not applicable for the checklist areas relevant to the change.
+Include concrete file paths, record IDs, validation output, and open human
+decisions. Do not paste private reasoning into PR comments.
+
+PR authors should link this canonical checklist and include only the evidence
+that applies to the PR scope. A content PR may need pedagogy,
+copyright/source-risk, accessibility, and content accuracy evidence. A
+data-only PR may need data/versioning and validation evidence.
+
 ## Non-Official Status Check
 
 - [ ] The material is described as open educational material, supplemental
@@ -42,6 +54,8 @@ explicit human maintainer approval.
 - [ ] Assessment intent is connected to learning objectives, not only final
       answers.
 - [ ] Practice progression moves from basic to standard to advanced work.
+- [ ] Objectives, problems, answers, and rubrics are traceable to each other
+      when those artifacts are in scope.
 
 ## Copyright and Source-Risk Review
 
@@ -71,6 +85,17 @@ explicit human maintainer approval.
 - [ ] Non-visual alternatives are available for visual explanations or
       diagrams.
 
+## Content Accuracy Review
+
+- [ ] Definitions are technically correct and appropriate for the lesson
+      scope.
+- [ ] Answers and accepted variants are correct when answer materials are in
+      scope.
+- [ ] Edge cases required by the objective or problem are handled.
+- [ ] Executable examples run as intended when they are meant to run.
+- [ ] Factual, curriculum, legal, or technical claims cite sources when needed
+      or are marked as needing review.
+
 ## Data and Versioning Review
 
 - [ ] Canonical records remain in `data/collections/*.ndjson`.
@@ -82,6 +107,47 @@ explicit human maintainer approval.
 - [ ] Status values stay within the allowed repository status set.
 - [ ] No record is moved to `approved` or `published` without explicit human
       approval.
+
+## Python and Example-Code Safety Review
+
+- [ ] Examples intended to run are executable.
+- [ ] Python is described as the project MVP example language, not as an
+      official curriculum requirement.
+- [ ] Examples do not hide external dependencies.
+- [ ] Beginner lesson examples stay short enough to trace by hand.
+- [ ] Examples do not perform unintended network access.
+- [ ] Examples do not perform unintended file-system writes.
+- [ ] Examples do not include secrets, tokens, API keys, or credentials.
+- [ ] Examples do not depend on personal data or learner-identifying
+      information.
+- [ ] Examples avoid unsafe side effects unless explicitly reviewed and in
+      scope.
+
+## Problem-Bank Review
+
+- [ ] MVP target remains 8 problems per lesson and 24 problems total unless a
+      maintainer changes the scope.
+- [ ] Per-lesson difficulty distribution follows the accepted design when
+      problem generation is in scope.
+- [ ] Machine-checkable and human-reviewed problem types are clearly
+      distinguished.
+- [ ] Every problem references separate answer and rubric records.
+- [ ] Common mistakes and feedback requirements are defined before answer or
+      rubric generation.
+- [ ] Originality review happens before problem generation or release-scope
+      review.
+
+## Answer and Rubric Review
+
+- [ ] Answer records are separate from problem records.
+- [ ] Rubric records are separate from problem and answer records.
+- [ ] Canonical answers and accepted variants are explicit when needed.
+- [ ] Rubric criteria match the problem objective and difficulty.
+- [ ] Human-reviewed problem types are not treated as machine-checked without a
+      reviewed rubric decision.
+- [ ] Answer and rubric records use review status values that preserve human
+      review gates.
+- [ ] Meaningful answer or rubric changes preserve revision history.
 
 ## Teacher Guide Review
 
@@ -97,6 +163,10 @@ explicit human maintainer approval.
 ## Public Preview Readiness
 
 - [ ] Required validation commands passed or failures are documented.
+- [ ] Validation evidence includes `python3 scripts/validate_ndjson.py` and
+      `python3 scripts/build_sqlite_index.py`, or the documented Windows
+      fallback commands with the launcher issue recorded.
+- [ ] `git diff --check` passed.
 - [ ] Required human review gates are identified and assigned.
 - [ ] Copyright/source notes are present.
 - [ ] Accessibility notes are present.
@@ -104,19 +174,65 @@ explicit human maintainer approval.
 - [ ] Public-preview wording does not imply stable, approved, published, or
       official status.
 
-## PR Review Usage
-
-In each PR, reviewers should record pass, non-blocking finding, blocking
-finding, or not applicable for the checklist areas relevant to the change.
-Include concrete file paths, record IDs, validation output, and open human
-decisions. Do not paste private reasoning into PR comments.
-
 ## Human Review Gates
 
 Human approval is required for public release, license changes, curriculum
 alignment claims, copyright-risk decisions, sensitive social topics,
 age-appropriateness decisions, accessibility acceptance for release-scope
 material, and changes from `approved` to `published`.
+
+## Reviewer Role Routing
+
+- `curriculum-planner`: objectives, prerequisites, sequence, and lesson graph.
+- `lesson-writer`: lesson requirements and student-facing explanation quality.
+- `problem-writer`: problem design, difficulty, feedback, and answer/rubric
+  separation.
+- `schema-validator`: NDJSON shape, identifiers, links, and generated indexes.
+- `pedagogy-reviewer`: age fit, cognitive load, practice progression, and
+  misconception coverage.
+- `copyright-reviewer`: originality, quotation risk, source attribution, and
+  public-release copyright risk.
+- `release-editor`: integration, release notes, checklist evidence, and final
+  release-readiness coordination.
+
+## Blocking vs Non-Blocking Findings
+
+Blocking findings should stop merge or release review until resolved. Examples:
+
+- Broken validation, unresolved required references, or invalid status values.
+- Missing answer/rubric separation for problem records.
+- Copied, closely paraphrased, or suspiciously imitative educational content.
+- Missing human gate for age fit, copyright risk, accessibility, release, or
+  curriculum alignment.
+- Examples with unreviewed network access, file-system writes, secrets,
+  personal data, or unsafe side effects.
+
+Non-blocking findings may be tracked as follow-up work when they do not affect
+current scope. Examples:
+
+- Minor wording improvements in draft-only docs.
+- Additional optional examples beyond the accepted MVP scope.
+- Formatting cleanup that does not affect validation, meaning, or review
+  evidence.
+
+## Required PR Evidence
+
+Each PR should include:
+
+- Scope.
+- Files changed.
+- Data records changed.
+- Validation result for `python3 scripts/validate_ndjson.py` or documented
+  Windows fallback `python scripts/validate_ndjson.py`.
+- Validation result for `python3 scripts/build_sqlite_index.py` or documented
+  Windows fallback `python scripts/build_sqlite_index.py`.
+- `git diff --check` result.
+- Link to this checklist plus relevant MVP review evidence or findings.
+- AI usage summary.
+- Human review needs.
+- Copyright/source note.
+- Backward compatibility note.
+- Related issues.
 
 ## Open Questions
 

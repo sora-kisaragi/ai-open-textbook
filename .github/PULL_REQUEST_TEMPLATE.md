@@ -28,7 +28,7 @@
 
 ## MVP review checklist evidence
 
-Reference: `docs/MVP_REVIEW_CHECKLIST.md`
+Reference: `docs/review/MVP_REVIEW_CHECKLIST.md`
 
 - Relevant checklist findings/evidence:
 - Blocking findings:

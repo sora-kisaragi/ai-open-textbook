@@ -11,16 +11,19 @@ project an official textbook.
 
 ## Release Boundary
 
-Release candidates must distinguish these states:
+Release candidates must follow the release boundary terminology in
+`docs/MVP_SCOPE.md` and distinguish these states:
 
 - Draft: work exists but has not completed machine checks or human review.
 - Review candidate: required files exist and machine checks have passed.
 - Public preview: maintainer-approved preview material with known limitations.
-- Stable release: maintainer-approved release with completed required review
-  gates and release notes.
+- Stable release: post-v0.1 release stage unless maintainers explicitly decide
+  otherwise; requires completed review gates and release notes.
 
-No file or record may use `approved`, `published`, `stable`, or equivalent
-final status without explicit human approval.
+The v0.1 public preview is not the same as a stable release. No file or record
+may use `approved`, `published`, `stable`, or equivalent final status without
+explicit human approval. Do not introduce status values that conflict with
+`AGENTS.md` or `docs/DATA_MODEL.md`.
 
 ## Required Content Artifacts
 
@@ -43,7 +46,8 @@ final status without explicit human approval.
 
 ## Required Review Artifacts
 
-- [ ] MVP review checklist evidence.
+- [ ] MVP review checklist evidence from
+      `docs/review/MVP_REVIEW_CHECKLIST.md`.
 - [ ] Pedagogy review findings or explicit human deferral.
 - [ ] Copyright/source-risk review findings.
 - [ ] Accessibility review notes.
@@ -112,6 +116,10 @@ final status without explicit human approval.
 - [ ] Human review completed and still needed are both listed.
 - [ ] Copyright/source note is included.
 - [ ] Accessibility note is included.
+- [ ] Release notes state that the material is not an official
+      government-approved textbook, is open educational material or
+      supplemental/self-study/teacher support material, and remains subject to
+      human review and correction.
 - [ ] Backward compatibility and known limitations are included.
 
 ## Human Approval Gates

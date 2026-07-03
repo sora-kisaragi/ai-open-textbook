@@ -262,7 +262,7 @@ Existing teacher-guide seed file:
 
 The existing seed file is useful as early draft material, but it needs future
 review against this requirements document, the Lesson 01 requirements,
-`docs/MVP_REVIEW_CHECKLIST.md`, and the project human review gates. This PR
+`docs/review/MVP_REVIEW_CHECKLIST.md`, and the project human review gates. This PR
 does not create or modify teacher-guide body files.
 
 ## Lesson-Record Reference Policy
