@@ -26,4 +26,12 @@
 - [ ] Data/schema
 - [ ] Release
 
+## MVP review checklist evidence
+
+Reference: `docs/MVP_REVIEW_CHECKLIST.md`
+
+- Relevant checklist findings/evidence:
+- Blocking findings:
+- Human review gates still needed:
+
 ## Notes
