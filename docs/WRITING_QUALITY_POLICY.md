@@ -12,6 +12,9 @@ source and uncertainty handling, and preservation of meaning during rewrites.
 This draft supports review. It does not approve content, replace human review,
 or introduce automated prose linting.
 
+Factual accuracy, age fit, copyright review, and accessibility review take
+priority over making prose sound natural or human-written.
+
 ## Non-goals
 
 - AI detector bypass.
@@ -72,12 +75,11 @@ conditions in #27 are met.
   causality.
 - Responsibility-free phrasing that hides uncertainty or review needs.
 - Vague attribution such as "studies show" without a source.
-- Overuse of filler phrases that do not add a concrete decision, next step, or
-  learning value.
 - Polished wording that hides uncertainty, missing sources, or human review
   needs.
 - Claims that are broader than the available evidence.
-- Summaries that do not add a concrete decision, next step, or learning value.
+- Filler phrases or summaries that do not add a concrete decision, next step,
+  or learning value.
 
 These patterns are review prompts, not a style-policing checklist. Legitimate
 writing should not be blocked only because it matches one pattern in isolation.

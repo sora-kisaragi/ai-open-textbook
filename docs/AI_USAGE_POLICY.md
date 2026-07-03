@@ -30,6 +30,6 @@ Pull requests should include an AI usage summary:
 ## Related draft policy
 
 For draft AI-assisted writing quality guidance, see
-`docs/WRITING_QUALITY_POLICY_DRAFT.md`. That draft focuses on clarity,
+`docs/WRITING_QUALITY_POLICY.md`. That draft focuses on clarity,
 meaning preservation, reviewability, and the separation of machine checks from
 human review. It does not approve generated material or introduce tooling.
