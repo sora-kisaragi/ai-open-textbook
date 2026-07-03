@@ -13,6 +13,8 @@ Localized learner-facing output can be generated later.
 - Include common mistakes.
 - Include self-check questions.
 - Avoid unnecessary jokes, memes, or cultural references.
+- For draft AI-assisted writing quality guidance, see
+  `docs/WRITING_QUALITY_POLICY.md`.
 
 ## Code examples
 
