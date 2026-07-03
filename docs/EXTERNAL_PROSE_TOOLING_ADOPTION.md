@@ -20,7 +20,8 @@ candidates. It is a proposal and decision record, not an implementation.
 - No external candidate is vendored or copied into this repository.
 - No external tool is approved as release criteria.
 - No AI detector score may be used as pass/fail evidence.
-- Existing repository-local assets remain the active guidance:
+- Existing repository-local assets remain the active guidance, subject to their
+  own draft / review status:
   - `docs/WRITING_QUALITY_POLICY.md`
   - `prompts/japanese-educational-prose-cleanup.md`
   - `docs/PROSE_LINTING_EVALUATION.md`
@@ -29,19 +30,21 @@ candidates. It is a proposal and decision record, not an implementation.
 
 ## Candidate Classification
 
+These classifications are proposals until a maintainer ratifies them on Issue #33.
+
 | Candidate | Type | Current decision | Rationale | License check needed? | Dependency impact | Detector-bypass / humanizer-framing risk | Allowed scope | Follow-up needed? |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `blader/humanizer` | Agent skill / prompt guidance | `reject` | Framing centers on making prose sound less AI-generated, which conflicts with the repository goal of educational quality and transparent review. | Yes before any reuse, but reuse is not recommended. | None if rejected. | High. | Research risk reference only. | None unless maintainers want a formal rejection note. |
+| `blader/humanizer` | Agent skill / prompt guidance | `reject` | Framing centers on making prose sound less AI-generated, which conflicts with the repository goal of educational quality and transparent review. | Yes before any reuse, but reuse is not recommended. | None if rejected. | High. | Research risk reference only. | No workflow follow-up recommended. |
 | `conorbronsdon/avoid-ai-writing` | Agent skill / detector-like guidance | `reference-only` | Some detect-only ideas may inform local review prompts, but rewrite and scoring framing is too close to AI-pattern removal. | Yes before any adaptation. | None unless adopted later. | High. | Research reference; no workflow use. | License, source, and rule review before any adaptation. |
 | `hardikpandya/stop-slop` | Agent skill / prose advice | `reference-only` | Broad anti-slop ideas may be useful as review concerns, but direct adoption risks copying external prompt text and optimizing for AI tells. | Yes before any adaptation. | None unless adopted later. | High. | Research reference; no workflow use. | Provenance and license review before any adaptation. |
-| `japanese-tech-writing` | Japanese prose guidance | `adapt` | Japanese technical-writing ideas may fit future repository-local guidance if rewritten in original words and reviewed for educational scope. | Yes. | None unless turned into tooling later. | Medium. | Maintainer-reviewed docs and prompts only. | Confirm authoritative source, license, and project fit. |
-| `stop-ai-slop-jp` | Japanese agent skill / prompt guidance | `reject` | Explicit AI-slop removal framing is not an acceptable repository goal, especially for learner-facing material. | Yes before any reuse, but reuse is not recommended. | None if rejected. | High. | Research risk reference only. | None unless maintainers want a formal rejection note. |
+| `japanese-tech-writing` | Japanese prose guidance | `adapt, pending license/source/project-fit review` | Japanese technical-writing ideas may fit future repository-local guidance if rewritten in original words and reviewed for educational scope. | Yes. | None unless turned into tooling later. | Medium. | Maintainer-reviewed docs and prompts only. | Confirm the authoritative source URL or repository before any adaptation. |
+| `stop-ai-slop-jp` | Japanese agent skill / prompt guidance | `reject` | Explicit AI-slop removal framing is not an acceptable repository goal, especially for learner-facing material. | Yes before any reuse, but reuse is not recommended. | None if rejected. | High. | Research risk reference only. | No workflow follow-up recommended. |
 | `textlint-rule-preset-ai-writing` | textlint preset | `defer` | Potentially useful as warning-only Japanese prose prompts, but requires dependency, license, rule-by-rule, and false-positive review. | Yes. | Node/package-manager decision required. | Medium. | Future non-student-facing warning-only pilot only. | Create a separate pilot issue if maintainers want to evaluate it. |
 | `patina` | Skill and Node.js CLI | `reference-only` | Multilingual detection and rewrite behavior is too broad for adoption, but it can remain a comparison point for risks. | Yes before any adaptation. | Node dependency if CLI is piloted. | High. | Research reference; no workflow use. | Scope, license, and dependency review if reconsidered. |
 | textlint | Prose linter framework | `defer` | Strong ecosystem and Japanese support, but the repository has not adopted Node tooling or a package-manager convention. | Yes for selected packages and rules. | Node/package-manager and lockfile policy required. | Depends on selected rules. | Future warning-only pilot for `docs/` and `prompts/` only. | Separate issue for package policy and pilot design. |
 | Vale | Prose linter framework | `defer` | Useful for English docs/style-guide checks, but repository-specific rules and install policy would be needed. | Yes for binary/source and any styles. | Binary install or package policy required. | Low for style-guide rules. | Future English docs-only warning pilot if needed. | Separate issue for install, versioning, and rule ownership. |
 | markdownlint | Markdown structure linter | `defer` | Useful for Markdown hygiene, not prose quality or educational approval. | Yes for selected implementation. | Node/action/binary decision required. | Low. | Future Markdown-structure pilot only. | Separate issue if structure checks become useful. |
-| current Python warning-only checker | Repository-local Python script | `adopt` | Already implemented as a dependency-free advisory pilot. It emits review prompts and exits `0` for prose findings. | No external license check needed for the local script. | None added. | Low to medium because it flags detector-framing terms for review, not as a goal. | Current low-risk scope in `docs/PROSE_WARNING_CHECKS.md`. | Maintain false-positive triage and ownership. |
+| current Python warning-only checker | Repository-local Python script | `retain as repository-local advisory pilot` | Already implemented as a dependency-free advisory pilot. This is not an external-adoption decision and does not make the pilot accepted policy. | No external license check needed for the local script. | None added. | Low to medium because it flags detector-framing terms for review, not as a goal. | Current low-risk scope in `docs/PROSE_WARNING_CHECKS.md`; advisory only. | Maintain false-positive triage and ownership. |
 
 ## Adoption Criteria
 

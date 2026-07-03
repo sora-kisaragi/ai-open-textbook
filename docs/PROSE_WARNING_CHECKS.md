@@ -137,6 +137,10 @@ False positives are expected during the pilot. Keep fixes small and avoid broad
 rewrites. If a rule creates noise without useful review prompts, update or
 remove the rule in a separate reviewable change.
 
+Policy documents that discuss detector terms, humanizer framing, or
+AI-detection terminology are an expected false-positive class and may be
+overridden with a short public reason.
+
 ## Relationship to `docs/PROSE_LINTING_EVALUATION.md`
 
 `docs/PROSE_LINTING_EVALUATION.md` evaluated textlint, Vale, markdownlint, and
