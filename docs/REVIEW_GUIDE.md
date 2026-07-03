@@ -24,6 +24,9 @@
 - Are edge cases handled?
 - Are claims sourced when needed?
 
+For AI-assisted student-facing or teacher-facing prose review, use the
+canonical checklist section in `docs/review/MVP_REVIEW_CHECKLIST.md`.
+
 ## Release checklist
 
 - Status is `approved` before `published`.

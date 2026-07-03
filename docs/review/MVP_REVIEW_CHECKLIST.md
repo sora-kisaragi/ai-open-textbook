@@ -96,6 +96,88 @@ data-only PR may need data/versioning and validation evidence.
 - [ ] Factual, curriculum, legal, or technical claims cite sources when needed
       or are marked as needing review.
 
+## AI-Assisted Prose Review
+
+Use this section for student-facing and teacher-facing prose that was drafted,
+rewritten, summarized, or cleaned up with AI assistance. It extends the review
+flow; it does not replace pedagogy, copyright, accessibility, maintainer, or
+release review.
+
+- [ ] Prose states specific learner value instead of vague improvement claims.
+- [ ] Factual claims are checked against the relevant source or marked as open
+      questions.
+- [ ] Prerequisites are explicit and fit the target lesson sequence.
+- [ ] Age fit is appropriate for the intended high school learners.
+- [ ] Cognitive load is controlled by limiting new concepts, sentence density,
+      and example complexity.
+- [ ] Wording, examples, prompts, and explanations are original and not close
+      paraphrases of protected source material.
+- [ ] Source risk is recorded for factual, curriculum, quotation, or
+      source-derived claims.
+- [ ] Accessibility needs are reviewed, including readable structure,
+      non-visual alternatives, and language clarity.
+- [ ] Examples are inclusive and avoid unnecessary assumptions about wealth,
+      region, family structure, gender, culture, personal data, or sensitive
+      traits.
+- [ ] Rewrites preserve meaning and do not introduce meaning drift.
+- [ ] Rewrites preserve numbers, identifiers, code, commands, paths, examples,
+      causal relationships, review status, source status, and uncertainty
+      markers unless the change is explicitly reviewed.
+- [ ] Code examples remain executable where applicable.
+- [ ] Problem statements remain checkable where applicable.
+- [ ] Uncertainty is recorded as open questions instead of hidden in polished
+      prose.
+- [ ] Warning-only prose check output is interpreted as review prompts only.
+- [ ] Machine checks are clearly separated from human-review-only judgments.
+- [ ] Prose warnings, cleanup guidance, or rewritten wording do not create
+      automatic approval.
+- [ ] No review comment frames the work as AI-authorship detector bypass,
+      humanizing generated text, or making AI involvement harder to detect.
+
+### Machine-Check Evidence for Prose Review
+
+When prose review is in scope, reviewers should record the relevant command
+results in the PR evidence. Use the warning-only prose check as advisory
+evidence and keep data validation evidence separate:
+
+- `python scripts/check_prose_warnings.py`
+- `python scripts/check_prose_warnings.py --format github`
+- `python scripts/validate_ndjson.py`
+- `python scripts/build_sqlite_index.py`
+
+Prose warnings do not prove correctness, age fit, accessibility, originality,
+or release readiness. NDJSON validation and SQLite index building remain
+machine validation evidence for repository data and generated index behavior.
+
+Human reviewers may override prose warnings with a short public reason, such
+as required policy wording, a necessary repeated term, a quoted superseded
+path, or a long command that must remain unchanged.
+
+### Human-Review-Only Prose Judgments
+
+These judgments must remain human review decisions:
+
+- Factual correctness.
+- Pedagogy fit.
+- Age fit.
+- Cognitive load.
+- Curriculum alignment claims.
+- Copyright risk.
+- Accessibility adequacy.
+- Appropriateness of examples.
+- Inclusive language.
+- Meaning preservation in substantive rewrites.
+- Whether Japanese learner-facing prose is suitable.
+- Whether a draft should be accepted, approved, published, or released.
+
+### Prose Review References
+
+- `docs/WRITING_QUALITY_POLICY.md`
+- `prompts/japanese-educational-prose-cleanup.md`
+- `docs/PROSE_LINTING_EVALUATION.md`
+- `docs/PROSE_WARNING_CHECKS.md`
+- Issue #33 for external prose skill and rule adoption decisions.
+
 ## Data and Versioning Review
 
 - [ ] Canonical records remain in `data/collections/*.ndjson`.
