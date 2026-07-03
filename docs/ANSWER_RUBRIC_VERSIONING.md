@@ -105,6 +105,10 @@ verification meaning changes enough that reviewers should see a new version.
 
 ## Rubric meaningful-change example
 
+Note: current rubric records may not define validity or supersession fields
+unless the approved schema supports them; the snippet below is illustrative
+only.
+
 Illustrative snippets only:
 
 ```json
