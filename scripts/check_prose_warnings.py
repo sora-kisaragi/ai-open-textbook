@@ -39,14 +39,15 @@ LONG_LINE_LIMIT = 140
 LONG_SENTENCE_WORD_LIMIT = 45
 LONG_SENTENCE_CHAR_LIMIT = 180
 
+# Keep this source file UTF-8 so Japanese warning phrases remain matchable.
 VAGUE_PHRASES = [
-    '驥崎ｦ√〒縺兪',
-    '逅・ｧ｣繧呈ｷｱ繧√ｋ',
-    '縺励▲縺九ｊ',
-    '縺輔∪縺悶∪',
-    '髱槫ｸｸ縺ｫ',
-    '隕九※縺・″縺ｾ縺励ｇ縺・',
-    '蠖ｹ遶九■縺ｾ縺兪',
+    '重要です',
+    '理解を深める',
+    'しっかり',
+    'さまざま',
+    '非常に',
+    '見ていきましょう',
+    '役立ちます',
     'it is important to',
     'delve into',
     'unlock the power of',
