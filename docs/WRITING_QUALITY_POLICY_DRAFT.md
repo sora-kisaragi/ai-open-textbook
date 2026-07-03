@@ -1,29 +1,28 @@
-# Writing Quality Policy Draft
+# AI-Assisted Writing Quality Policy Draft
 
-Status: `draft`
-Review status: `needs_human_review`
+Status: draft / needs human review
 
 ## Purpose
 
 Define draft guidance for AI-assisted writing quality controls in repository
 prose and future localized educational outputs. The goal is clarity,
-specificity, educational usefulness, meaning preservation, and reviewability.
+specificity, educational usefulness, reviewability, factual responsibility,
+source and uncertainty handling, and preservation of meaning during rewrites.
 
 This draft supports review. It does not approve content, replace human review,
 or introduce automated prose linting.
 
-## Non-Goals
+## Non-goals
 
-- Do not frame writing quality work as AI detector bypass.
-- Do not use AI detector scores as acceptance or CI pass/fail criteria.
-- Do not publish, approve, or mark student-facing content as release-ready
-  through this policy alone.
-- Do not weaken copyright, source, pedagogy, accessibility, or release review
-  gates.
-- Do not add textlint, Vale, Node dependencies, package manager files, or CI
-  jobs through this draft.
+- AI detector bypass.
+- Hiding AI involvement or making generated writing look deceptively human.
+- Automatic approval of generated material.
+- Replacing pedagogy, copyright, accessibility, maintainer, or release review.
+- Rewriting student-facing content before human review gates are satisfied.
+- Adding textlint, Vale, Node dependencies, package manager files, or CI jobs
+  through this draft.
 
-## Target Language Scope
+## Target language scope
 
 The repository remains English-first for source files, policies, issues,
 prompts, metadata, and review artifacts.
@@ -42,24 +41,25 @@ Automation should be phased:
 - Phase 2: Japanese localized, learner-facing, or teacher-facing drafts after
   policy and review gates are defined.
 
+This is a proposed language scope. Maintainer confirmation is required before
+using it as an implementation or release criterion.
+
 ## Scope Split
+
+### English source and repository prose
 
 English source and repository prose includes policies, prompts, issues,
 metadata, review artifacts, and documentation. It should stay concise,
-explicit, and easy to review.
+specific, easy to review, and explicit about source status, uncertainty, and
+human review needs.
+
+### Future Japanese learner-facing or teacher-facing outputs
 
 Future Japanese learner-facing or teacher-facing outputs need separate review
-for learner comprehension, age fit, terminology, examples, and localization
-quality before automation is treated as useful evidence.
-
-Machine-checkable style issues include repeated filler phrases, broken Markdown
-structure, inconsistent headings, very long sentences, repeated vague
-modifiers, and repository-specific banned phrasing.
-
-Human-review-only writing judgments include age fit, cognitive load, meaning
-drift, factual accuracy, originality, source risk, inclusive examples,
-curriculum alignment claims, and whether a localized draft is pedagogically
-appropriate.
+for learner comprehension, age fit, terminology, examples, localization
+quality, accessibility, and copyright/source risk before automation is treated
+as useful evidence. Do not pilot this policy on learner-facing files until the
+conditions in #27 are met.
 
 ## Weak Writing Patterns to Avoid
 
@@ -67,25 +67,78 @@ appropriate.
 - Unsupported factual, legal, curriculum, or release-readiness claims.
 - Inflated framing such as implying official approval or publication readiness.
 - Empty conclusions that restate the prompt without adding evidence.
-- Excessive structure that makes a short draft harder to review.
-- Uniform sentence rhythm that obscures priority or causality.
+- Excessive structure without substance.
+- Uniform rhythm or repetitive paragraph patterns that obscure priority or
+  causality.
 - Responsibility-free phrasing that hides uncertainty or review needs.
+- Vague attribution such as "studies show" without a source.
+- Overuse of filler phrases that do not add a concrete decision, next step, or
+  learning value.
+- Polished wording that hides uncertainty, missing sources, or human review
+  needs.
+- Claims that are broader than the available evidence.
+- Summaries that do not add a concrete decision, next step, or learning value.
 
-## Meaning-Preservation Rules
+These patterns are review prompts, not a style-policing checklist. Legitimate
+writing should not be blocked only because it matches one pattern in isolation.
+
+## Meaning-preservation requirements
 
 When revising AI-assisted drafts, preserve:
 
-- Meaning, scope, and uncertainty.
-- Numbers, identifiers, filenames, links, commands, and code.
-- Definitions, examples, causal relationships, and prerequisites.
-- Status language such as `draft`, `needs_human_review`, or maintainer decision
-  required.
-- Existing human review gates and copyright/source risk notes.
+- Numbers.
+- Identifiers.
+- Filenames and paths.
+- Issue numbers.
+- Code.
+- Commands.
+- Definitions.
+- Examples.
+- Causal relationships.
+- Prerequisite relationships.
+- Review status.
+- Source status.
+- Uncertainty markers.
+- Non-official-material disclaimers.
 
-If a source, curriculum claim, factual point, or learner-fit decision is
-uncertain, record an open question instead of smoothing over the uncertainty.
+If a rewrite changes any of these items, the change must be explicitly
+summarized. If a source, curriculum claim, factual point, or learner-fit
+decision is uncertain, record an open question instead of smoothing over the
+uncertainty.
 
-## Relationship to Existing Guides
+## Machine-checkable issues
+
+Machine checks may support review, but they do not approve educational
+content.
+
+Examples of machine-checkable issues include:
+
+- Markdown structure.
+- Repeated phrases.
+- Long sentences.
+- Banned filler expressions.
+- Stale path references.
+- Missing required sections.
+- Terminology consistency.
+- Link format.
+- Checklist presence.
+
+## Human-review-only judgments
+
+Human review is required for judgments that need subject, learner, legal,
+accessibility, or release context. Examples include:
+
+- Pedagogy fit.
+- Age fit.
+- Cognitive load.
+- Factual correctness.
+- Copyright risk.
+- Accessibility adequacy.
+- Appropriateness of examples.
+- Whether a Japanese localized output is suitable for learners.
+- Whether a draft should be accepted or published.
+
+## Relationship to existing policies
 
 - `docs/STYLE_GUIDE.md` remains the baseline for repository writing and
   educational style.
@@ -93,9 +146,34 @@ uncertain, record an open question instead of smoothing over the uncertainty.
   review expectations.
 - `docs/AI_USAGE_POLICY.md` remains the baseline for allowed AI uses,
   prohibited uses, and PR disclosure.
+- `docs/review/MVP_REVIEW_CHECKLIST.md` remains the canonical MVP review
+  checklist path. Issue #26 should extend that file instead of the superseded
+  `docs/MVP_REVIEW_CHECKLIST.md` pointer.
 
 This draft should be reconciled with those files after maintainer review. Avoid
 duplicating long policy text across multiple documents.
+
+## Rollout guidance
+
+- Start with policy and review guidance.
+- Do not implement tooling until #24 evaluates options.
+- Do not add warning-only CI until #25.
+- Do not pilot on learner-facing files until #27 conditions are met.
+- Prefer low-risk docs and prompts for early pilots.
+- Treat Japanese learner-facing output as a later phase after review gates are
+  defined.
+- Keep initial automation warning-only if introduced later.
+
+Issue dependencies:
+
+- #22 defines the policy and language scope.
+- #23 depends on #22 for skill behavior and language scope.
+- #24 depends on #22 for textlint, Vale, and markdownlint evaluation scope.
+- #25 depends on #24 and maintainer decision on dependencies.
+- #26 depends on #22 and should extend
+  `docs/review/MVP_REVIEW_CHECKLIST.md`.
+- #27 depends on #22, #23, and #26, and should prefer non-learner-facing pilot
+  targets.
 
 ## Open Questions
 
