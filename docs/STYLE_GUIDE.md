@@ -15,6 +15,8 @@ Localized learner-facing output can be generated later.
 - Avoid unnecessary jokes, memes, or cultural references.
 - For draft AI-assisted writing quality guidance, see
   `docs/WRITING_QUALITY_POLICY.md`.
+- For draft Japanese educational prose cleanup guidance, see
+  `prompts/japanese-educational-prose-cleanup.md`.
 
 ## Code examples
 
