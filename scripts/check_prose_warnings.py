@@ -40,14 +40,45 @@ LONG_SENTENCE_WORD_LIMIT = 45
 LONG_SENTENCE_CHAR_LIMIT = 180
 
 # Keep this source file UTF-8 so Japanese warning phrases remain matchable.
-VAGUE_PHRASES = [
+JAPANESE_VAGUE_PHRASES = [
     '重要です',
+    '大切です',
+    '必要です',
     '理解を深める',
+    '理解しやすくなります',
+    '分かりやすくなります',
+    '役立ちます',
+    '活用できます',
+    '便利です',
+]
+
+JAPANESE_FILLER_PHRASES = [
     'しっかり',
     'さまざま',
     '非常に',
+    '適切に',
+    '正しく',
+    '効率的に',
+]
+
+JAPANESE_MECHANICAL_TRANSITIONS = [
     '見ていきましょう',
-    '役立ちます',
+    '考えてみましょう',
+    '確認してみましょう',
+    'このように',
+    '以上のように',
+]
+
+JAPANESE_BROAD_CLAIMS = [
+    '現代社会において',
+    '情報社会において',
+    '重要な役割を果たします',
+    '欠かせないものです',
+    '可能性が広がります',
+]
+
+VAGUE_PHRASES = [
+    *JAPANESE_VAGUE_PHRASES,
     'it is important to',
     'delve into',
     'unlock the power of',
@@ -279,6 +310,30 @@ def check_file(path: Path) -> list[WarningFinding]:
         'vague-phrase',
         VAGUE_PHRASES,
         'phrase may be vague or over-polished; review in context',
+    )
+    add_phrase_warnings(
+        findings,
+        path,
+        non_code_lines,
+        'filler-phrase',
+        JAPANESE_FILLER_PHRASES,
+        'phrase may be filler or too broad; review in context',
+    )
+    add_phrase_warnings(
+        findings,
+        path,
+        non_code_lines,
+        'mechanical-transition',
+        JAPANESE_MECHANICAL_TRANSITIONS,
+        'transition may be mechanical; review in context',
+    )
+    add_phrase_warnings(
+        findings,
+        path,
+        non_code_lines,
+        'broad-claim',
+        JAPANESE_BROAD_CLAIMS,
+        'claim may be broad; review in context',
     )
     add_phrase_warnings(
         findings,
