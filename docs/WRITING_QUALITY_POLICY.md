@@ -1,6 +1,7 @@
 # AI-Assisted Writing Quality Policy Draft
 
-Status: draft / needs human review
+Status: `draft`
+Review status: `needs_human_review`
 
 ## Purpose
 
@@ -18,6 +19,7 @@ priority over making prose sound natural or human-written.
 ## Non-goals
 
 - AI detector bypass.
+- Using AI detector scores as acceptance criteria or CI pass/fail criteria.
 - Hiding AI involvement or making generated writing look deceptively human.
 - Automatic approval of generated material.
 - Replacing pedagogy, copyright, accessibility, maintainer, or release review.
@@ -136,6 +138,7 @@ accessibility, or release context. Examples include:
 - Factual correctness.
 - Copyright risk.
 - Accessibility adequacy.
+- Curriculum alignment claims.
 - Appropriateness of examples.
 - Whether a Japanese localized output is suitable for learners.
 - Whether a draft should be accepted or published.
