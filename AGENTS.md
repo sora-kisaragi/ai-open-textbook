@@ -127,50 +127,22 @@ Human approval is required for:
 - Age-appropriateness decisions
 - Changes from `approved` to `published`
 
-## Imported Claude Cowork project instructions
+## Agent Workflow Rules
 
-Work as an AI coding and editorial coworker for this repository.
+These notes clarify how agents should apply the repository rules during
+day-to-day work.
 
-Read AGENTS.md first and treat it as the primary repository-level instruction file.
-Also check CLAUDE.md and relevant files under docs/ before planning or editing.
-
-Use concise English for repository files, prompts, GitHub Issues, PR text, comments, code, schemas, and data fields.
-Use Japanese for final user-facing progress reports, result summaries, and questions to the project owner.
-
-Do not expose private chain-of-thought.
-Use brief public reasoning artifacts only: assumptions, decision summaries, trade-offs, validation evidence, risks, and open questions.
-
-This project creates open educational materials, supplemental resources, self-study materials, and teacher support materials.
-Do not describe the output as an official government-approved textbook.
-Do not copy, paraphrase closely, or imitate existing textbooks, paid problem books, proprietary diagrams, teacher manuals, or answer keys.
-Do not invent citations, curriculum references, legal claims, or review status.
-
-Follow a planning-first workflow:
-1. Inspect the repository rules and current files.
-2. State a short plan before major edits.
-3. Make small, reviewable changes.
-4. Keep generated content in draft status unless human review has approved it.
-5. Run available validation commands before reporting completion.
-
-Data policy:
-- Treat data/collections/*.ndjson as the canonical data source.
-- Treat SQLite files under build/ as generated indexes.
-- Do not manually edit generated build artifacts unless explicitly asked.
-- Preserve answer, rubric, source, and revision history.
-
-Validation policy:
-Run these when relevant:
-python3 scripts/validate_ndjson.py
-python3 scripts/build_sqlite_index.py
-
-GitHub workflow:
-Use GitHub Issues and PR-oriented work units when possible.
-If GitHub CLI is unavailable, unauthenticated, or no usable remote exists, create local drafts and report that fallback honestly.
-
-Final reports must be in Japanese and include:
-- 実施概要
-- 作成・変更したファイル
-- GitHub Issue登録結果 or フォールバック結果
-- 実行した検証コマンドと結果
-- 未解決のリスク
-- 次に人間が判断すべきこと
+- Treat `AGENTS.md` as the primary source of repository instructions.
+- Check `CLAUDE.md`, `docs/OPERATING_RULES.md`, `docs/DATA_MODEL.md`, and
+  task-specific issues or prompts when they are relevant.
+- Use concise English for repository files, prompts, GitHub Issues, PR text,
+  comments, code, schemas, and data fields.
+- Use Japanese for final user-facing progress reports, result summaries, and
+  questions to the project owner when the surrounding thread is Japanese.
+- Use short public reasoning artifacts only: assumptions, decision summaries,
+  trade-offs, validation evidence, risks, and open questions.
+- Work in small, reviewable steps: inspect rules and current files, state a
+  short plan before major edits, keep generated content in draft status unless
+  human review has approved it, and run validation before reporting completion.
+- Use GitHub Issues and PR-oriented work units when possible. If GitHub access
+  is unavailable, create local drafts and report the fallback honestly.
