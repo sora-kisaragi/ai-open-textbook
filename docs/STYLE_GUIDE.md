@@ -21,6 +21,8 @@ Localized learner-facing output can be generated later.
   `docs/PROSE_LINTING_EVALUATION.md`.
 - For warning-only prose review prompts, see
   `docs/PROSE_WARNING_CHECKS.md`.
+- For external prose skill, rule set, and CLI adoption status, see
+  `docs/EXTERNAL_PROSE_TOOLING_ADOPTION.md`.
 
 ## Code examples
 

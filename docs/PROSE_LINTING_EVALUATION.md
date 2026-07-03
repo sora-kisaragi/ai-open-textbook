@@ -219,6 +219,9 @@ Use a conservative path:
 6. Keep Japanese learner-facing checks behind pedagogy, copyright,
    accessibility, and maintainer review.
 
+For the current external prose skill, rule set, and CLI adoption status, see
+`docs/EXTERNAL_PROSE_TOOLING_ADOPTION.md`.
+
 ## Open Questions
 
 - Should the first pilot use textlint, Vale, markdownlint, or a minimal custom
