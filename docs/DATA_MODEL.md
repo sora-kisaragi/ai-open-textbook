@@ -53,6 +53,45 @@ Allowed `status` values are defined in `AGENTS.md`:
 - `deprecated`
 - `superseded`
 
+## Field Language Policy
+
+`locale` describes the language of the educational content for a record. It
+does not describe the language used for repository management, GitHub Issues,
+PRs, scripts, schemas, or internal review notes.
+
+For the Japanese High School Information I MVP, display fields shown to
+learners or teachers should be Japanese. Internal metadata, review metadata,
+stable identifiers, schema keys, commands, code literals, and source tracking
+metadata remain English or machine-readable literals.
+
+| Collection | Field or content | Classification | Language rule |
+| --- | --- | --- | --- |
+| All NDJSON collections | `id`, `type`, `schema_version`, field names | Stable machine-readable identifiers and schema fields | English or machine literals |
+| All NDJSON collections | `status`, `review_status`, `verification_status`, `change_type`, `actor` | Review-facing metadata or lifecycle values | English enum values |
+| All NDJSON collections | dates, revision numbers, references, file paths | Internal metadata | Machine-readable literals |
+| `lessons.ndjson` | `locale` | Educational-content language metadata | Use the BCP 47 language tag for the educational content, such as `ja` for Japanese learner-facing content |
+| `lessons.ndjson` | `title` | Display metadata | Japanese when shown to learners or teachers |
+| `lessons.ndjson` | `subject`, `unit` | Display metadata | Japanese when shown to learners or teachers; keep internal planning docs in English |
+| `lessons.ndjson` | `learning_objectives`, `prerequisites` | Learner-facing educational content | Japanese |
+| `lessons.ndjson` | `body_ref`, `source_refs` | Stable references | Keep file paths and IDs unchanged |
+| `problems.ndjson` | `question` | Learner-facing educational content | Japanese, except code blocks and literal output |
+| `problems.ndjson` | `common_mistakes` | Learner-facing feedback or review aid, depending on use | Japanese when surfaced to learners or teachers; English is acceptable only for internal-only review notes |
+| `problems.ndjson` | `difficulty`, `question_type`, `lesson_refs`, `answer_refs`, `rubric_refs` | Machine-readable metadata | English enum values or stable IDs |
+| `answers.ndjson` | `canonical_answer` | Answer value | Keep exact code/output literals unchanged; use Japanese only when the canonical answer is prose |
+| `answers.ndjson` | `acceptable_answers` | Answer values | Keep exact code/output variants unchanged; use Japanese for accepted prose variants |
+| `answers.ndjson` | `explanation` | Learner-facing feedback | Japanese |
+| `answers.ndjson` | `verification_evidence`, `source_refs`, `valid_from`, `valid_to`, `supersedes` | Review-facing or machine metadata | English or machine-readable literals |
+| `rubrics.ndjson` | rubric criteria prose such as `criteria[].description` | Teacher-facing instructional content | Japanese when used for instruction or scoring guidance |
+| `rubrics.ndjson` | criteria IDs, points, `problem_id` | Machine-readable rubric metadata | English or machine-readable literals |
+| `sources.ndjson` | `title`, `source_type`, `url`, `accessed_at`, source IDs | Source metadata | Keep English or source-provided titles; do not translate official titles unless a reviewed display title field is added |
+| `sources.ndjson` | `notes` | Review-facing metadata | English unless explicitly surfaced to learners or teachers |
+| `revisions.ndjson` | `reason` | Review-facing metadata | English concise public summary |
+
+Do not translate GitHub operational text, schema keys, commands, scripts,
+record IDs, or internal developer-facing documentation as part of educational
+localization work. Do not infer approval, publication, official textbook
+status, or curriculum alignment from a language update.
+
 ## Required fields by collection
 
 All records in `data/collections/*.ndjson` must include the core fields:
