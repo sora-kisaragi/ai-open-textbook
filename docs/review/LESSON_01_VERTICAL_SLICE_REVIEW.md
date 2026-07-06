@@ -84,6 +84,8 @@ Compared source: `docs/requirements/lesson-01-variables.md`.
 - `ans.prob.info1.variables.001.v1` has `verification_status: not_run`, so its
   answer and accepted variant need reviewer or machine-check evidence before
   acceptance.
+- `ans.prob.info1.variables.002.v1` is machine-checkable in type, but it still
+  needs actual reviewer or machine-run evidence before acceptance.
 
 ### Non-Blocking Gaps
 
@@ -128,6 +130,11 @@ Existing repository rules allow `human_review_requested` as a lifecycle status.
 guide, problems, answers, rubrics, revisions, machine checks, and checklist
 evidence. This PR therefore moves only the existing Lesson 01 lesson, problem,
 answer, and rubric records from `draft` to `human_review_requested`.
+
+The records move directly from `draft` to `human_review_requested` because the
+required machine checks were executed and recorded in this PR. This
+review-preparation transition does not retain a separate `machine_checked`
+state and does not approve, accept, publish, or release any record.
 
 No learner-facing text, problem prompt, answer content, accepted answer,
 rubric criterion, source record, schema, or generated artifact is edited by
