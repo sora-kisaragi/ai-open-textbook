@@ -12,7 +12,8 @@ approve, publish, or count any lesson or problem-bank record by itself.
 
 Keep literal code, program output, command names, schema keys, record IDs,
 file paths, and example identifiers unchanged when they are code or
-machine-readable values.
+machine-readable values. Explanatory comments inside code examples may be
+Japanese when the comments are learner-facing prose.
 
 ## Language Scope
 
