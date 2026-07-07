@@ -1,53 +1,53 @@
-# Variables and Assignment
+# 変数と代入
 
-## Learning goals
+## 学習目標
 
-After this lesson, learners can:
+このレッスンのあと、学習者は次のことができるようになります。
 
-1. Explain why variables are useful.
-2. Assign a value to a variable in Python.
-3. Predict the value of a variable after simple assignments.
+1. 変数がなぜ役に立つのかを説明できる。
+2. Pythonで変数に値を代入できる。
+3. 簡単な代入のあとで、変数の値を予測できる。
 
-## Prerequisites
+## 前提知識
 
-- Basic idea of a computer program as ordered instructions.
-- Basic arithmetic expressions.
+- コンピュータプログラムは順番に実行される命令である、という基本的な考え方。
+- 基本的な算術式。
 
-## Introduction
+## 導入
 
-A program often needs to remember values.
-A variable gives a name to a value so that the program can use it later.
+プログラムでは、値をあとで使うために覚えておきたい場面がよくあります。
+変数は値に名前を付けるしくみです。名前を付けておくと、プログラムはその値をあとから使えます。
 
-## Example
+## 例
 
 ```python
 score = 80
 print(score)
 ```
 
-The variable `score` stores the value `80`.
-The `print` function displays the current value of `score`.
+変数 `score` には値 `80` が保存されます。
+`print` 関数は、`score` の現在の値を表示します。
 
-## Common mistakes
+## よくある間違い
 
-### Mistake: Reading assignment as equality
+### 間違い: 代入を等号として読む
 
 ```python
 x = x + 1
 ```
 
-In mathematics, this looks impossible as an equation.
-In Python, it means: compute the current value of `x + 1`, then store the result back into `x`.
+数学の式として見ると、これは成り立たない等式に見えます。
+Pythonでは、「現在の `x + 1` の値を計算し、その結果をもう一度 `x` に保存する」という意味です。
 
-### Mistake: Using a variable before assigning it
+### 間違い: 代入する前に変数を使う
 
 ```python
 print(total)
 ```
 
-This fails if `total` has not been assigned earlier.
+それより前に `total` へ値が代入されていない場合、このコードは失敗します。
 
-## Self-check
+## 自己確認
 
-- What is the value of `x` after `x = 3` and `x = x + 2`?
-- Why is `name = "Aki"` different from `name == "Aki"`?
+- `x = 3` のあとに `x = x + 2` を実行すると、`x` の値はいくつになりますか。
+- `name = "Aki"` と `name == "Aki"` は、なぜ違う意味になりますか。
