@@ -1,23 +1,23 @@
-# Teacher Guide: Variables and Assignment
+# 教師用ガイド: 変数と代入
 
-## Lesson intent
+## レッスンのねらい
 
-Learners should understand assignment as a state update, not as mathematical equality.
+学習者が、代入を数学の等式ではなく、状態を更新する操作として理解することを目指します。
 
-## Suggested flow
+## 進め方の例
 
-1. Ask learners where a game stores score.
-2. Introduce a variable as a named storage location.
-3. Show `score = 80` and `score = score + 10`.
-4. Discuss why assignment and equality are different.
-5. Run short prediction exercises.
+1. ゲームの得点はどこに保存されていると思うかを学習者に問いかける。
+2. 変数を、名前の付いた保存場所として導入する。
+3. `score = 80` と `score = score + 10` を示す。
+4. 代入と等しいことの違いを話し合う。
+5. 短い値の予測問題に取り組ませる。
 
-## Expected misconceptions
+## 想定される誤解
 
-- Learners may read `=` as mathematical equality.
-- Learners may think the variable name is the value.
-- Learners may not notice execution order.
+- 学習者は `=` を数学の等号として読むことがある。
+- 学習者は変数名そのものが値だと考えることがある。
+- 学習者は実行順序に気づかないことがある。
 
-## Formative assessment
+## 形成的評価
 
-Ask learners to predict printed output before running code.
+コードを実行する前に、表示される出力を学習者に予測させます。
