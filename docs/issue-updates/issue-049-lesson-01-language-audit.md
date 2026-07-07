@@ -10,6 +10,9 @@ sections that need Japanese localization in a later PR.
 This audit does not translate content, approve content, publish content, close
 Issue #49, merge PR #48, or count Lesson 01 seed problems toward the final
 problem-bank target.
+Issue #49 was already closed after the language policy work; this audit records
+follow-up evidence and handoff details, and does not reopen or re-close the
+issue.
 
 ## Policy basis
 
