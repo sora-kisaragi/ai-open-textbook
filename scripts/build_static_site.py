@@ -59,7 +59,7 @@ def markdown_renderer() -> MarkdownIt:
             "linkify": False,
             "typographer": False,
         },
-    )
+    ).enable("table")
 
 
 def load_records(root: Path) -> tuple[dict[str, dict], dict[str, list[dict]]]:
