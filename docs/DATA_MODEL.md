@@ -28,6 +28,11 @@ Canonical collections live in `data/collections/`:
 - `sources.ndjson`
 - `revisions.ndjson`
 
+The subject-wide planning graph lives in
+`curriculum/highschool_information_i.curriculum.json`. It is validated as the
+canonical curriculum record `curriculum.info1.v1` but remains separate from the
+educational NDJSON collections.
+
 ## Core fields
 
 Every record should include:
@@ -83,7 +88,7 @@ add explicit separate fields instead.
 | `lessons.ndjson` | `body_ref`, `source_refs` | Stable references | Keep file paths and IDs unchanged |
 | `problems.ndjson` | `question` | Learner-facing educational content | Japanese, except code blocks and literal output |
 | `problems.ndjson` | `common_mistakes` | Learner- or teacher-facing instructional content by default | Japanese when attached to learner or teacher instructional records; English is acceptable only for explicitly documented internal-only review metadata |
-| `problems.ndjson` | `difficulty`, `question_type`, `lesson_refs`, `answer_refs`, `rubric_refs` | Machine-readable metadata | English enum values or stable IDs |
+| `problems.ndjson` | `difficulty`, `question_type`, `lesson_refs`, `objective_refs`, `answer_refs`, `rubric_refs` | Machine-readable metadata | English enum values or stable IDs |
 | `answers.ndjson` | `canonical_answer` | Answer value | Keep exact code/output literals unchanged; use Japanese only when the canonical answer is prose |
 | `answers.ndjson` | `acceptable_answers` | Answer values | Keep exact code/output variants unchanged; use Japanese for accepted prose variants |
 | `answers.ndjson` | `explanation` | Learner-facing feedback | Japanese |
@@ -119,7 +124,7 @@ Additional required fields are:
 | Collection | Type | Additional required fields |
 | --- | --- | --- |
 | `lessons.ndjson` | `lesson` | `title`, `body_ref`, `learning_objectives` |
-| `problems.ndjson` | `problem` | `question`, `question_type`, `lesson_refs`, `answer_refs`, `rubric_refs` |
+| `problems.ndjson` | `problem` | `question`, `question_type`, `lesson_refs`, `objective_refs`, `answer_refs`, `rubric_refs` |
 | `answers.ndjson` | `answer` | `problem_id`, `canonical_answer`, `answer_type`, `review_status`, `revision` |
 | `rubrics.ndjson` | `rubric` | `problem_id`, `criteria` |
 | `sources.ndjson` | `source` | `title`, `source_type`, `url` |
@@ -170,6 +175,8 @@ Recommended fields:
   `data/collections/revisions.ndjson`.
 - Every non-revision record should have at least one revision record whose
   `entity_id` matches the record `id`.
+- The curriculum record also requires revision events even though its structured
+  body is stored outside the NDJSON collections.
 - `supersedes` points to the previous record version when a record replaces an
   earlier version.
 - `superseded_by` points to the replacement record version when known.
@@ -189,6 +196,9 @@ Tables:
 
 - `documents`: all NDJSON records as JSON text.
 - `edges`: references between records.
+- `curriculum_lessons`: the 32 planned lessons in curriculum order.
+- `objectives`: stable objective IDs and learner-navigation labels.
+- `coverage`: objective-level assessment evidence state.
 - `doc_fts`: optional FTS5 search index when available.
 
 SQLite is disposable. Rebuild it from NDJSON.
@@ -205,11 +215,12 @@ python3 scripts/build_sqlite_index.py
 ```
 
 On Windows systems where `python3` is an unavailable launcher alias, run the
-same scripts with the available Python interpreter and document the fallback:
+same scripts with the locked virtual-environment interpreter and document the
+fallback:
 
 ```bash
-python scripts/validate_ndjson.py
-python scripts/build_sqlite_index.py
+.venv\Scripts\python.exe scripts/validate_ndjson.py
+.venv\Scripts\python.exe scripts/build_sqlite_index.py
 ```
 
 ## Future migration options

@@ -26,8 +26,10 @@ supplemental teaching aid, and self-study resource under human review.
 
 ## Design choice
 
-The source of truth is NoSQL-style NDJSON under `data/collections/`.
-SQLite is treated as a generated index under `build/`, not as the canonical database.
+Educational records use canonical NDJSON under `data/collections/`. The
+subject-wide plan is canonicalized separately in
+`curriculum/highschool_information_i.curriculum.json`. SQLite is a generated
+index under `build/`, not a canonical database.
 
 Why:
 
@@ -39,17 +41,28 @@ Why:
 ## Quick start
 
 ```bash
-python3 scripts/validate_ndjson.py
-python3 scripts/build_sqlite_index.py
-python3 scripts/build_static_site.py
+uv sync --locked --extra dev
+uv run python -m playwright install chromium
+uv run python scripts/validate_ndjson.py
+uv run python scripts/build_sqlite_index.py
+uv run python scripts/check_examples.py
+uv run python scripts/build_static_site.py
+uv run python scripts/verify_static_site.py
+uv run python scripts/build_pdf.py
+uv run python -m pytest
 ```
 
-Optional:
+For a branch or pull request, also run
+`uv run python scripts/check_revision_history.py --base-ref <base-commit>`.
+This enforces revision events against the actual Git change set.
+
+On Windows, keep `uv run python` so the locked environment is used. If direct
+interpreter invocation is required, use `.venv\Scripts\python.exe`; do not
+substitute an unqualified system `python` after `uv sync`.
+GNU Make users may run the complete sequence with:
 
 ```bash
-make validate
-make sqlite
-make site
+make check
 ```
 
 ## Key files
@@ -58,11 +71,12 @@ make site
 - `CLAUDE.md`: Claude Code bridge that points to `AGENTS.md`.
 - `docs/OPERATING_RULES.md`: Human and AI operating rules.
 - `docs/DATA_MODEL.md`: NoSQL-first data model and SQLite projection.
+- `docs/TOOLING_GATES.md`: Locked validation, execution, HTML, and PDF gates.
 - `docs/PROCESS.md`: End-to-end production flow.
 - `.claude/agents/`: Specialist subagent definitions.
 - `data/collections/`: Versioned NDJSON collections.
-- `schemas/`: Lightweight JSON schema documents.
-- `scripts/`: Validation and indexing utilities.
+- `schemas/`: Executable JSON Schema contracts for canonical records and curriculum.
+- `scripts/`: Validation, execution, indexing, HTML, and PDF build utilities.
 
 ## Licensing
 

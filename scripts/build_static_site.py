@@ -6,10 +6,12 @@ import argparse
 import html
 import json
 import os
+import re
 import shutil
 import sys
 import tempfile
 import time
+from dataclasses import dataclass
 from pathlib import Path
 from string import Template
 
@@ -17,6 +19,7 @@ from markdown_it import MarkdownIt
 
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]
+CURRICULUM_FILE = Path("curriculum/highschool_information_i.curriculum.json")
 COLLECTION_FILES = (
     "lessons.ndjson",
     "problems.ndjson",
@@ -29,6 +32,19 @@ COLLECTION_FILES = (
 
 class SiteBuildError(RuntimeError):
     """Raised for a clear, user-facing static-site build failure."""
+
+
+@dataclass(frozen=True)
+class CurriculumPosition:
+    """Ordered curriculum metadata for one canonical lesson."""
+
+    unit_id: str
+    unit_title: str
+    unit_index: int
+    lesson_index: int
+    order: str
+    curriculum_title: str
+    objective_ids: frozenset[str]
 
 
 def escape(value: object) -> str:
@@ -73,6 +89,69 @@ def load_records(root: Path) -> tuple[dict[str, dict], dict[str, list[dict]]]:
     return by_id, by_type
 
 
+def load_curriculum(root: Path) -> dict[str, CurriculumPosition]:
+    path = root / CURRICULUM_FILE
+    if not path.is_file():
+        raise SiteBuildError(f"missing curriculum: {CURRICULUM_FILE.as_posix()}")
+    try:
+        curriculum = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise SiteBuildError(f"{CURRICULUM_FILE.as_posix()}: invalid JSON: {exc}") from exc
+
+    units = curriculum.get("units")
+    if not isinstance(units, list) or not units:
+        raise SiteBuildError("curriculum must contain a non-empty units list")
+
+    positions: dict[str, CurriculumPosition] = {}
+    objective_owners: dict[str, str] = {}
+    for unit_index, unit in enumerate(units):
+        if not isinstance(unit, dict):
+            raise SiteBuildError(f"curriculum units[{unit_index}] must be an object")
+        unit_id = unit.get("id")
+        unit_title = unit.get("title")
+        planned_lessons = unit.get("lessons")
+        if not isinstance(unit_id, str) or not isinstance(unit_title, str):
+            raise SiteBuildError(f"curriculum units[{unit_index}] is missing id or title")
+        if not isinstance(planned_lessons, list) or not planned_lessons:
+            raise SiteBuildError(f"curriculum unit has no lessons: {unit_id}")
+
+        for lesson_index, planned in enumerate(planned_lessons):
+            if not isinstance(planned, dict):
+                raise SiteBuildError(f"curriculum lesson in {unit_id} must be an object")
+            lesson_id = planned.get("lesson_id")
+            order = planned.get("order")
+            title = planned.get("title")
+            objectives = planned.get("learning_objectives")
+            if not all(isinstance(value, str) and value for value in (lesson_id, order, title)):
+                raise SiteBuildError(f"curriculum lesson in {unit_id} is missing lesson_id, order, or title")
+            if lesson_id in positions:
+                raise SiteBuildError(f"duplicate curriculum lesson id: {lesson_id}")
+            if not isinstance(objectives, list) or not objectives:
+                raise SiteBuildError(f"curriculum lesson has no learning objectives: {lesson_id}")
+
+            objective_ids: set[str] = set()
+            for objective in objectives:
+                objective_id = objective.get("id") if isinstance(objective, dict) else None
+                if not isinstance(objective_id, str) or not objective_id:
+                    raise SiteBuildError(f"curriculum lesson has an invalid objective: {lesson_id}")
+                if objective_id in objective_owners:
+                    raise SiteBuildError(f"duplicate curriculum objective id: {objective_id}")
+                objective_owners[objective_id] = lesson_id
+                objective_ids.add(objective_id)
+
+            positions[lesson_id] = CurriculumPosition(
+                unit_id=unit_id,
+                unit_title=unit_title,
+                unit_index=unit_index,
+                lesson_index=lesson_index,
+                order=order,
+                curriculum_title=title,
+                objective_ids=frozenset(objective_ids),
+            )
+
+    return positions
+
+
 def repository_path(root: Path, relative: object, field: str) -> Path:
     if not isinstance(relative, str) or not relative:
         raise SiteBuildError(f"missing {field}")
@@ -92,12 +171,20 @@ def require_reference(by_id: dict[str, dict], ref: object, expected_type: str, f
     return record
 
 
-def validate_graph(root: Path, by_id: dict[str, dict], by_type: dict[str, list[dict]]) -> None:
+def validate_graph(
+    root: Path,
+    by_id: dict[str, dict],
+    by_type: dict[str, list[dict]],
+    curriculum: dict[str, CurriculumPosition],
+) -> None:
     lessons = by_type.get("lesson", [])
     if not lessons:
         raise SiteBuildError("no lesson records found")
 
     for lesson in lessons:
+        lesson_id = str(lesson["id"])
+        if lesson_id not in curriculum:
+            raise SiteBuildError(f"lesson is not present in curriculum: {lesson_id}")
         body = repository_path(root, lesson.get("body_ref"), "body_ref")
         if not body.is_file():
             raise SiteBuildError(f"missing body_ref file: {lesson.get('body_ref')}")
@@ -110,8 +197,22 @@ def validate_graph(root: Path, by_id: dict[str, dict], by_type: dict[str, list[d
             raise SiteBuildError(f"missing teacher guide: {teacher_ref.as_posix()}")
 
     for problem in by_type.get("problem", []):
-        for ref in problem.get("lesson_refs", []) or []:
+        lesson_refs = problem.get("lesson_refs", []) or []
+        for ref in lesson_refs:
             require_reference(by_id, ref, "lesson", "lesson_refs")
+        objective_refs = problem.get("objective_refs", []) or []
+        if not objective_refs:
+            raise SiteBuildError(f"problem has no objective_refs: {problem.get('id')}")
+        allowed_objectives = {
+            objective_id
+            for lesson_ref in lesson_refs
+            for objective_id in curriculum[str(lesson_ref)].objective_ids
+        }
+        for ref in objective_refs:
+            if not isinstance(ref, str) or ref not in allowed_objectives:
+                raise SiteBuildError(
+                    f"objective_refs must belong to a referenced curriculum lesson: {ref}"
+                )
         for ref in problem.get("answer_refs", []) or []:
             require_reference(by_id, ref, "answer", "answer_refs")
         for ref in problem.get("rubric_refs", []) or []:
@@ -152,7 +253,14 @@ def render_without_leading_h1(md: MarkdownIt, source: str) -> str:
 
 
 def slug_for_lesson(lesson: dict) -> str:
-    return Path(str(lesson["body_ref"])).stem.replace("_", "-")
+    lesson_id = str(lesson.get("id", ""))
+    parts = lesson_id.split(".")
+    if len(parts) < 4 or parts[0] != "lesson" or not re.fullmatch(r"v[1-9][0-9]*", parts[-1]):
+        raise SiteBuildError(f"cannot derive semantic slug from lesson id: {lesson_id}")
+    semantic_parts = parts[2:-1]
+    if not semantic_parts or any(not re.fullmatch(r"[a-z0-9]+", part) for part in semantic_parts):
+        raise SiteBuildError(f"cannot derive semantic slug from lesson id: {lesson_id}")
+    return "-".join(semantic_parts)
 
 
 def render_list(items: list[object], css_class: str = "detail-list") -> str:
@@ -161,16 +269,17 @@ def render_list(items: list[object], css_class: str = "detail-list") -> str:
     return f'<ul class="{css_class}">' + "".join(f"<li>{escape(item)}</li>" for item in items) + "</ul>"
 
 
-def render_practices(md: MarkdownIt, problems: list[dict]) -> str:
+def render_practices(md: MarkdownIt, problems: list[dict], id_prefix: str = "practice") -> str:
     blocks = []
     for number, problem in enumerate(problems, start=1):
         question = md.render(str(problem.get("question", "")))
+        section_id = f"{id_prefix}-{number}"
         blocks.append(
-            '<section class="practice-item" aria-labelledby="practice-{}">'
+            '<section class="practice-item" aria-labelledby="{}">'
             '<p class="section-kicker">練習 {}</p>'
-            '<h3 id="practice-{}">自分で考えてみよう</h3>{}'
+            '<h3 id="{}">自分で考えてみよう</h3>{}'
             '<div class="answer-space" aria-hidden="true"></div>'
-            "</section>".format(number, number, number, question)
+            "</section>".format(section_id, number, section_id, question)
         )
     return "".join(blocks)
 
@@ -262,7 +371,13 @@ def render_revisions(revisions: list[dict], entity_ids: set[str]) -> str:
     ) + "</ol>"
 
 
-def write_site(root: Path, destination: Path, by_id: dict[str, dict], by_type: dict[str, list[dict]]) -> None:
+def write_site(
+    root: Path,
+    destination: Path,
+    by_id: dict[str, dict],
+    by_type: dict[str, list[dict]],
+    curriculum: dict[str, CurriculumPosition],
+) -> None:
     md = markdown_renderer()
     assets = destination / "assets"
     lesson_dir = destination / "lessons"
@@ -276,15 +391,21 @@ def write_site(root: Path, destination: Path, by_id: dict[str, dict], by_type: d
         raise SiteBuildError(f"missing site asset: {stylesheet.relative_to(root)}")
     shutil.copyfile(stylesheet, assets / "styles.css")
 
-    index_items = []
-    teacher_items = []
     output_slugs: set[str] = set()
-    lessons = sorted(by_type.get("lesson", []), key=lambda item: str(item.get("body_ref", "")))
+    lessons = sorted(
+        by_type.get("lesson", []),
+        key=lambda item: (
+            curriculum[str(item["id"])].unit_index,
+            curriculum[str(item["id"])].lesson_index,
+        ),
+    )
     problems = by_type.get("problem", [])
     revisions = by_type.get("revision", [])
+    lesson_views: list[dict[str, object]] = []
 
-    for lesson_number, lesson in enumerate(lessons, start=1):
+    for lesson in lessons:
         lesson_id = str(lesson["id"])
+        position = curriculum[lesson_id]
         linked_problems = sorted(
             (problem for problem in problems if lesson_id in (problem.get("lesson_refs", []) or [])),
             key=lambda item: str(item.get("id", "")),
@@ -298,6 +419,41 @@ def write_site(root: Path, destination: Path, by_id: dict[str, dict], by_type: d
             raise SiteBuildError(f"duplicate lesson output slug: {slug}")
         output_slugs.add(slug)
         page_title = str(lesson.get("title", ""))
+        lesson_views.append(
+            {
+                "lesson": lesson,
+                "position": position,
+                "problems": linked_problems,
+                "slug": slug,
+                "page_title": page_title,
+                "lesson_html": lesson_html,
+                "practice_html": practice_html,
+            }
+        )
+
+    for index, view in enumerate(lesson_views):
+        lesson = view["lesson"]
+        position = view["position"]
+        linked_problems = view["problems"]
+        slug = str(view["slug"])
+        page_title = str(view["page_title"])
+        assert isinstance(lesson, dict)
+        assert isinstance(position, CurriculumPosition)
+        assert isinstance(linked_problems, list)
+
+        def navigation_link(target_index: int, direction: str) -> str:
+            if target_index < 0 or target_index >= len(lesson_views):
+                return '<span class="lesson-nav-placeholder" aria-hidden="true"></span>'
+            target = lesson_views[target_index]
+            target_position = target["position"]
+            assert isinstance(target_position, CurriculumPosition)
+            label = "前のレッスン" if direction == "prev" else "次のレッスン"
+            return (
+                f'<a class="lesson-nav-link {direction}" rel="{direction}" '
+                f'href="{escape(target["slug"])}.html">'
+                f'<span>{label}</span><strong>{escape(target_position.order)} '
+                f'{escape(target["page_title"])}</strong></a>'
+            )
 
         learner_page = render_template(
             root,
@@ -306,12 +462,16 @@ def write_site(root: Path, destination: Path, by_id: dict[str, dict], by_type: d
                 "page_title": escape(page_title),
                 "subject": escape(lesson.get("subject", "")),
                 "unit": escape(lesson.get("unit", "")),
-                "lesson_html": lesson_html,
-                "practice_html": practice_html,
+                "curriculum_order": escape(position.order),
+                "lesson_html": str(view["lesson_html"]),
+                "practice_html": str(view["practice_html"]),
+                "previous_link": navigation_link(index - 1, "prev"),
+                "next_link": navigation_link(index + 1, "next"),
             },
         )
         (lesson_dir / f"{slug}.html").write_text(learner_page, encoding="utf-8", newline="\n")
 
+        lesson_id = str(lesson["id"])
         body_ref = Path(str(lesson["body_ref"]))
         teacher_ref = Path("teacher_guides", *body_ref.parts[1:])
         teacher_path = repository_path(root, teacher_ref.as_posix(), "teacher guide")
@@ -328,6 +488,8 @@ def write_site(root: Path, destination: Path, by_id: dict[str, dict], by_type: d
             "teacher.html",
             {
                 "page_title": escape(page_title),
+                "curriculum_order": escape(position.order),
+                "unit": escape(lesson.get("unit", "")),
                 "lesson_id": escape(lesson_id),
                 "lesson_status": escape(lesson.get("status", "")),
                 "learner_href": f"../lessons/{escape(slug)}.html",
@@ -338,29 +500,114 @@ def write_site(root: Path, destination: Path, by_id: dict[str, dict], by_type: d
         )
         (teacher_dir / f"{slug}.html").write_text(teacher_page, encoding="utf-8", newline="\n")
 
-        index_items.append(
-            '<li class="contents-item">'
-            f'<a href="lessons/{escape(slug)}.html">'
-            f'<span class="lesson-number">Lesson {lesson_number:02d}</span>'
-            f'<strong>{escape(page_title)}</strong>'
-            f'<span>{escape(lesson.get("unit", ""))}</span>'
-            "</a></li>"
-        )
-        teacher_items.append(
-            '<li><a href="teacher/{}.html">教師・レビュー用: {}</a></li>'.format(
-                escape(slug), escape(page_title)
+    unit_groups: list[list[dict[str, object]]] = []
+    for view in lesson_views:
+        position = view["position"]
+        assert isinstance(position, CurriculumPosition)
+        if not unit_groups or unit_groups[-1][0]["position"].unit_id != position.unit_id:
+            unit_groups.append([])
+        unit_groups[-1].append(view)
+
+    index_units = []
+    teacher_units = []
+    book_toc_units = []
+    book_units = []
+    for group in unit_groups:
+        first = group[0]
+        first_lesson = first["lesson"]
+        first_position = first["position"]
+        assert isinstance(first_lesson, dict)
+        assert isinstance(first_position, CurriculumPosition)
+        unit_code = re.match(r"[A-Z]+", first_position.order)
+        unit_label = unit_code.group(0) if unit_code else first_position.order
+        display_unit = str(first_lesson.get("unit", "")) or first_position.unit_title
+        unit_anchor = f"unit-{unit_label.lower()}"
+
+        contents_items = []
+        teacher_items = []
+        book_toc_items = []
+        book_articles = []
+        for view in group:
+            lesson = view["lesson"]
+            position = view["position"]
+            assert isinstance(lesson, dict)
+            assert isinstance(position, CurriculumPosition)
+            slug = str(view["slug"])
+            page_title = str(view["page_title"])
+            contents_items.append(
+                '<li class="contents-item">'
+                f'<a href="lessons/{escape(slug)}.html">'
+                f'<span class="lesson-number">{escape(position.order)}</span>'
+                f'<strong>{escape(page_title)}</strong>'
+                f'<span>{escape(lesson.get("unit", ""))}</span>'
+                "</a></li>"
             )
+            teacher_items.append(
+                '<li><a href="teacher/{}.html"><span>{}</span> '
+                '<strong>教師・レビュー用: {}</strong></a></li>'.format(
+                    escape(slug), escape(position.order), escape(page_title)
+                )
+            )
+            book_toc_items.append(
+                f'<li><a href="#lesson-{escape(slug)}">'
+                f'{escape(position.order)} {escape(page_title)}</a></li>'
+            )
+            book_practices = render_practices(
+                md,
+                view["problems"],
+                id_prefix=f"book-{slug}-practice",
+            )
+            book_articles.append(
+                f'<article class="book-lesson" id="lesson-{escape(slug)}">'
+                '<header class="book-lesson-meta">'
+                f'<p>{escape(position.order)} / {escape(display_unit)}</p>'
+                "</header>"
+                f'<div class="lesson-article">{view["lesson_html"]}</div>'
+                '<section class="practice-section" aria-label="練習">'
+                f"{book_practices}</section></article>"
+            )
+
+        index_units.append(
+            f'<section class="curriculum-unit" id="{escape(unit_anchor)}">'
+            f'<p class="section-kicker">ユニット {escape(unit_label)}</p>'
+            f'<h2>{escape(display_unit)}</h2><ol class="contents-list">'
+            f'{"".join(contents_items)}</ol></section>'
+        )
+        teacher_units.append(
+            '<section class="teacher-index-unit">'
+            f'<h3>{escape(unit_label)} {escape(display_unit)}</h3><ul>'
+            f'{"".join(teacher_items)}</ul></section>'
+        )
+        book_toc_units.append(
+            f'<li><a href="#{escape(unit_anchor)}-book">'
+            f'{escape(unit_label)} {escape(display_unit)}</a><ol>'
+            f'{"".join(book_toc_items)}</ol></li>'
+        )
+        book_units.append(
+            f'<section class="book-unit" id="{escape(unit_anchor)}-book">'
+            f'<header class="book-unit-heading"><p>ユニット {escape(unit_label)}</p>'
+            f'<h2>{escape(display_unit)}</h2></header>{"".join(book_articles)}</section>'
         )
 
     index_page = render_template(
         root,
         "index.html",
         {
-            "contents_items": "".join(index_items),
-            "teacher_items": "".join(teacher_items),
+            "curriculum_units": "".join(index_units),
+            "teacher_units": "".join(teacher_units),
         },
     )
     (destination / "index.html").write_text(index_page, encoding="utf-8", newline="\n")
+
+    book_page = render_template(
+        root,
+        "book.html",
+        {
+            "book_toc": "".join(book_toc_units),
+            "book_units": "".join(book_units),
+        },
+    )
+    (destination / "book.html").write_text(book_page, encoding="utf-8", newline="\n")
 
 
 def replace_with_retry(source: Path, destination: Path, attempts: int = 5) -> None:
@@ -374,7 +621,12 @@ def replace_with_retry(source: Path, destination: Path, attempts: int = 5) -> No
             time.sleep(0.05 * (2**attempt))
 
 
-def replace_site(root: Path, by_id: dict[str, dict], by_type: dict[str, list[dict]]) -> Path:
+def replace_site(
+    root: Path,
+    by_id: dict[str, dict],
+    by_type: dict[str, list[dict]],
+    curriculum: dict[str, CurriculumPosition],
+) -> Path:
     build = root / "build"
     output = build / "site"
     backup = build / ".site-backup"
@@ -386,7 +638,7 @@ def replace_site(root: Path, by_id: dict[str, dict], by_type: dict[str, list[dic
     temp = Path(tempfile.mkdtemp(prefix=".site-build-", dir=build))
 
     try:
-        write_site(root, temp, by_id, by_type)
+        write_site(root, temp, by_id, by_type, curriculum)
         if output.exists():
             replace_with_retry(output, backup)
         try:
@@ -407,8 +659,9 @@ def replace_site(root: Path, by_id: dict[str, dict], by_type: dict[str, list[dic
 def build(root: Path) -> Path:
     root = root.resolve()
     by_id, by_type = load_records(root)
-    validate_graph(root, by_id, by_type)
-    return replace_site(root, by_id, by_type)
+    curriculum = load_curriculum(root)
+    validate_graph(root, by_id, by_type, curriculum)
+    return replace_site(root, by_id, by_type, curriculum)
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:

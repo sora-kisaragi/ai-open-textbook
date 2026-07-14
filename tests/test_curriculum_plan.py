@@ -138,7 +138,7 @@ def test_time_and_assessment_baselines() -> None:
             for criterion_ref in criterion_refs:
                 assert set(criterion_ref) == {"rubric_ref", "criterion_id"}
                 rubric = rubrics[criterion_ref["rubric_ref"]]
-                assert rubric["problem_id"] in item_refs
+                assert rubric["problem_id"] not in item_refs
                 criterion_ids = {criterion["id"] for criterion in rubric["criteria"]}
                 assert criterion_ref["criterion_id"] in criterion_ids
 

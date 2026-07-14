@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>$page_title | 情報I プログラミングの基礎</title>
+  <title>$curriculum_order $page_title | 情報I</title>
   <link rel="stylesheet" href="../assets/styles.css">
 </head>
 <body class="lesson-page">
@@ -14,11 +14,11 @@
     <span class="review-state">人間レビュー中</span>
   </header>
   <nav class="breadcrumb" aria-label="パンくずリスト">
-    <a href="../index.html">目次</a><span aria-hidden="true">/</span><span>$page_title</span>
+    <a href="../index.html">目次</a><span aria-hidden="true">/</span><span>$curriculum_order $page_title</span>
   </nav>
   <main id="lesson-content">
     <div class="lesson-meta" aria-label="教材情報">
-      <span>$subject</span><span>$unit</span>
+      <span>$subject</span><span>$unit</span><span>$curriculum_order</span>
     </div>
     <article class="lesson-article">$lesson_html</article>
     <section class="practice-section" aria-labelledby="practice-title">
@@ -30,7 +30,9 @@
       $practice_html
     </section>
     <nav class="lesson-navigation" aria-label="レッスンナビゲーション">
-      <a href="../index.html">目次に戻る</a>
+      $previous_link
+      <a class="contents-return" href="../index.html">目次</a>
+      $next_link
     </nav>
   </main>
   <footer class="site-footer">この教材は人間による確認中です。</footer>

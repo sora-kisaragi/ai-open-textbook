@@ -101,6 +101,9 @@ order, examples, and explanation structure must not be imitated.
 - `python scripts/validate_ndjson.py`
 - `python scripts/build_sqlite_index.py`
 - `python scripts/build_static_site.py`
+- `python scripts/verify_static_site.py`
+- `python scripts/check_examples.py`
+- `python scripts/build_pdf.py`
 - `python -m pytest`
 - Relevant `python scripts/check_prose_warnings.py ...`
 - Execution checks for changed runnable examples
