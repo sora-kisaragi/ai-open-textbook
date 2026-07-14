@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>教師・レビュー用: $page_title</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body class="teacher-page">
+  <a class="skip-link" href="#teacher-content">本文へ移動</a>
+  <header class="site-header teacher-header">
+    <a class="site-name" href="../index.html">AI Open Textbook</a>
+    <strong>教師・レビュー用</strong>
+  </header>
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <a href="../index.html">目次</a><span aria-hidden="true">/</span><span>教師・レビュー用</span>
+  </nav>
+  <main id="teacher-content" class="teacher-layout">
+    <aside class="teacher-notice" aria-labelledby="teacher-notice-title">
+      <p class="section-kicker">Review material</p>
+      <h1 id="teacher-notice-title">教師・レビュー用: $page_title</h1>
+      <p>学習者向けページとは分離されていますが、アクセス制御された情報ではありません。</p>
+      <dl class="metadata-list">
+        <div><dt>Lesson ID</dt><dd><code>$lesson_id</code></dd></div>
+        <div><dt>Status</dt><dd><code>$lesson_status</code></dd></div>
+      </dl>
+    </aside>
+    <section class="teacher-section" aria-labelledby="guide-title">
+      <div class="section-heading"><p class="section-kicker">Teaching guide</p><h2 id="guide-title">指導ガイド</h2></div>
+      <div class="teacher-copy">$teacher_guide_html</div>
+    </section>
+    <section class="teacher-section" aria-labelledby="records-title">
+      <div class="section-heading"><p class="section-kicker">Linked records</p><h2 id="records-title">問題・回答・ルーブリック</h2></div>
+      $review_html
+    </section>
+    <section class="teacher-section" aria-labelledby="revisions-title">
+      <div class="section-heading"><p class="section-kicker">Revision context</p><h2 id="revisions-title">改訂履歴</h2></div>
+      $revision_html
+    </section>
+    <nav class="lesson-navigation" aria-label="レビューナビゲーション">
+      <a href="../index.html">目次に戻る</a>
+      <a href="$learner_href">学習者向けページを見る</a>
+    </nav>
+  </main>
+  <footer class="site-footer">教師・レビュー用資料・人間レビュー中</footer>
+</body>
+</html>
