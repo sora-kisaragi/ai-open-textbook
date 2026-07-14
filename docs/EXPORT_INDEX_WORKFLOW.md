@@ -47,6 +47,30 @@ The builder writes a complete temporary database under `build/` and replaces
 because the database is open, especially on Windows where file locks are strict,
 close the application holding the file and rerun the command.
 
+## Static Textbook Site
+
+The static textbook site is a generated review and learning artifact under
+`build/site/`. Its canonical inputs remain lesson Markdown, teacher-guide
+Markdown, and NDJSON records. Do not edit or commit generated HTML or CSS.
+
+Install the declared Python project dependencies, then build the site with:
+
+```bash
+python3 scripts/build_static_site.py
+```
+
+Windows fallback:
+
+```bash
+python scripts/build_static_site.py
+```
+
+The builder pre-renders all pages and copies local styles so the generated
+`build/site/index.html` can be opened without a web server or network access.
+It replaces only `build/site/`; it does not remove or modify
+`build/index.sqlite`. Learner pages exclude answer, rubric, verification, and
+review metadata, while teacher/reviewer pages present those records separately.
+
 ## Export Manifest Expectations
 
 `MANIFEST.json` is the current review-build file manifest at the repository

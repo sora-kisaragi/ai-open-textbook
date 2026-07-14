@@ -1,0 +1,601 @@
+:root {
+  color-scheme: light;
+  --paper: #ffffff;
+  --canvas: #f4f5f1;
+  --ink: #1f2926;
+  --muted: #5f6965;
+  --line: #d6dbd7;
+  --green: #176b5b;
+  --green-soft: #e7f2ee;
+  --blue: #315f86;
+  --blue-soft: #eaf1f7;
+  --amber: #9a5b12;
+  --amber-soft: #fff4df;
+  --code: #17221f;
+  --code-ink: #eff7f3;
+  --measure: 46rem;
+  --wide: 68rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, sans-serif;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 1.75;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+}
+
+a {
+  color: var(--green);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: #0d4f43;
+}
+
+:focus-visible {
+  outline: 3px solid #d48a22;
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 20;
+  padding: 0.6rem 0.9rem;
+  background: var(--ink);
+  color: #fff;
+  transform: translateY(-180%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-header {
+  min-height: 3.75rem;
+  padding: 0.75rem max(1.25rem, calc((100% - var(--wide)) / 2));
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--paper);
+}
+
+.site-name {
+  color: var(--ink);
+  font-family: Georgia, "Yu Mincho", serif;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.review-state,
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
+  padding: 0.1rem 0.55rem;
+  border: 1px solid #d6a45e;
+  border-radius: 4px;
+  background: var(--amber-soft);
+  color: #71410b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.breadcrumb {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 0.8rem 1.25rem;
+  display: flex;
+  gap: 0.65rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.title-band {
+  border-bottom: 1px solid var(--line);
+  background: var(--green-soft);
+}
+
+.title-band-inner {
+  max-width: var(--wide);
+  min-height: 20rem;
+  margin: 0 auto;
+  padding: 4rem 1.25rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.subject-label,
+.section-kicker {
+  margin: 0 0 0.35rem;
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.title-band h1 {
+  max-width: 16ch;
+  margin: 0;
+  font-family: Georgia, "Yu Mincho", serif;
+  font-size: 3rem;
+  line-height: 1.3;
+}
+
+.title-band p:last-child {
+  max-width: 38rem;
+  margin: 1.25rem 0 0;
+  color: #37443f;
+  font-size: 1.08rem;
+}
+
+.wide-container {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 3.5rem 1.25rem;
+}
+
+.wide-container h2,
+.section-heading h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  line-height: 1.4;
+}
+
+.contents-list {
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.contents-item {
+  border-bottom: 1px solid var(--line);
+}
+
+.contents-item a {
+  min-height: 7.5rem;
+  padding: 1.4rem 0;
+  display: grid;
+  grid-template-columns: 7rem 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.contents-item a:hover strong {
+  color: var(--green);
+}
+
+.contents-item strong {
+  font-size: 1.3rem;
+}
+
+.contents-item span:last-child {
+  color: var(--muted);
+}
+
+.lesson-number {
+  color: var(--green);
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.teacher-access {
+  border-top: 1px solid var(--line);
+  background: var(--blue-soft);
+}
+
+.teacher-access p:not(.section-kicker) {
+  max-width: 42rem;
+}
+
+.lesson-meta {
+  max-width: var(--measure);
+  margin: 2rem auto 0;
+  padding: 0 1.25rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.lesson-article,
+.practice-section,
+.lesson-navigation {
+  max-width: var(--measure);
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1.25rem;
+  padding-left: 1.25rem;
+}
+
+.lesson-article {
+  padding-bottom: 3rem;
+}
+
+.lesson-article h1,
+.teacher-copy h1 {
+  margin: 0 0 2rem;
+  font-family: Georgia, "Yu Mincho", serif;
+  font-size: 2.5rem;
+  line-height: 1.35;
+}
+
+.lesson-article h2,
+.teacher-copy h2 {
+  margin: 3.2rem 0 1rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 2px solid var(--green);
+  font-size: 1.55rem;
+  line-height: 1.45;
+}
+
+.lesson-article h3,
+.teacher-copy h3 {
+  margin: 2rem 0 0.7rem;
+  font-size: 1.18rem;
+  line-height: 1.5;
+}
+
+.lesson-article p,
+.lesson-article li,
+.teacher-copy p,
+.teacher-copy li {
+  overflow-wrap: anywhere;
+}
+
+.lesson-article code:not(pre code),
+.teacher-copy code:not(pre code),
+.practice-item code:not(pre code),
+.metadata-list code,
+.record-id code {
+  padding: 0.08rem 0.28rem;
+  border: 1px solid #c9d3ce;
+  border-radius: 3px;
+  background: #f0f4f1;
+  color: #194a40;
+  font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", monospace;
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+}
+
+pre {
+  max-width: 100%;
+  margin: 1.25rem 0;
+  padding: 1.1rem 1.2rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  background: var(--code);
+  color: var(--code-ink);
+  line-height: 1.6;
+  tab-size: 4;
+}
+
+pre code {
+  font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", monospace;
+  font-size: 0.92rem;
+}
+
+.practice-section {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  border-top: 1px solid var(--line);
+}
+
+.section-heading {
+  margin-bottom: 1.75rem;
+}
+
+.section-heading > p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.practice-item {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--green);
+  border-radius: 6px;
+  background: var(--paper);
+}
+
+.practice-item h3 {
+  margin: 0 0 0.8rem;
+  font-size: 1.18rem;
+}
+
+.answer-space {
+  min-height: 3rem;
+  margin-top: 1.4rem;
+  border-bottom: 1px dashed #aab5b0;
+}
+
+.lesson-navigation {
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.teacher-header {
+  border-bottom-color: #b9cbd9;
+  background: var(--blue-soft);
+}
+
+.teacher-layout {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+}
+
+.teacher-notice {
+  padding: 1.5rem 0 2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.teacher-notice h1 {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.4;
+}
+
+.metadata-list {
+  margin: 1.5rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.metadata-list div {
+  min-width: 0;
+  padding: 0.8rem;
+  border-left: 3px solid var(--blue);
+  background: var(--blue-soft);
+}
+
+.metadata-list dt {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.metadata-list dd {
+  margin: 0.2rem 0 0;
+}
+
+.teacher-section {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.teacher-copy {
+  max-width: var(--measure);
+}
+
+.review-record {
+  margin: 1.5rem 0 2.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.review-record-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.review-record-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  overflow-wrap: anywhere;
+}
+
+.record-id {
+  margin-top: -0.35rem;
+}
+
+.review-subsection {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.review-subsection h4,
+.review-subsection h5 {
+  margin-bottom: 0.6rem;
+}
+
+.detail-list,
+.rubric-list,
+.revision-list {
+  padding-left: 1.25rem;
+}
+
+.rubric-list li {
+  margin: 0.45rem 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+th,
+td {
+  padding: 0.65rem;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: var(--blue-soft);
+}
+
+.revision-list li {
+  margin: 0.8rem 0;
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  gap: 1rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.site-footer {
+  padding: 1.5rem;
+  border-top: 1px solid var(--line);
+  background: var(--canvas);
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 44rem) {
+  .site-header {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .title-band-inner {
+    min-height: 16rem;
+    padding-top: 2.8rem;
+  }
+
+  .title-band h1,
+  .lesson-article h1 {
+    font-size: 2.1rem;
+  }
+
+  .contents-item a {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
+  .contents-item span:last-child {
+    font-size: 0.88rem;
+  }
+
+  .metadata-list {
+    grid-template-columns: 1fr;
+  }
+
+  .practice-item,
+  .review-record {
+    padding: 1.1rem;
+  }
+
+  .review-record-header,
+  .rubric-list li,
+  .lesson-navigation {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .revision-list li {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}
+
+@media print {
+  @page {
+    margin: 16mm 15mm;
+    size: A4;
+  }
+
+  html,
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 10.5pt;
+  }
+
+  .site-header,
+  .breadcrumb,
+  .lesson-navigation,
+  .site-footer,
+  .skip-link,
+  .review-state {
+    display: none !important;
+  }
+
+  .lesson-meta,
+  .lesson-article,
+  .practice-section,
+  .teacher-layout {
+    max-width: none;
+    margin: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .lesson-article h2,
+  .teacher-copy h2 {
+    border-bottom-color: #000;
+  }
+
+  .practice-item,
+  .review-record,
+  pre,
+  table {
+    break-inside: avoid;
+  }
+
+  .practice-section {
+    break-before: page;
+  }
+
+  pre {
+    border: 1px solid #555;
+    background: #f4f4f4;
+    color: #000;
+    white-space: pre-wrap;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+}

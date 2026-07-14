@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "Starter repository for AI-native open educational materials."
 requires-python = ">=3.10"
 license = { text = "MIT for code; CC BY 4.0 for content" }
+dependencies = [
+    "markdown-it-py>=4.2,<5",
+]
 
 [tool.project]
 source_of_truth = "data/collections/*.ndjson"
