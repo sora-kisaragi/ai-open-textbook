@@ -4,118 +4,2636 @@
   "schema_version": "1.0",
   "stage": "high_school",
   "subject": "Information I",
+  "locale": "ja",
   "status": "draft",
   "review_status": "needs_human_review",
+  "scope_version": "0.2",
+  "tracking_issue": 59,
   "source_refs": [
-    "src.mext.curriculum.general.v1"
+    "src.mext.highschool.curriculum2018.v1",
+    "src.mext.information.commentary2018.v1"
   ],
   "notes": [
-    "This curriculum map is a planning baseline only.",
-    "No official curriculum alignment approval or official textbook status is claimed.",
-    "Alignment, pedagogy, copyright, accessibility, and release decisions require human review."
+    "This is an original project decomposition for planning and coverage review.",
+    "Lesson count, order, titles, and assessment design are project decisions, not MEXT-prescribed requirements.",
+    "No official textbook, final curriculum alignment, approval, or publication claim is made."
   ],
   "units": [
     {
-      "id": "unit.info1.programming.v1",
-      "title": "Programming Basics",
+      "id": "unit.info1.society.v1",
+      "area": "mext.info1.1",
+      "title": "Information Society and Problem Solving",
       "status": "draft",
+      "source_locator": {
+        "normative": "High School Course of Study, Information I content (1), PDF pages 191-192",
+        "commentary": "Information commentary, Information I content (1), PDF pages 30-34"
+      },
+      "unit_outcome": "Analyze an information-related problem, identify responsibilities and constraints, compare alternatives, and evaluate a solution with evidence.",
       "lessons": [
         {
-          "lesson_id": "lesson.info1.programming.variables.v1",
-          "title": "Variables and Assignment",
-          "issue": 4,
-          "ndjson_record": "data/collections/lessons.ndjson",
-          "body_ref": "lessons/highschool_information_i/programming/01_variables.md",
-          "record_note": "Existing draft lesson record.",
+          "order": "A1",
+          "lesson_id": "lesson.info1.society.information.media.v1",
+          "title": "Information and Media",
+          "status": "draft",
           "learning_objectives": [
-            "Explain why variables are useful.",
-            "Assign a value to a variable in Python.",
-            "Predict the value of a variable after simple assignments."
+            {
+              "id": "obj.info1.society.information.media.001.v1",
+              "statement": "Distinguish data, information, and media in a concrete situation.",
+              "expected_evidence": "analysis",
+              "label": "A1.O1"
+            },
+            {
+              "id": "obj.info1.society.information.media.002.v1",
+              "statement": "Explain how a medium changes what can be recorded, transmitted, or interpreted.",
+              "expected_evidence": "explanation",
+              "label": "A1.O2"
+            },
+            {
+              "id": "obj.info1.society.information.media.003.v1",
+              "statement": "Identify an information-related problem from observations and evidence.",
+              "expected_evidence": "identification",
+              "label": "A1.O3"
+            }
           ],
           "prerequisites": [
-            "Basic idea of a computer program as ordered instructions.",
-            "Basic arithmetic expressions."
+            "Everyday experience receiving and sharing information."
+          ],
+          "key_concepts": [
+            "data",
+            "information",
+            "media",
+            "representation",
+            "problem discovery"
+          ],
+          "assessment_intent": "Classify examples and justify a problem statement using observable evidence.",
+          "depends_on": [],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              1,
+              1
+            ],
+            "self_study_minutes": [
+              35,
+              60
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.society.information.media.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.information.media.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.information.media.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "A2",
+          "lesson_id": "lesson.info1.society.source.evaluation.v1",
+          "title": "Reliability and Source Evaluation",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.society.source.evaluation.001.v1",
+              "statement": "Separate a claim from the evidence offered for it.",
+              "expected_evidence": "analysis",
+              "label": "A2.O1"
+            },
+            {
+              "id": "obj.info1.society.source.evaluation.002.v1",
+              "statement": "Evaluate source relevance, currency, authorship, and corroboration.",
+              "expected_evidence": "evaluation",
+              "label": "A2.O2"
+            },
+            {
+              "id": "obj.info1.society.source.evaluation.003.v1",
+              "statement": "Record uncertainty instead of presenting an unsupported conclusion.",
+              "expected_evidence": "documentation",
+              "label": "A2.O3"
+            }
+          ],
+          "prerequisites": [
+            "A1: Information and Media."
+          ],
+          "key_concepts": [
+            "claim",
+            "evidence",
+            "source",
+            "reliability",
+            "uncertainty"
+          ],
+          "assessment_intent": "Compare candidate sources and explain which evidence can and cannot support a claim.",
+          "depends_on": [
+            "lesson.info1.society.information.media.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              1,
+              2
+            ],
+            "self_study_minutes": [
+              45,
+              90
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.society.source.evaluation.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.source.evaluation.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.source.evaluation.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "A3",
+          "lesson_id": "lesson.info1.society.rights.responsibility.v1",
+          "title": "Rights, Responsibility, Privacy, and Risk",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.society.rights.responsibility.001.v1",
+              "statement": "Identify stakeholders, information flows, and potential harms in a scenario.",
+              "expected_evidence": "identification",
+              "label": "A3.O1"
+            },
+            {
+              "id": "obj.info1.society.rights.responsibility.002.v1",
+              "statement": "Distinguish personal responsibility, social norms, and source-backed legal constraints.",
+              "expected_evidence": "analysis",
+              "label": "A3.O2"
+            },
+            {
+              "id": "obj.info1.society.rights.responsibility.003.v1",
+              "statement": "Propose a risk-reducing action while explaining its trade-offs.",
+              "expected_evidence": "evaluation",
+              "label": "A3.O3"
+            }
+          ],
+          "prerequisites": [
+            "A1: Information and Media.",
+            "A2: Reliability and Source Evaluation."
+          ],
+          "key_concepts": [
+            "privacy",
+            "responsibility",
+            "information ethics",
+            "risk",
+            "stakeholder"
+          ],
+          "assessment_intent": "Analyze a fictional scenario without making unsupported legal claims.",
+          "depends_on": [
+            "lesson.info1.society.information.media.v1",
+            "lesson.info1.society.source.evaluation.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.society.rights.responsibility.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.rights.responsibility.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.rights.responsibility.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "A4",
+          "lesson_id": "lesson.info1.society.problem.definition.v1",
+          "title": "Problem Definition and Requirements",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.society.problem.definition.001.v1",
+              "statement": "Describe the current and desired states of a problem separately.",
+              "expected_evidence": "explanation",
+              "label": "A4.O1"
+            },
+            {
+              "id": "obj.info1.society.problem.definition.002.v1",
+              "statement": "Identify stakeholders, constraints, and measurable success criteria.",
+              "expected_evidence": "identification",
+              "label": "A4.O2"
+            },
+            {
+              "id": "obj.info1.society.problem.definition.003.v1",
+              "statement": "Rewrite a solution-shaped request as a testable problem statement.",
+              "expected_evidence": "application",
+              "label": "A4.O3"
+            }
+          ],
+          "prerequisites": [
+            "A1: Information and Media."
+          ],
+          "key_concepts": [
+            "current state",
+            "desired state",
+            "stakeholder",
+            "constraint",
+            "requirement"
+          ],
+          "assessment_intent": "Create and critique a problem definition for a school-neutral fictional context.",
+          "depends_on": [
+            "lesson.info1.society.information.media.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              1,
+              2
+            ],
+            "self_study_minutes": [
+              45,
+              90
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.society.problem.definition.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.problem.definition.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.problem.definition.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "A5",
+          "lesson_id": "lesson.info1.society.decomposition.modeling.v1",
+          "title": "Decomposition and Modeling",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.society.decomposition.modeling.001.v1",
+              "statement": "Decompose a problem into related questions and tasks.",
+              "expected_evidence": "application",
+              "label": "A5.O1"
+            },
+            {
+              "id": "obj.info1.society.decomposition.modeling.002.v1",
+              "statement": "Represent relevant entities, relationships, inputs, and outputs in a simple model.",
+              "expected_evidence": "creation",
+              "label": "A5.O2"
+            },
+            {
+              "id": "obj.info1.society.decomposition.modeling.003.v1",
+              "statement": "State what a model intentionally leaves out.",
+              "expected_evidence": "explanation",
+              "label": "A5.O3"
+            }
+          ],
+          "prerequisites": [
+            "A4: Problem Definition and Requirements."
+          ],
+          "key_concepts": [
+            "decomposition",
+            "abstraction",
+            "model",
+            "input",
+            "output"
+          ],
+          "assessment_intent": "Create a simple model, state its omissions, and compare decompositions against the stated requirements.",
+          "depends_on": [
+            "lesson.info1.society.problem.definition.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.society.decomposition.modeling.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.decomposition.modeling.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.decomposition.modeling.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "A6",
+          "lesson_id": "lesson.info1.society.solution.evaluation.v1",
+          "title": "Comparing and Evaluating Solutions",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.society.solution.evaluation.001.v1",
+              "statement": "Generate more than one candidate solution to a defined problem.",
+              "expected_evidence": "creation",
+              "label": "A6.O1"
+            },
+            {
+              "id": "obj.info1.society.solution.evaluation.002.v1",
+              "statement": "Compare solutions using requirements, evidence, risk, and trade-offs.",
+              "expected_evidence": "analysis",
+              "label": "A6.O2"
+            },
+            {
+              "id": "obj.info1.society.solution.evaluation.003.v1",
+              "statement": "Design a small evaluation and use its result to recommend an improvement.",
+              "expected_evidence": "creation",
+              "label": "A6.O3"
+            }
+          ],
+          "prerequisites": [
+            "A2: Reliability and Source Evaluation.",
+            "A5: Decomposition and Modeling."
+          ],
+          "key_concepts": [
+            "alternative",
+            "criterion",
+            "trade-off",
+            "evaluation",
+            "improvement"
+          ],
+          "assessment_intent": "Use a decision matrix and written justification without treating a score as automatic truth.",
+          "depends_on": [
+            "lesson.info1.society.source.evaluation.v1",
+            "lesson.info1.society.decomposition.modeling.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.society.solution.evaluation.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.solution.evaluation.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.solution.evaluation.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "A7",
+          "lesson_id": "lesson.info1.society.inquiry.project.v1",
+          "title": "Information Society Inquiry Project",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.society.inquiry.project.001.v1",
+              "statement": "Investigate a bounded information-society problem with traceable evidence.",
+              "expected_evidence": "application",
+              "label": "A7.O1"
+            },
+            {
+              "id": "obj.info1.society.inquiry.project.002.v1",
+              "statement": "Propose and evaluate a response that accounts for stakeholders, responsibility, and risk.",
+              "expected_evidence": "evaluation",
+              "label": "A7.O2"
+            },
+            {
+              "id": "obj.info1.society.inquiry.project.003.v1",
+              "statement": "Communicate limitations and next questions.",
+              "expected_evidence": "explanation",
+              "label": "A7.O3"
+            }
+          ],
+          "prerequisites": [
+            "A3: Rights, Responsibility, Privacy, and Risk.",
+            "A6: Comparing and Evaluating Solutions."
+          ],
+          "key_concepts": [
+            "inquiry",
+            "evidence trail",
+            "proposal",
+            "limitation",
+            "reflection"
+          ],
+          "assessment_intent": "Performance task with separate evidence, reasoning, proposal, and reflection criteria.",
+          "depends_on": [
+            "lesson.info1.society.rights.responsibility.v1",
+            "lesson.info1.society.solution.evaluation.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              3,
+              4
+            ],
+            "self_study_minutes": [
+              150,
+              240
+            ],
+            "is_multi_session_project": true
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.society.inquiry.project.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.inquiry.project.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.society.inquiry.project.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unit.info1.design.v1",
+      "area": "mext.info1.2",
+      "title": "Communication and Information Design",
+      "status": "draft",
+      "source_locator": {
+        "normative": "High School Course of Study, Information I content (2), PDF page 192",
+        "commentary": "Information commentary, Information I content (2), PDF pages 34-38"
+      },
+      "unit_outcome": "Design, test, and improve an accessible information artifact for a defined audience, purpose, and medium.",
+      "lessons": [
+        {
+          "order": "B1",
+          "lesson_id": "lesson.info1.design.communication.media.v1",
+          "title": "Communication and Media Choice",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.design.communication.media.001.v1",
+              "statement": "Identify sender, receiver, purpose, context, and feedback in communication.",
+              "expected_evidence": "identification",
+              "label": "B1.O1"
+            },
+            {
+              "id": "obj.info1.design.communication.media.002.v1",
+              "statement": "Compare media by persistence, reach, interaction, detail, and accessibility.",
+              "expected_evidence": "analysis",
+              "label": "B1.O2"
+            },
+            {
+              "id": "obj.info1.design.communication.media.003.v1",
+              "statement": "Select a medium for a stated audience and justify the choice.",
+              "expected_evidence": "application",
+              "label": "B1.O3"
+            }
+          ],
+          "prerequisites": [
+            "A1: Information and Media."
+          ],
+          "key_concepts": [
+            "communication",
+            "sender",
+            "receiver",
+            "feedback",
+            "medium"
+          ],
+          "assessment_intent": "Choose and justify communication media for contrasting scenarios.",
+          "depends_on": [
+            "lesson.info1.society.information.media.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              1,
+              1
+            ],
+            "self_study_minutes": [
+              35,
+              60
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.design.communication.media.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.communication.media.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.communication.media.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "B2",
+          "lesson_id": "lesson.info1.design.digital.representation.v1",
+          "title": "Digital Representation of Media",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.design.digital.representation.001.v1",
+              "statement": "Explain that text, images, and sound require defined digital representations.",
+              "expected_evidence": "explanation",
+              "label": "B2.O1"
+            },
+            {
+              "id": "obj.info1.design.digital.representation.002.v1",
+              "statement": "Predict how resolution, sampling, or encoding choices affect fidelity and size.",
+              "expected_evidence": "trace",
+              "label": "B2.O2"
+            },
+            {
+              "id": "obj.info1.design.digital.representation.003.v1",
+              "statement": "Choose a representation appropriate to a communication purpose.",
+              "expected_evidence": "application",
+              "label": "B2.O3"
+            }
+          ],
+          "prerequisites": [
+            "B1: Communication and Media Choice."
+          ],
+          "key_concepts": [
+            "digitization",
+            "encoding",
+            "resolution",
+            "sampling",
+            "compression"
+          ],
+          "assessment_intent": "Reason about representation trade-offs without depending on one software tool.",
+          "depends_on": [
+            "lesson.info1.design.communication.media.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.design.digital.representation.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.digital.representation.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.digital.representation.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "B3",
+          "lesson_id": "lesson.info1.design.audience.accessibility.v1",
+          "title": "Audience, Purpose, and Accessibility",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.design.audience.accessibility.001.v1",
+              "statement": "Describe an audience without relying on a single assumed user.",
+              "expected_evidence": "explanation",
+              "label": "B3.O1"
+            },
+            {
+              "id": "obj.info1.design.audience.accessibility.002.v1",
+              "statement": "Identify barriers caused by language, vision, hearing, movement, device, or context.",
+              "expected_evidence": "identification",
+              "label": "B3.O2"
+            },
+            {
+              "id": "obj.info1.design.audience.accessibility.003.v1",
+              "statement": "Turn an audience and purpose statement into accessible design requirements.",
+              "expected_evidence": "application",
+              "label": "B3.O3"
+            }
+          ],
+          "prerequisites": [
+            "A2: Reliability and Source Evaluation.",
+            "B1: Communication and Media Choice."
+          ],
+          "key_concepts": [
+            "audience",
+            "purpose",
+            "context",
+            "barrier",
+            "accessibility"
+          ],
+          "assessment_intent": "Review a fictional artifact for barriers and propose testable improvements.",
+          "depends_on": [
+            "lesson.info1.society.source.evaluation.v1",
+            "lesson.info1.design.communication.media.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.design.audience.accessibility.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.audience.accessibility.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.audience.accessibility.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "B4",
+          "lesson_id": "lesson.info1.design.information.structure.v1",
+          "title": "Information Structure and Visual Hierarchy",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.design.information.structure.001.v1",
+              "statement": "Group and order information according to audience tasks.",
+              "expected_evidence": "application",
+              "label": "B4.O1"
+            },
+            {
+              "id": "obj.info1.design.information.structure.002.v1",
+              "statement": "Use headings, labels, spacing, and emphasis to create a perceivable hierarchy.",
+              "expected_evidence": "application",
+              "label": "B4.O2"
+            },
+            {
+              "id": "obj.info1.design.information.structure.003.v1",
+              "statement": "Explain why color alone cannot carry meaning.",
+              "expected_evidence": "explanation",
+              "label": "B4.O3"
+            }
+          ],
+          "prerequisites": [
+            "B2: Digital Representation of Media.",
+            "B3: Audience, Purpose, and Accessibility."
+          ],
+          "key_concepts": [
+            "structure",
+            "hierarchy",
+            "label",
+            "contrast",
+            "color independence"
+          ],
+          "assessment_intent": "Restructure content and justify each hierarchy decision against requirements.",
+          "depends_on": [
+            "lesson.info1.design.digital.representation.v1",
+            "lesson.info1.design.audience.accessibility.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.design.information.structure.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.information.structure.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.information.structure.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "B5",
+          "lesson_id": "lesson.info1.design.data.visualization.v1",
+          "title": "Data Visualization and Misleading Presentation",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.design.data.visualization.001.v1",
+              "statement": "Match a basic chart form to a communication purpose and data relationship.",
+              "expected_evidence": "application",
+              "label": "B5.O1"
+            },
+            {
+              "id": "obj.info1.design.data.visualization.002.v1",
+              "statement": "Identify truncated scales, missing context, visual distortion, and inaccessible encoding.",
+              "expected_evidence": "identification",
+              "label": "B5.O2"
+            },
+            {
+              "id": "obj.info1.design.data.visualization.003.v1",
+              "statement": "Revise a visualization to communicate its evidence and limits more clearly.",
+              "expected_evidence": "creation",
+              "label": "B5.O3"
+            }
+          ],
+          "prerequisites": [
+            "A2: Reliability and Source Evaluation.",
+            "B4: Information Structure and Visual Hierarchy."
+          ],
+          "key_concepts": [
+            "visualization",
+            "scale",
+            "comparison",
+            "context",
+            "misleading presentation"
+          ],
+          "assessment_intent": "Critique and redesign a synthetic-data chart without overstating conclusions.",
+          "depends_on": [
+            "lesson.info1.society.source.evaluation.v1",
+            "lesson.info1.design.information.structure.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.design.data.visualization.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.data.visualization.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.data.visualization.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "B6",
+          "lesson_id": "lesson.info1.design.prototype.usability.v1",
+          "title": "Prototyping and Usability Evaluation",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.design.prototype.usability.001.v1",
+              "statement": "Create a low-cost prototype from communication requirements.",
+              "expected_evidence": "creation",
+              "label": "B6.O1"
+            },
+            {
+              "id": "obj.info1.design.prototype.usability.002.v1",
+              "statement": "Plan a task-based evaluation with observable criteria.",
+              "expected_evidence": "creation",
+              "label": "B6.O2"
+            },
+            {
+              "id": "obj.info1.design.prototype.usability.003.v1",
+              "statement": "Separate participant evidence from the designer's assumption and prioritize revisions.",
+              "expected_evidence": "analysis",
+              "label": "B6.O3"
+            }
+          ],
+          "prerequisites": [
+            "B3: Audience, Purpose, and Accessibility.",
+            "B4: Information Structure and Visual Hierarchy."
+          ],
+          "key_concepts": [
+            "prototype",
+            "task",
+            "usability",
+            "observation",
+            "iteration"
+          ],
+          "assessment_intent": "Produce an evaluation plan and improve a prototype from recorded observations.",
+          "depends_on": [
+            "lesson.info1.design.audience.accessibility.v1",
+            "lesson.info1.design.information.structure.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.design.prototype.usability.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.prototype.usability.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.prototype.usability.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "B7",
+          "lesson_id": "lesson.info1.design.project.v1",
+          "title": "Information Design Project",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.design.project.001.v1",
+              "statement": "Design an original information artifact for a stated audience and purpose.",
+              "expected_evidence": "creation",
+              "label": "B7.O1"
+            },
+            {
+              "id": "obj.info1.design.project.002.v1",
+              "statement": "Test the artifact for communication effectiveness and accessibility.",
+              "expected_evidence": "application",
+              "label": "B7.O2"
+            },
+            {
+              "id": "obj.info1.design.project.003.v1",
+              "statement": "Use evidence to explain revisions and remaining limitations.",
+              "expected_evidence": "application",
+              "label": "B7.O3"
+            }
+          ],
+          "prerequisites": [
+            "B5: Data Visualization and Misleading Presentation.",
+            "B6: Prototyping and Usability Evaluation."
+          ],
+          "key_concepts": [
+            "design brief",
+            "artifact",
+            "accessibility",
+            "evaluation",
+            "revision"
+          ],
+          "assessment_intent": "Performance task with requirements, artifact, evaluation evidence, and revision rationale.",
+          "depends_on": [
+            "lesson.info1.design.data.visualization.v1",
+            "lesson.info1.design.prototype.usability.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              3,
+              4
+            ],
+            "self_study_minutes": [
+              150,
+              240
+            ],
+            "is_multi_session_project": true
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.design.project.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.project.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.design.project.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unit.info1.programming.v1",
+      "area": "mext.info1.3",
+      "title": "Computers, Algorithms, and Programming",
+      "status": "draft",
+      "source_locator": {
+        "normative": "High School Course of Study, Information I content (3), PDF page 192",
+        "commentary": "Information commentary, Information I content (3), PDF pages 38-42"
+      },
+      "unit_outcome": "Explain computation, trace and create programs, compare algorithms, and use models and simulations to solve problems.",
+      "lessons": [
+        {
+          "order": "C1",
+          "lesson_id": "lesson.info1.programming.computer.systems.v1",
+          "title": "Computer Systems and Information Processing",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.programming.computer.systems.001.v1",
+              "statement": "Explain the roles of input, output, memory, processing, software, and external devices.",
+              "expected_evidence": "explanation",
+              "label": "C1.O1"
+            },
+            {
+              "id": "obj.info1.programming.computer.systems.002.v1",
+              "statement": "Trace a simple instruction and data flow through a computer system.",
+              "expected_evidence": "trace",
+              "label": "C1.O2"
+            },
+            {
+              "id": "obj.info1.programming.computer.systems.003.v1",
+              "statement": "Relate digital representation and finite resources to a computation limit.",
+              "expected_evidence": "analysis",
+              "label": "C1.O3"
+            }
+          ],
+          "prerequisites": [
+            "B2: Digital Representation of Media."
+          ],
+          "key_concepts": [
+            "hardware",
+            "software",
+            "processor",
+            "memory",
+            "finite representation"
+          ],
+          "assessment_intent": "Trace system components and explain a representation or resource limitation.",
+          "depends_on": [
+            "lesson.info1.design.digital.representation.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.programming.computer.systems.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.computer.systems.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.computer.systems.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "C2",
+          "lesson_id": "lesson.info1.programming.variables.v1",
+          "title": "Variables and Assignment",
+          "status": "human_review_requested",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.programming.variables.001.v1",
+              "statement": "Explain why a named stored value is useful.",
+              "expected_evidence": "explanation",
+              "label": "C2.O1"
+            },
+            {
+              "id": "obj.info1.programming.variables.002.v1",
+              "statement": "Assign and update a value in a short Python program.",
+              "expected_evidence": "application",
+              "label": "C2.O2"
+            },
+            {
+              "id": "obj.info1.programming.variables.003.v1",
+              "statement": "Trace stored values and printed output after ordered assignments.",
+              "expected_evidence": "trace",
+              "label": "C2.O3"
+            }
+          ],
+          "prerequisites": [
+            "Basic arithmetic expressions.",
+            "Ordered program execution is introduced and checked inside this lesson; no prior programming is assumed."
           ],
           "key_concepts": [
             "variable",
-            "assignment statement",
+            "assignment",
             "stored value",
-            "updating a value",
-            "output with print"
+            "update",
+            "output"
           ],
+          "assessment_intent": "Write one assignment and trace an update without introducing comparison syntax.",
           "depends_on": [],
-          "review_status": "needs_human_review"
+          "existing_body_ref": "lessons/highschool_information_i/programming/01_variables.md",
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              1,
+              1
+            ],
+            "self_study_minutes": [
+              45,
+              90
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.programming.variables.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.variables.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "partial",
+              "assessment_item_refs": [
+                "prob.info1.variables.001.v1"
+              ],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.variables.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "partial",
+              "assessment_item_refs": [
+                "prob.info1.variables.002.v1"
+              ],
+              "performance_criterion_refs": []
+            }
+          ]
         },
         {
+          "order": "C3",
           "lesson_id": "lesson.info1.programming.conditionals.v1",
-          "title": "Conditionals",
-          "issue": 5,
-          "ndjson_record": "data/collections/lessons.ndjson",
-          "record_note": "Planned draft lesson record for Issue #5.",
+          "title": "Comparisons and Conditionals",
+          "status": "draft",
           "learning_objectives": [
-            "Explain how a conditional chooses between actions.",
-            "Write a simple if statement using a Boolean condition.",
-            "Trace which branch runs for a given input value."
+            {
+              "id": "obj.info1.programming.conditionals.001.v1",
+              "statement": "Evaluate a Boolean comparison separately from assignment.",
+              "expected_evidence": "evaluation",
+              "label": "C3.O1"
+            },
+            {
+              "id": "obj.info1.programming.conditionals.002.v1",
+              "statement": "Trace which branch runs for given input values.",
+              "expected_evidence": "trace",
+              "label": "C3.O2"
+            },
+            {
+              "id": "obj.info1.programming.conditionals.003.v1",
+              "statement": "Write and test a simple conditional for a stated rule.",
+              "expected_evidence": "application",
+              "label": "C3.O3"
+            }
           ],
           "prerequisites": [
-            "Variables and assignment.",
-            "Comparing simple values."
+            "C2: Variables and Assignment."
           ],
           "key_concepts": [
-            "Boolean expression",
-            "comparison operator",
-            "if statement",
-            "else branch",
+            "Boolean value",
+            "comparison",
+            "condition",
+            "branch",
             "control flow"
           ],
+          "assessment_intent": "Predict branch behavior, then implement and test a two-branch decision.",
           "depends_on": [
             "lesson.info1.programming.variables.v1"
           ],
-          "review_status": "needs_human_review"
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.programming.conditionals.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.conditionals.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.conditionals.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
         },
         {
+          "order": "C4",
           "lesson_id": "lesson.info1.programming.loops.v1",
-          "title": "Loops",
-          "issue": 6,
-          "ndjson_record": "data/collections/lessons.ndjson",
-          "record_note": "Planned draft lesson record for Issue #6.",
+          "title": "Repetition",
+          "status": "draft",
           "learning_objectives": [
-            "Explain why loops are useful for repeated actions.",
-            "Trace a fixed-count loop and describe how the loop variable changes.",
-            "Write a simple loop with a clear stopping condition."
+            {
+              "id": "obj.info1.programming.loops.001.v1",
+              "statement": "Explain why a repeated procedure can be represented as a loop.",
+              "expected_evidence": "explanation",
+              "label": "C4.O1"
+            },
+            {
+              "id": "obj.info1.programming.loops.002.v1",
+              "statement": "Trace a fixed-count loop and a condition-controlled loop.",
+              "expected_evidence": "trace",
+              "label": "C4.O2"
+            },
+            {
+              "id": "obj.info1.programming.loops.003.v1",
+              "statement": "Write a loop with a clear stopping condition and test its boundary.",
+              "expected_evidence": "application",
+              "label": "C4.O3"
+            }
           ],
           "prerequisites": [
-            "Variables and assignment.",
-            "Conditionals and Boolean conditions."
+            "C3: Comparisons and Conditionals."
           ],
           "key_concepts": [
             "iteration",
             "loop body",
             "loop variable",
-            "fixed-count loop",
-            "condition-controlled loop",
-            "stopping condition"
+            "stopping condition",
+            "boundary"
           ],
+          "assessment_intent": "Trace iterations and repair a loop with an incorrect stopping condition.",
           "depends_on": [
             "lesson.info1.programming.conditionals.v1"
           ],
-          "review_status": "needs_human_review"
-        }
-      ],
-      "lesson_dependency_graph": [
-        {
-          "from": "lesson.info1.programming.variables.v1",
-          "to": "lesson.info1.programming.conditionals.v1",
-          "relationship": "prerequisite"
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              3,
+              3
+            ],
+            "self_study_minutes": [
+              100,
+              150
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.programming.loops.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.loops.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.loops.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
         },
         {
-          "from": "lesson.info1.programming.conditionals.v1",
-          "to": "lesson.info1.programming.loops.v1",
-          "relationship": "prerequisite"
+          "order": "C5",
+          "lesson_id": "lesson.info1.programming.collections.strings.v1",
+          "title": "Collections and Strings",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.programming.collections.strings.001.v1",
+              "statement": "Represent related values as a sequence instead of separate variables.",
+              "expected_evidence": "creation",
+              "label": "C5.O1"
+            },
+            {
+              "id": "obj.info1.programming.collections.strings.002.v1",
+              "statement": "Access and iterate over collection elements while respecting index boundaries.",
+              "expected_evidence": "application",
+              "label": "C5.O2"
+            },
+            {
+              "id": "obj.info1.programming.collections.strings.003.v1",
+              "statement": "Choose an appropriate simple representation for text or tabular values.",
+              "expected_evidence": "application",
+              "label": "C5.O3"
+            }
+          ],
+          "prerequisites": [
+            "C2: Variables and Assignment.",
+            "C4: Repetition."
+          ],
+          "key_concepts": [
+            "sequence",
+            "list",
+            "string",
+            "index",
+            "boundary"
+          ],
+          "assessment_intent": "Trace collection access, transform a sequence, and justify a representation choice for text or tabular values.",
+          "depends_on": [
+            "lesson.info1.programming.variables.v1",
+            "lesson.info1.programming.loops.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.programming.collections.strings.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.collections.strings.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.collections.strings.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "C6",
+          "lesson_id": "lesson.info1.programming.functions.v1",
+          "title": "Functions and Decomposition",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.programming.functions.001.v1",
+              "statement": "Explain a function as a named reusable operation with inputs and an output or effect.",
+              "expected_evidence": "explanation",
+              "label": "C6.O1"
+            },
+            {
+              "id": "obj.info1.programming.functions.002.v1",
+              "statement": "Define and call a short Python function.",
+              "expected_evidence": "application",
+              "label": "C6.O2"
+            },
+            {
+              "id": "obj.info1.programming.functions.003.v1",
+              "statement": "Decompose a problem into functions with clear responsibilities.",
+              "expected_evidence": "application",
+              "label": "C6.O3"
+            }
+          ],
+          "prerequisites": [
+            "C2: Variables and Assignment.",
+            "C3: Comparisons and Conditionals.",
+            "C4: Repetition."
+          ],
+          "key_concepts": [
+            "function",
+            "parameter",
+            "return value",
+            "responsibility",
+            "decomposition"
+          ],
+          "assessment_intent": "Trace a call and refactor repeated logic into a function without hidden state.",
+          "depends_on": [
+            "lesson.info1.programming.variables.v1",
+            "lesson.info1.programming.conditionals.v1",
+            "lesson.info1.programming.loops.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.programming.functions.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.functions.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.functions.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "C7",
+          "lesson_id": "lesson.info1.programming.algorithms.v1",
+          "title": "Algorithms and Efficiency",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.programming.algorithms.001.v1",
+              "statement": "Express an algorithm using structured natural language, a diagram, or code.",
+              "expected_evidence": "creation",
+              "label": "C7.O1"
+            },
+            {
+              "id": "obj.info1.programming.algorithms.002.v1",
+              "statement": "Compare algorithms for correctness, clarity, and work as input grows.",
+              "expected_evidence": "analysis",
+              "label": "C7.O2"
+            },
+            {
+              "id": "obj.info1.programming.algorithms.003.v1",
+              "statement": "Use tests and traces to improve an algorithm.",
+              "expected_evidence": "application",
+              "label": "C7.O3"
+            }
+          ],
+          "prerequisites": [
+            "C4: Repetition.",
+            "C5: Collections and Strings.",
+            "C6: Functions and Decomposition."
+          ],
+          "key_concepts": [
+            "algorithm",
+            "correctness",
+            "trace",
+            "test",
+            "efficiency"
+          ],
+          "assessment_intent": "Compare two search or aggregation procedures and justify an improvement.",
+          "depends_on": [
+            "lesson.info1.programming.loops.v1",
+            "lesson.info1.programming.collections.strings.v1",
+            "lesson.info1.programming.functions.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.programming.algorithms.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.algorithms.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.algorithms.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "C8",
+          "lesson_id": "lesson.info1.programming.modeling.simulation.v1",
+          "title": "Modeling and Simulation",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.programming.modeling.simulation.001.v1",
+              "statement": "Identify variables, assumptions, relationships, and boundaries in a simple model.",
+              "expected_evidence": "identification",
+              "label": "C8.O1"
+            },
+            {
+              "id": "obj.info1.programming.modeling.simulation.002.v1",
+              "statement": "Run a manual and a Python-based simulation for the same model.",
+              "expected_evidence": "application",
+              "label": "C8.O2"
+            },
+            {
+              "id": "obj.info1.programming.modeling.simulation.003.v1",
+              "statement": "Evaluate how assumptions or parameter changes affect results and limitations.",
+              "expected_evidence": "evaluation",
+              "label": "C8.O3"
+            }
+          ],
+          "prerequisites": [
+            "A5: Decomposition and Modeling.",
+            "C3: Comparisons and Conditionals.",
+            "C4: Repetition.",
+            "C6: Functions and Decomposition."
+          ],
+          "key_concepts": [
+            "model",
+            "assumption",
+            "parameter",
+            "simulation",
+            "sensitivity"
+          ],
+          "assessment_intent": "Compare simulation outputs while explaining why a model is not the real system.",
+          "depends_on": [
+            "lesson.info1.society.decomposition.modeling.v1",
+            "lesson.info1.programming.conditionals.v1",
+            "lesson.info1.programming.loops.v1",
+            "lesson.info1.programming.functions.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              3,
+              3
+            ],
+            "self_study_minutes": [
+              100,
+              150
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.programming.modeling.simulation.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.modeling.simulation.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.modeling.simulation.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "C9",
+          "lesson_id": "lesson.info1.programming.project.v1",
+          "title": "Tested Programming Project",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.programming.project.001.v1",
+              "statement": "Design an algorithm for a bounded problem and implement it in Python.",
+              "expected_evidence": "creation",
+              "label": "C9.O1"
+            },
+            {
+              "id": "obj.info1.programming.project.002.v1",
+              "statement": "Test normal, boundary, and invalid cases appropriate to the design.",
+              "expected_evidence": "application",
+              "label": "C9.O2"
+            },
+            {
+              "id": "obj.info1.programming.project.003.v1",
+              "statement": "Evaluate the program against requirements and explain improvements and limits.",
+              "expected_evidence": "evaluation",
+              "label": "C9.O3"
+            }
+          ],
+          "prerequisites": [
+            "A6: Comparing and Evaluating Solutions.",
+            "B6: Prototyping and Usability Evaluation.",
+            "C7: Algorithms and Efficiency.",
+            "C8: Modeling and Simulation."
+          ],
+          "key_concepts": [
+            "requirement",
+            "algorithm",
+            "implementation",
+            "test case",
+            "evaluation"
+          ],
+          "assessment_intent": "Performance task with design, executable program, tests, evaluation, and reflection.",
+          "depends_on": [
+            "lesson.info1.society.solution.evaluation.v1",
+            "lesson.info1.design.prototype.usability.v1",
+            "lesson.info1.programming.algorithms.v1",
+            "lesson.info1.programming.modeling.simulation.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              4,
+              5
+            ],
+            "self_study_minutes": [
+              200,
+              300
+            ],
+            "is_multi_session_project": true
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.programming.project.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.project.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.programming.project.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unit.info1.networks.data.v1",
+      "area": "mext.info1.4",
+      "title": "Networks, Information Systems, and Data",
+      "status": "draft",
+      "source_locator": {
+        "normative": "High School Course of Study, Information I content (4), PDF pages 192-193",
+        "commentary": "Information commentary, Information I content (4), PDF pages 42-48"
+      },
+      "unit_outcome": "Explain networked services and security, then collect, manage, analyze, and communicate data with stated limitations.",
+      "lessons": [
+        {
+          "order": "D1",
+          "lesson_id": "lesson.info1.networks.protocols.v1",
+          "title": "Networks and Protocols",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.networks.protocols.001.v1",
+              "statement": "Identify endpoints, links, intermediary devices, and protocols in a small network.",
+              "expected_evidence": "identification",
+              "label": "D1.O1"
+            },
+            {
+              "id": "obj.info1.networks.protocols.002.v1",
+              "statement": "Explain why shared communication rules are necessary.",
+              "expected_evidence": "explanation",
+              "label": "D1.O2"
+            },
+            {
+              "id": "obj.info1.networks.protocols.003.v1",
+              "statement": "Design a small network from stated communication and reliability needs.",
+              "expected_evidence": "creation",
+              "label": "D1.O3"
+            }
+          ],
+          "prerequisites": [
+            "B1: Communication and Media Choice.",
+            "C1: Computer Systems and Information Processing."
+          ],
+          "key_concepts": [
+            "network",
+            "endpoint",
+            "link",
+            "protocol",
+            "packet"
+          ],
+          "assessment_intent": "Interpret and improve a small network diagram without vendor-specific configuration.",
+          "depends_on": [
+            "lesson.info1.design.communication.media.v1",
+            "lesson.info1.programming.computer.systems.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.networks.protocols.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.networks.protocols.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.networks.protocols.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "D2",
+          "lesson_id": "lesson.info1.networks.internet.web.v1",
+          "title": "Internet, Web, and Information Services",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.networks.internet.web.001.v1",
+              "statement": "Distinguish the Internet, the Web, and an information service.",
+              "expected_evidence": "analysis",
+              "label": "D2.O1"
+            },
+            {
+              "id": "obj.info1.networks.internet.web.002.v1",
+              "statement": "Trace a simplified name-resolution, request-response, data-processing, and service-delivery path.",
+              "expected_evidence": "trace",
+              "label": "D2.O2"
+            },
+            {
+              "id": "obj.info1.networks.internet.web.003.v1",
+              "statement": "Evaluate how an information system's components and operation support or limit effective service use.",
+              "expected_evidence": "evaluation",
+              "label": "D2.O3"
+            }
+          ],
+          "prerequisites": [
+            "D1: Networks and Protocols."
+          ],
+          "key_concepts": [
+            "Internet",
+            "Web",
+            "information system",
+            "service",
+            "client-server"
+          ],
+          "assessment_intent": "Trace a simplified service flow, diagnose a failure location, and evaluate service use against a stated need.",
+          "depends_on": [
+            "lesson.info1.networks.protocols.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.networks.internet.web.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.networks.internet.web.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.networks.internet.web.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "D3",
+          "lesson_id": "lesson.info1.networks.security.v1",
+          "title": "Authentication, Encryption, and Security",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.networks.security.001.v1",
+              "statement": "Relate confidentiality, integrity, and availability to concrete risks.",
+              "expected_evidence": "analysis",
+              "label": "D3.O1"
+            },
+            {
+              "id": "obj.info1.networks.security.002.v1",
+              "statement": "Distinguish authentication, authorization, encryption, and backup.",
+              "expected_evidence": "analysis",
+              "label": "D3.O2"
+            },
+            {
+              "id": "obj.info1.networks.security.003.v1",
+              "statement": "Select layered controls for a scenario and explain residual risk.",
+              "expected_evidence": "application",
+              "label": "D3.O3"
+            }
+          ],
+          "prerequisites": [
+            "A3: Rights, Responsibility, Privacy, and Risk.",
+            "D2: Internet, Web, and Information Services."
+          ],
+          "key_concepts": [
+            "confidentiality",
+            "integrity",
+            "availability",
+            "authentication",
+            "encryption"
+          ],
+          "assessment_intent": "Build a threat-control table using current primary technical sources where claims require them.",
+          "depends_on": [
+            "lesson.info1.society.rights.responsibility.v1",
+            "lesson.info1.networks.internet.web.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              3,
+              3
+            ],
+            "self_study_minutes": [
+              100,
+              150
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.networks.security.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.networks.security.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.networks.security.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "D4",
+          "lesson_id": "lesson.info1.data.lifecycle.v1",
+          "title": "Data Lifecycle, Measurement, Bias, and Ethics",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.data.lifecycle.001.v1",
+              "statement": "Describe how a question becomes measured, collected, stored, used, and deleted data.",
+              "expected_evidence": "explanation",
+              "label": "D4.O1"
+            },
+            {
+              "id": "obj.info1.data.lifecycle.002.v1",
+              "statement": "Identify sampling, measurement, missing-data, and representation bias.",
+              "expected_evidence": "identification",
+              "label": "D4.O2"
+            },
+            {
+              "id": "obj.info1.data.lifecycle.003.v1",
+              "statement": "Plan proportionate collection that accounts for purpose, consent, privacy, and minimization.",
+              "expected_evidence": "creation",
+              "label": "D4.O3"
+            }
+          ],
+          "prerequisites": [
+            "A2: Reliability and Source Evaluation.",
+            "A4: Problem Definition and Requirements."
+          ],
+          "key_concepts": [
+            "data lifecycle",
+            "measurement",
+            "sampling",
+            "bias",
+            "data minimization"
+          ],
+          "assessment_intent": "Critique a synthetic collection plan and revise it to reduce avoidable bias and risk.",
+          "depends_on": [
+            "lesson.info1.society.source.evaluation.v1",
+            "lesson.info1.society.problem.definition.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              3,
+              3
+            ],
+            "self_study_minutes": [
+              100,
+              150
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.data.lifecycle.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.data.lifecycle.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.data.lifecycle.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "D5",
+          "lesson_id": "lesson.info1.data.cleaning.v1",
+          "title": "Tabular Data and Cleaning",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.data.cleaning.001.v1",
+              "statement": "Identify observations, variables, values, types, and missing data in a table.",
+              "expected_evidence": "identification",
+              "label": "D5.O1"
+            },
+            {
+              "id": "obj.info1.data.cleaning.002.v1",
+              "statement": "Apply reproducible cleaning rules without silently changing meaning.",
+              "expected_evidence": "application",
+              "label": "D5.O2"
+            },
+            {
+              "id": "obj.info1.data.cleaning.003.v1",
+              "statement": "Document transformations and unresolved quality limitations.",
+              "expected_evidence": "application",
+              "label": "D5.O3"
+            }
+          ],
+          "prerequisites": [
+            "D4: Data Lifecycle, Measurement, Bias, and Ethics."
+          ],
+          "key_concepts": [
+            "observation",
+            "variable",
+            "data type",
+            "missing value",
+            "transformation log"
+          ],
+          "assessment_intent": "Clean a small synthetic dataset and justify each transformation.",
+          "depends_on": [
+            "lesson.info1.data.lifecycle.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.data.cleaning.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.data.cleaning.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.data.cleaning.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "D6",
+          "lesson_id": "lesson.info1.data.descriptive.analysis.v1",
+          "title": "Descriptive Analysis",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.data.descriptive.analysis.001.v1",
+              "statement": "Choose summaries appropriate to data type and analytical question.",
+              "expected_evidence": "application",
+              "label": "D6.O1"
+            },
+            {
+              "id": "obj.info1.data.descriptive.analysis.002.v1",
+              "statement": "Calculate and interpret counts, proportions, center, and spread for small datasets.",
+              "expected_evidence": "calculation",
+              "label": "D6.O2"
+            },
+            {
+              "id": "obj.info1.data.descriptive.analysis.003.v1",
+              "statement": "Explain how distributions or outliers can make one summary misleading.",
+              "expected_evidence": "explanation",
+              "label": "D6.O3"
+            }
+          ],
+          "prerequisites": [
+            "D5: Tabular Data and Cleaning."
+          ],
+          "key_concepts": [
+            "distribution",
+            "count",
+            "proportion",
+            "center",
+            "spread"
+          ],
+          "assessment_intent": "Select and interpret summaries while stating what they do not establish.",
+          "depends_on": [
+            "lesson.info1.data.cleaning.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.data.descriptive.analysis.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.data.descriptive.analysis.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.data.descriptive.analysis.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "D7",
+          "lesson_id": "lesson.info1.data.visualization.interpretation.v1",
+          "title": "Visualization and Interpretation",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.data.visualization.interpretation.001.v1",
+              "statement": "Select a table or chart for comparison, relationship, change, or classification.",
+              "expected_evidence": "application",
+              "label": "D7.O1"
+            },
+            {
+              "id": "obj.info1.data.visualization.interpretation.002.v1",
+              "statement": "Interpret patterns while separating association from causation.",
+              "expected_evidence": "analysis",
+              "label": "D7.O2"
+            },
+            {
+              "id": "obj.info1.data.visualization.interpretation.003.v1",
+              "statement": "Evaluate and improve an analysis using labels, context, uncertainty, and accessible encodings.",
+              "expected_evidence": "evaluation",
+              "label": "D7.O3"
+            }
+          ],
+          "prerequisites": [
+            "B5: Data Visualization and Misleading Presentation.",
+            "D6: Descriptive Analysis."
+          ],
+          "key_concepts": [
+            "comparison",
+            "relationship",
+            "change",
+            "association",
+            "uncertainty"
+          ],
+          "assessment_intent": "Create and critique an accessible visualization from synthetic or licensed data.",
+          "depends_on": [
+            "lesson.info1.design.data.visualization.v1",
+            "lesson.info1.data.descriptive.analysis.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              2,
+              2
+            ],
+            "self_study_minutes": [
+              70,
+              110
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.data.visualization.interpretation.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.data.visualization.interpretation.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.data.visualization.interpretation.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "D8",
+          "lesson_id": "lesson.info1.data.databases.queries.v1",
+          "title": "Databases and Queries",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.data.databases.queries.001.v1",
+              "statement": "Explain why structured data storage supports consistent retrieval and update.",
+              "expected_evidence": "explanation",
+              "label": "D8.O1"
+            },
+            {
+              "id": "obj.info1.data.databases.queries.002.v1",
+              "statement": "Identify records, fields, keys, tables, and relationships in a small database.",
+              "expected_evidence": "identification",
+              "label": "D8.O2"
+            },
+            {
+              "id": "obj.info1.data.databases.queries.003.v1",
+              "statement": "Construct and evaluate simple filter, projection, sort, and aggregate queries.",
+              "expected_evidence": "creation",
+              "label": "D8.O3"
+            }
+          ],
+          "prerequisites": [
+            "D2: Internet, Web, and Information Services.",
+            "D5: Tabular Data and Cleaning.",
+            "D6: Descriptive Analysis."
+          ],
+          "key_concepts": [
+            "database",
+            "record",
+            "field",
+            "key",
+            "query"
+          ],
+          "assessment_intent": "Design and query a small offline database without personal or sensitive data.",
+          "depends_on": [
+            "lesson.info1.networks.internet.web.v1",
+            "lesson.info1.data.cleaning.v1",
+            "lesson.info1.data.descriptive.analysis.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              3,
+              3
+            ],
+            "self_study_minutes": [
+              100,
+              150
+            ],
+            "is_multi_session_project": false
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.data.databases.queries.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.data.databases.queries.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.data.databases.queries.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
+        },
+        {
+          "order": "D9",
+          "lesson_id": "lesson.info1.data.investigation.project.v1",
+          "title": "Data Investigation Project",
+          "status": "draft",
+          "learning_objectives": [
+            {
+              "id": "obj.info1.data.investigation.project.001.v1",
+              "statement": "Turn a bounded question into an ethical and reproducible data investigation.",
+              "expected_evidence": "application",
+              "label": "D9.O1"
+            },
+            {
+              "id": "obj.info1.data.investigation.project.002.v1",
+              "statement": "Collect or select, clean, analyze, visualize, and document data.",
+              "expected_evidence": "application",
+              "label": "D9.O2"
+            },
+            {
+              "id": "obj.info1.data.investigation.project.003.v1",
+              "statement": "Communicate a conclusion with uncertainty, limitations, and improvement proposals.",
+              "expected_evidence": "explanation",
+              "label": "D9.O3"
+            }
+          ],
+          "prerequisites": [
+            "A6: Comparing and Evaluating Solutions.",
+            "B6: Prototyping and Usability Evaluation.",
+            "D3: Authentication, Encryption, and Security.",
+            "D7: Visualization and Interpretation.",
+            "D8: Databases and Queries."
+          ],
+          "key_concepts": [
+            "investigation",
+            "reproducibility",
+            "analysis",
+            "uncertainty",
+            "communication"
+          ],
+          "assessment_intent": "Performance task with question, provenance, transformations, analysis, communication, and reflection criteria.",
+          "depends_on": [
+            "lesson.info1.society.solution.evaluation.v1",
+            "lesson.info1.design.prototype.usability.v1",
+            "lesson.info1.networks.security.v1",
+            "lesson.info1.data.visualization.interpretation.v1",
+            "lesson.info1.data.databases.queries.v1"
+          ],
+          "source_refs": [
+            "src.mext.highschool.curriculum2018.v1",
+            "src.mext.information.commentary2018.v1"
+          ],
+          "instructional_time": {
+            "class_periods_50_min": [
+              4,
+              5
+            ],
+            "self_study_minutes": [
+              200,
+              300
+            ],
+            "is_multi_session_project": true
+          },
+          "assessment_coverage": [
+            {
+              "objective_ref": "obj.info1.data.investigation.project.001.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.data.investigation.project.002.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            },
+            {
+              "objective_ref": "obj.info1.data.investigation.project.003.v1",
+              "requirement": "two_items_or_one_item_plus_performance_criterion",
+              "status": "not_started",
+              "assessment_item_refs": [],
+              "performance_criterion_refs": []
+            }
+          ]
         }
       ]
     }
   ],
-  "created_at": "2026-07-02",
-  "updated_at": "2026-07-02"
+  "created_at": "2026-07-14",
+  "updated_at": "2026-07-14",
+  "global_prerequisites": [
+    "Everyday experience using digital information and communication tools.",
+    "Basic arithmetic including whole numbers, decimals, and simple proportions; required ideas are refreshed before use.",
+    "Basic chart reading from earlier schooling; no advanced statistics or prior programming is assumed."
+  ],
+  "numbering_convention": "A1-D9 are planning and learner navigation labels. Stable lesson IDs and existing file paths remain unchanged; historical Lesson 01 refers to C2 only."
 }

@@ -32,16 +32,22 @@ flowchart TD
 9. Release
 10. Continuous revision
 
-## MVP target
+## Current Review-Candidate Target
 
 - Stage: High school
 - Subject: Information I
-- Unit: Programming Basics
-- Lesson sample: Variables and Assignment
+- Scope: all four provisional content areas
+- Curriculum: 4 units and 32 planned lessons
+- Delivery: Japanese learner lessons, supplemental teacher guides, aligned
+  assessment records, offline HTML, and reproducible print/PDF output
+
+The measurable scope and current baseline are defined in
+`docs/INFORMATION_I_COMPLETION_MATRIX.md`. Earlier programming-only MVP documents
+remain useful for C2 through C4 but no longer define subject-wide completeness.
 
 ## Definition of done
 
-A lesson is done only when:
+A lesson package is ready for final human review only when:
 
 - Student material exists.
 - Teacher guide exists.
@@ -51,4 +57,8 @@ A lesson is done only when:
 - Source records exist if needed.
 - Revision records exist.
 - Validation passes.
-- Human review is complete.
+- Specialist review has no unresolved machine-detectable or clearly actionable
+  blocker.
+
+Final human review, approval, merge, and any publication decision remain separate
+gates. A completed draft package is not automatically approved or published.
