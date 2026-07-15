@@ -52,7 +52,7 @@ def escape(value: object) -> str:
 
 
 def markdown_renderer() -> MarkdownIt:
-    return MarkdownIt(
+    renderer = MarkdownIt(
         "commonmark",
         {
             "html": False,
@@ -60,6 +60,16 @@ def markdown_renderer() -> MarkdownIt:
             "typographer": False,
         },
     ).enable("table")
+
+    def table_open(_renderer, _tokens, _index, _options, _env) -> str:
+        return '<div class="table-wrap"><table>\n'
+
+    def table_close(_renderer, _tokens, _index, _options, _env) -> str:
+        return "</table></div>\n"
+
+    renderer.add_render_rule("table_open", table_open)
+    renderer.add_render_rule("table_close", table_close)
+    return renderer
 
 
 def load_records(root: Path) -> tuple[dict[str, dict], dict[str, list[dict]]]:
