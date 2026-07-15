@@ -15,8 +15,8 @@
   ],
   "notes": [
     "This is an original project decomposition for planning and coverage review.",
-    "Lesson count, order, titles, and assessment design are project decisions, not MEXT-prescribed requirements.",
-    "Unit A objectives are draft project interpretations of Information I content (1), using the Course of Study PDF pages 191-192 and Information commentary PDF pages 30-34 as scope locators rather than official objective wording.",
+    "All unit objectives, sequencing, and assessments are project-authored interpretations, not MEXT wording or MEXT-prescribed requirements.",
+    "The Course of Study and commentary locators define review scope; lesson counts, titles, examples, and evidence rules remain project decisions.",
     "No official textbook, final curriculum alignment, approval, or publication claim is made."
   ],
   "units": [
@@ -1371,22 +1371,31 @@
             {
               "objective_ref": "obj.info1.programming.computer.systems.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.computer.systems.001.v1",
+                "prob.info1.programming.computer.systems.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.computer.systems.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.computer.systems.002.v1",
+                "prob.info1.programming.computer.systems.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.computer.systems.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.computer.systems.003.v1",
+                "prob.info1.programming.computer.systems.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -1417,8 +1426,7 @@
             }
           ],
           "prerequisites": [
-            "Basic arithmetic expressions.",
-            "Ordered program execution is introduced and checked inside this lesson; no prior programming is assumed."
+            "No prior programming is assumed; required arithmetic expressions and ordered execution are introduced and checked inside this lesson."
           ],
           "key_concepts": [
             "variable",
@@ -1449,25 +1457,33 @@
             {
               "objective_ref": "obj.info1.programming.variables.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.variables.003.v1",
+                "prob.info1.variables.004.v1",
+                "prob.info1.variables.008.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.variables.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "partial",
+              "status": "complete",
               "assessment_item_refs": [
-                "prob.info1.variables.001.v1"
+                "prob.info1.variables.005.v1",
+                "prob.info1.variables.007.v1",
+                "prob.info1.variables.008.v1"
               ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.variables.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "partial",
+              "status": "complete",
               "assessment_item_refs": [
-                "prob.info1.variables.002.v1"
+                "prob.info1.variables.006.v1",
+                "prob.info1.variables.007.v1",
+                "prob.info1.variables.008.v1"
               ],
               "performance_criterion_refs": []
             }
@@ -1531,22 +1547,37 @@
             {
               "objective_ref": "obj.info1.programming.conditionals.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.conditionals.001.v1",
+                "prob.info1.conditionals.004.v1",
+                "prob.info1.conditionals.007.v1",
+                "prob.info1.conditionals.008.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.conditionals.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.conditionals.002.v1",
+                "prob.info1.conditionals.004.v1",
+                "prob.info1.conditionals.006.v1",
+                "prob.info1.conditionals.008.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.conditionals.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.conditionals.003.v1",
+                "prob.info1.conditionals.005.v1",
+                "prob.info1.conditionals.007.v1",
+                "prob.info1.conditionals.008.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -1609,22 +1640,36 @@
             {
               "objective_ref": "obj.info1.programming.loops.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.loops.001.v1",
+                "prob.info1.loops.007.v1",
+                "prob.info1.loops.008.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.loops.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.loops.002.v1",
+                "prob.info1.loops.003.v1",
+                "prob.info1.loops.005.v1",
+                "prob.info1.loops.008.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.loops.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.loops.004.v1",
+                "prob.info1.loops.006.v1",
+                "prob.info1.loops.007.v1",
+                "prob.info1.loops.008.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -1689,22 +1734,31 @@
             {
               "objective_ref": "obj.info1.programming.collections.strings.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.collections.strings.001.v1",
+                "prob.info1.programming.collections.strings.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.collections.strings.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.collections.strings.002.v1",
+                "prob.info1.programming.collections.strings.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.collections.strings.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.collections.strings.003.v1",
+                "prob.info1.programming.collections.strings.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -1746,7 +1800,7 @@
             "responsibility",
             "decomposition"
           ],
-          "assessment_intent": "Trace a call and refactor repeated logic into a function without hidden state.",
+          "assessment_intent": "Trace arguments, parameters, return values, and call results, then refactor repeated print-job logic into functions with explicit responsibilities and no hidden state.",
           "depends_on": [
             "lesson.info1.programming.variables.v1",
             "lesson.info1.programming.conditionals.v1",
@@ -1771,22 +1825,31 @@
             {
               "objective_ref": "obj.info1.programming.functions.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.functions.001.v1",
+                "prob.info1.programming.functions.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.functions.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.functions.002.v1",
+                "prob.info1.programming.functions.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.functions.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.functions.003.v1",
+                "prob.info1.programming.functions.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -1799,7 +1862,7 @@
           "learning_objectives": [
             {
               "id": "obj.info1.programming.algorithms.001.v1",
-              "statement": "Express an algorithm using structured natural language, a diagram, or code.",
+              "statement": "Express an algorithm using structured natural language or code.",
               "expected_evidence": "creation",
               "label": "C7.O1"
             },
@@ -1828,7 +1891,7 @@
             "test",
             "efficiency"
           ],
-          "assessment_intent": "Compare two search or aggregation procedures and justify an improvement.",
+          "assessment_intent": "Express, trace, test, and improve FIFO print scheduling while preserving the supplied request order.",
           "depends_on": [
             "lesson.info1.programming.loops.v1",
             "lesson.info1.programming.collections.strings.v1",
@@ -1853,22 +1916,31 @@
             {
               "objective_ref": "obj.info1.programming.algorithms.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.algorithms.001.v1",
+                "prob.info1.programming.algorithms.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.algorithms.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.algorithms.002.v1",
+                "prob.info1.programming.algorithms.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.algorithms.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.algorithms.003.v1",
+                "prob.info1.programming.algorithms.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -1888,7 +1960,7 @@
             {
               "id": "obj.info1.programming.modeling.simulation.002.v1",
               "statement": "Run a manual and a Python-based simulation for the same model.",
-              "expected_evidence": "application",
+              "expected_evidence": "manual_trace_and_executable_output",
               "label": "C8.O2"
             },
             {
@@ -1911,7 +1983,7 @@
             "simulation",
             "sensitivity"
           ],
-          "assessment_intent": "Compare simulation outputs while explaining why a model is not the real system.",
+          "assessment_intent": "Manually trace and execute the same print-queue simulation, compare all outputs, and evaluate assumptions, sensitivity, and limits.",
           "depends_on": [
             "lesson.info1.society.decomposition.modeling.v1",
             "lesson.info1.programming.conditionals.v1",
@@ -1937,22 +2009,31 @@
             {
               "objective_ref": "obj.info1.programming.modeling.simulation.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.modeling.simulation.001.v1",
+                "prob.info1.programming.modeling.simulation.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.modeling.simulation.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.modeling.simulation.002.v1",
+                "prob.info1.programming.modeling.simulation.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.programming.modeling.simulation.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.modeling.simulation.003.v1",
+                "prob.info1.programming.modeling.simulation.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -1971,7 +2052,7 @@
             },
             {
               "id": "obj.info1.programming.project.002.v1",
-              "statement": "Test normal, boundary, and invalid cases appropriate to the design.",
+              "statement": "Test normal, boundary, invalid, and empty cases appropriate to the design.",
               "expected_evidence": "application",
               "label": "C9.O2"
             },
@@ -1995,7 +2076,7 @@
             "test case",
             "evaluation"
           ],
-          "assessment_intent": "Performance task with design, executable program, tests, evaluation, and reflection.",
+          "assessment_intent": "FIFO-core performance task using supplied starter signatures, an executable program, tests, requirement evaluation, and reflection; shortest-job-first is an optional extension.",
           "depends_on": [
             "lesson.info1.society.solution.evaluation.v1",
             "lesson.info1.design.prototype.usability.v1",
@@ -2008,8 +2089,8 @@
           ],
           "instructional_time": {
             "class_periods_50_min": [
-              4,
-              5
+              5,
+              6
             ],
             "self_study_minutes": [
               200,
@@ -2021,23 +2102,44 @@
             {
               "objective_ref": "obj.info1.programming.project.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
-              "performance_criterion_refs": []
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.project.001.v1"
+              ],
+              "performance_criterion_refs": [
+                {
+                  "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                  "criterion_id": "c5_executable_evidence"
+                }
+              ]
             },
             {
               "objective_ref": "obj.info1.programming.project.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
-              "performance_criterion_refs": []
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.project.002.v1"
+              ],
+              "performance_criterion_refs": [
+                {
+                  "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                  "criterion_id": "c6_test_classes"
+                }
+              ]
             },
             {
               "objective_ref": "obj.info1.programming.project.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
-              "performance_criterion_refs": []
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.programming.project.003.v1"
+              ],
+              "performance_criterion_refs": [
+                {
+                  "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                  "criterion_id": "c7_requirement_evaluation"
+                }
+              ]
             }
           ]
         }
@@ -2780,7 +2882,7 @@
     }
   ],
   "created_at": "2026-07-14",
-  "updated_at": "2026-07-14",
+  "updated_at": "2026-07-15",
   "global_prerequisites": [
     "Everyday experience using digital information and communication tools.",
     "Basic arithmetic including whole numbers, decimals, and simple proportions; required ideas are refreshed before use.",

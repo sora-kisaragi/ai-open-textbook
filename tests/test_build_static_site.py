@@ -178,6 +178,7 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert "&lt;script&gt;alert('unsafe')&lt;/script&gt;" in learner
     assert "SECRET_ANSWER_TOKEN" in teacher
     assert "SECRET_RUBRIC_TOKEN" in teacher
+    assert "各レッスンの学習目標、順序、例、時間配分、問題、評価方法は本プロジェクトが作成したドラフト" in teacher
     assert "SECRET_ANSWER_TOKEN" not in book
     assert "SECRET_ACCEPTABLE_TOKEN" not in book
     assert "SECRET_RUBRIC_TOKEN" not in book

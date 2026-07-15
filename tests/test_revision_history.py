@@ -71,15 +71,15 @@ def test_changed_record_with_revision_passes(history_root: Path) -> None:
         {
             "actor": "tests",
             "change_type": "update",
-            "created_at": "2026-07-15",
+            "created_at": "2099-01-01",
             "entity_id": problems[0]["id"],
-            "id": "rev.20260715.0001",
+            "id": "rev.20990101.0001",
             "reason": "Test revision.",
             "schema_version": "1.0",
             "status": "draft",
             "supersedes": None,
             "type": "revision",
-            "updated_at": "2026-07-15",
+            "updated_at": "2099-01-01",
         }
     )
     write_ndjson(revision_path, revisions)
@@ -120,15 +120,15 @@ def test_direct_publish_transition_is_rejected(history_root: Path) -> None:
         {
             "actor": "tests",
             "change_type": "update",
-            "created_at": "2026-07-15",
+            "created_at": "2099-01-01",
             "entity_id": problems[0]["id"],
-            "id": "rev.20260715.0001",
+            "id": "rev.20990101.0001",
             "reason": "Invalid direct publication.",
             "schema_version": "1.0",
             "status": "draft",
             "supersedes": None,
             "type": "revision",
-            "updated_at": "2026-07-15",
+            "updated_at": "2099-01-01",
         }
     )
     write_ndjson(revision_path, revisions)
@@ -153,15 +153,15 @@ def test_content_change_cannot_use_review_request_revision(history_root: Path) -
         {
             "actor": "tests",
             "change_type": "review_request",
-            "created_at": "2026-07-15",
+            "created_at": "2099-01-01",
             "entity_id": answers[0]["id"],
-            "id": "rev.20260715.0001",
+            "id": "rev.20990101.0001",
             "reason": "Invalid event type for content change.",
             "schema_version": "1.0",
             "status": "draft",
             "supersedes": None,
             "type": "revision",
-            "updated_at": "2026-07-15",
+            "updated_at": "2099-01-01",
         }
     )
     write_ndjson(revision_path, revisions)

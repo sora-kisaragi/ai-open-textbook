@@ -22,7 +22,7 @@ def test_pdf_build_is_repeatable_and_verified(tmp_path: Path) -> None:
     second_manifest = build_pdf.build(ROOT, second)
 
     assert first_manifest["page_count"] >= 1
-    assert first_manifest["implemented_lesson_count"] == 15
+    assert first_manifest["implemented_lesson_count"] == 23
     assert first_manifest["planned_lesson_count"] == 32
     assert first_manifest["input_sha256"] == second_manifest["input_sha256"]
     assert first_manifest["semantic_sha256"] == second_manifest["semantic_sha256"]

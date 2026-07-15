@@ -252,6 +252,18 @@ def test_remove_one_final_line_ending(stdout: bytes, expected: bytes) -> None:
     assert check_examples.remove_one_final_line_ending(stdout) == expected
 
 
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        (b"line 1\r\nline 2", b"line 1\nline 2"),
+        (b"line 1\nline 2", b"line 1\nline 2"),
+        (b"line 1\rline 2", b"line 1\nline 2"),
+    ],
+)
+def test_normalize_line_endings(value: bytes, expected: bytes) -> None:
+    assert check_examples.normalize_line_endings(value) == expected
+
+
 def test_cli_supports_root_and_reports_clear_failure(example_root: Path) -> None:
     (example_root / "lessons" / "test.md").write_text(
         "# Test\n\n## Example\n\n```python\n1 / 0\n```\n",
