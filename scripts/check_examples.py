@@ -541,6 +541,10 @@ def remove_one_final_line_ending(stdout: bytes) -> bytes:
     return stdout
 
 
+def normalize_line_endings(value: bytes) -> bytes:
+    return value.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+
+
 def as_source(value: object, label: str, failures: list[str]) -> str | None:
     if not isinstance(value, str):
         failures.append(f"{label}: code must be a string")
@@ -670,7 +674,7 @@ def check_repository(
             continue
         if not results or results[0] is None:
             continue
-        actual = remove_one_final_line_ending(results[0].stdout)
+        actual = normalize_line_endings(remove_one_final_line_ending(results[0].stdout))
         answer_refs = problem.get("answer_refs")
         if not isinstance(answer_refs, list) or not answer_refs:
             failures.append(f"{location}: predict_output requires linked answer_refs")
@@ -691,7 +695,7 @@ def check_repository(
                     f"{location}: linked answer {answer_ref} canonical_answer must be a string"
                 )
                 continue
-            expected_bytes = expected.encode("utf-8")
+            expected_bytes = normalize_line_endings(expected.encode("utf-8"))
             if actual != expected_bytes:
                 failures.append(
                     f"{location}: stdout does not match linked canonical answer {answer_ref}: "
