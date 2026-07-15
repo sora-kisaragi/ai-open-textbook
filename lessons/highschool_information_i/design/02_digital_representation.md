@@ -97,6 +97,6 @@
 ## 練習
 
 - `prob.info1.design.digital.representation.001.v1`: 文字、画像、音の表現規則を説明します。
-- `prob.info1.design.digital.representation.002.v1`: 画像のデータ量を計算します。
-- `prob.info1.design.digital.representation.003.v1`: 音のデータ量と表現の変化を予測します。
+- `prob.info1.design.digital.representation.002.v1`: 画像のデータ量と、解像度が表現できる細かさへ与える影響を説明します。
+- `prob.info1.design.digital.representation.003.v1`: 音声のデータ量を計算し、音声と文字起こしを併用する理由を説明します。
 - `prob.info1.design.digital.representation.004.v1`: 案内素材に合う表現をトレードオフから選びます。

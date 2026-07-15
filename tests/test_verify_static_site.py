@@ -66,7 +66,7 @@ def built_site_root(tmp_path: Path) -> Path:
             "type": "answer",
             "problem_id": problem_id,
             "canonical_answer": "SECRET_CANONICAL_ANSWER",
-            "acceptable_answers": ["SECRET_ACCEPTABLE_ANSWER"],
+            "acceptable_answers": ["SECRET_ACCEPTABLE_ANSWER", "5"],
             "explanation": "SECRET_ANSWER_EXPLANATION",
             "verification_evidence": [{
                 "method": "SECRET_VERIFICATION_METHOD",
@@ -215,6 +215,37 @@ def test_verifier_rejects_teacher_only_data_in_learner_book(
 
     assert result.returncode == 1
     assert "leaked into book.html" in result.stderr
+
+
+def test_verifier_allows_standalone_numeric_answer_in_unrelated_learner_text(
+    built_site_root: Path,
+) -> None:
+    book = built_site_root / "build/site/book.html"
+    book.write_text(
+        book.read_text(encoding="utf-8").replace("</main>", "<p>5</p></main>", 1),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_verifier_rejects_numeric_answer_in_review_only_structure(
+    built_site_root: Path,
+) -> None:
+    book = built_site_root / "build/site/book.html"
+    book.write_text(
+        book.read_text(encoding="utf-8").replace(
+            "</main>", '<section class="review-subsection"><p>5</p></section></main>', 1
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "review-only structure leaked into book.html" in result.stderr
 
 
 def test_verifier_rejects_wrong_page_count_and_missing_structure(built_site_root: Path) -> None:

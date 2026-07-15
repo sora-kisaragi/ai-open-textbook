@@ -1215,7 +1215,7 @@
             },
             {
               "id": "obj.info1.design.project.002.v1",
-              "statement": "Test the artifact for communication effectiveness and accessibility.",
+              "statement": "Evaluate supplied test evidence and inspect the revised artifact against communication and accessibility requirements.",
               "expected_evidence": "application",
               "label": "B7.O2"
             },
@@ -1227,7 +1227,6 @@
             }
           ],
           "prerequisites": [
-            "B5: Data Visualization and Misleading Presentation.",
             "B6: Prototyping and Usability Evaluation."
           ],
           "key_concepts": [
@@ -1239,7 +1238,6 @@
           ],
           "assessment_intent": "Performance task with requirements, artifact, evaluation evidence, and revision rationale.",
           "depends_on": [
-            "lesson.info1.design.data.visualization.v1",
             "lesson.info1.design.prototype.usability.v1"
           ],
           "source_refs": [

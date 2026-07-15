@@ -78,4 +78,4 @@
 - `prob.info1.design.audience.accessibility.001.v1`: 多様な受け手を目的と状況から説明します。
 - `prob.info1.design.audience.accessibility.002.v1`: 架空の案内から障壁を見つけます。
 - `prob.info1.design.audience.accessibility.003.v1`: 障壁を設計要件へ変換します。
-- `prob.info1.design.audience.accessibility.004.v1`: 複数の受け手に向けて案内を改善します。
+- `prob.info1.design.audience.accessibility.004.v1`: 障壁、改善要件、確認方法の表を完成させます。

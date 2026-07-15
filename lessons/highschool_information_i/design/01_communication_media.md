@@ -76,4 +76,4 @@
 - `prob.info1.design.communication.media.001.v1`: コミュニケーションの五つの要素を特定します。
 - `prob.info1.design.communication.media.002.v1`: 二つのメディアを共通の観点で比較します。
 - `prob.info1.design.communication.media.003.v1`: 受け手と目的に合うメディアを選びます。
-- `prob.info1.design.communication.media.004.v1`: 受付変更の伝達方法を総合して設計します。
+- `prob.info1.design.communication.media.004.v1`: 通常案内の複数メディア設計を完成させます。
