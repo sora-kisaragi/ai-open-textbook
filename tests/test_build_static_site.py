@@ -174,6 +174,7 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert "prob.info1.variables.001.v1" not in learner
     assert "練習 1" in learner
     assert "<table>" in learner
+    assert '<div class="table-wrap"><table>' in learner
     assert "<th>案</th>" in learner
     assert "&lt;script&gt;alert('unsafe')&lt;/script&gt;" in learner
     assert "SECRET_ANSWER_TOKEN" in teacher
@@ -185,6 +186,7 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert "prob.info1.variables.001.v1" not in book
     assert 'id="lesson-programming-variables"' in book
     assert "<table>" in book
+    assert '<div class="table-wrap"><table>' in book
     assert 'href="book.html"' in index
     assert "ユニット C" in index
     assert "C2" in learner

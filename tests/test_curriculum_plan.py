@@ -252,6 +252,68 @@ def test_time_and_assessment_baselines() -> None:
         ),
     }
 
+    unit_d = next(
+        unit for unit in curriculum["units"]
+        if unit["id"] == "unit.info1.networks.data.v1"
+    )
+    unit_d_lessons = unit_d["lessons"]
+    unit_d_lesson_ids = {lesson["lesson_id"] for lesson in unit_d_lessons}
+    unit_d_problem_counts = {
+        lesson_id: sum(
+            lesson_id in problem["lesson_refs"]
+            for problem in load_collection("problems.ndjson")
+        )
+        for lesson_id in unit_d_lesson_ids
+    }
+    assert unit_d_problem_counts == {
+        "lesson.info1.networks.protocols.v1": 4,
+        "lesson.info1.networks.internet.web.v1": 4,
+        "lesson.info1.networks.security.v1": 4,
+        "lesson.info1.data.lifecycle.v1": 4,
+        "lesson.info1.data.cleaning.v1": 4,
+        "lesson.info1.data.descriptive.analysis.v1": 4,
+        "lesson.info1.data.visualization.interpretation.v1": 4,
+        "lesson.info1.data.databases.queries.v1": 4,
+        "lesson.info1.data.investigation.project.v1": 4,
+    }
+    assert sum(unit_d_problem_counts.values()) == 36
+    assert all(
+        entry["status"] == "complete"
+        for lesson in unit_d_lessons
+        for entry in lesson["assessment_coverage"]
+    )
+
+    d9 = next(lesson for lesson in unit_d_lessons if lesson["order"] == "D9")
+    assert {
+        entry["objective_ref"]: (
+            entry["assessment_item_refs"],
+            entry["performance_criterion_refs"],
+        )
+        for entry in d9["assessment_coverage"]
+    } == {
+        "obj.info1.data.investigation.project.001.v1": (
+            ["prob.info1.data.investigation.project.001.v1"],
+            [{
+                "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                "criterion_id": "c1_question_ethics",
+            }],
+        ),
+        "obj.info1.data.investigation.project.002.v1": (
+            ["prob.info1.data.investigation.project.002.v1"],
+            [{
+                "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                "criterion_id": "c2_reproducible_workflow",
+            }],
+        ),
+        "obj.info1.data.investigation.project.003.v1": (
+            ["prob.info1.data.investigation.project.003.v1"],
+            [{
+                "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                "criterion_id": "c4_bounded_conclusion",
+            }],
+        ),
+    }
+
 
 def test_curriculum_dependencies_are_resolved_and_acyclic() -> None:
     curriculum = load_curriculum()

@@ -34,6 +34,11 @@ class PdfBuildError(RuntimeError):
     """Raised for a clear PDF build or verification failure."""
 
 
+def compact_extracted_text(value: str) -> str:
+    """Normalize PDF text while ignoring renderer-dependent whitespace."""
+    return "".join(unicodedata.normalize("NFKC", value).split())
+
+
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -179,14 +184,14 @@ def verify_pdf(root: Path, pdf_path: Path) -> int:
         height = float(page.mediabox.height)
         if abs(width - A4_WIDTH_POINTS) > PAGE_TOLERANCE_POINTS or abs(height - A4_HEIGHT_POINTS) > PAGE_TOLERANCE_POINTS:
             raise PdfBuildError(f"page {index} is not A4: {width:.2f} x {height:.2f} points")
-    text = unicodedata.normalize(
-        "NFKC", "\n".join(page.extract_text() or "" for page in reader.pages)
+    text = compact_extracted_text(
+        "\n".join(page.extract_text() or "" for page in reader.pages)
     )
     for title in implemented_titles(root):
-        if unicodedata.normalize("NFKC", title) not in text:
+        if compact_extracted_text(title) not in text:
             raise PdfBuildError(f"generated PDF is missing implemented lesson title: {title}")
     for token in forbidden_review_tokens(root):
-        if unicodedata.normalize("NFKC", token) in text:
+        if compact_extracted_text(token) in text:
             raise PdfBuildError(f"learner PDF contains review-only token: {token}")
     return len(reader.pages)
 
