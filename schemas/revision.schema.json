@@ -1,70 +1,23 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Revision Record",
+  "title": "Revision Event",
   "type": "object",
-  "required": [
-    "id",
-    "type",
-    "schema_version",
-    "status",
-    "created_at",
-    "updated_at",
-    "entity_id",
-    "change_type",
-    "reason",
-    "actor"
-  ],
+  "required": ["id", "type", "schema_version", "status", "created_at", "updated_at", "entity_id", "change_type", "reason", "actor"],
   "properties": {
-    "id": {
-      "type": "string",
-      "pattern": "^rev\\.\\d{8}\\.\\d{4}$"
-    },
-    "type": {
-      "const": "revision"
-    },
-    "schema_version": {
-      "const": "1.0"
-    },
-    "status": {
-      "enum": [
-        "draft",
-        "machine_checked",
-        "human_review_requested",
-        "approved",
-        "published",
-        "deprecated",
-        "superseded"
-      ]
-    },
-    "created_at": {
-      "type": "string",
-      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
-    },
-    "updated_at": {
-      "type": "string",
-      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
-    },
-    "entity_id": {
-      "type": "string"
-    },
-    "change_type": {
-      "enum": [
-        "create",
-        "update",
-        "supersede",
-        "deprecate",
-        "review_request",
-        "publish"
-      ]
-    },
-    "reason": {
-      "type": "string",
-      "minLength": 1
-    },
-    "actor": {
-      "type": "string",
-      "minLength": 1
-    }
+    "id": {"type": "string", "pattern": "^rev\\.[0-9]{8}\\.[0-9]{4}$"},
+    "type": {"const": "revision"},
+    "schema_version": {"const": "1.0"},
+    "status": {"$ref": "#/$defs/status"},
+    "created_at": {"type": "string", "format": "date"},
+    "updated_at": {"type": "string", "format": "date"},
+    "entity_id": {"type": "string", "pattern": "^[a-z0-9]+(?:\\.[a-z0-9]+)*\\.v[1-9][0-9]*$"},
+    "change_type": {"enum": ["create", "update", "supersede", "deprecate", "review_request", "publish"]},
+    "reason": {"type": "string", "minLength": 1},
+    "actor": {"type": "string", "minLength": 1},
+    "supersedes": {"anyOf": [{"type": "string", "pattern": "^rev\\.[0-9]{8}\\.[0-9]{4}$"}, {"type": "null"}]}
   },
-  "additionalProperties": true
+  "additionalProperties": false,
+  "$defs": {
+    "status": {"enum": ["draft", "machine_checked", "human_review_requested", "approved", "published", "deprecated", "superseded"]}
+  }
 }

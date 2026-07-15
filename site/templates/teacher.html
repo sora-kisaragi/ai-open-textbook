@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>教師・レビュー用: $page_title</title>
+  <title>教師・レビュー用: $curriculum_order $page_title</title>
   <link rel="stylesheet" href="../assets/styles.css">
 </head>
 <body class="teacher-page">
@@ -19,9 +19,11 @@
   <main id="teacher-content" class="teacher-layout">
     <aside class="teacher-notice" aria-labelledby="teacher-notice-title">
       <p class="section-kicker">Review material</p>
-      <h1 id="teacher-notice-title">教師・レビュー用: $page_title</h1>
+      <h1 id="teacher-notice-title">教師・レビュー用: $curriculum_order $page_title</h1>
       <p>学習者向けページとは分離されていますが、アクセス制御された情報ではありません。</p>
       <dl class="metadata-list">
+        <div><dt>Curriculum</dt><dd><code>$curriculum_order</code></dd></div>
+        <div><dt>Unit</dt><dd>$unit</dd></div>
         <div><dt>Lesson ID</dt><dd><code>$lesson_id</code></dd></div>
         <div><dt>Status</dt><dd><code>$lesson_status</code></dd></div>
       </dl>

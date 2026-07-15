@@ -35,10 +35,25 @@ def write_ndjson(path: Path, records: list[dict]) -> None:
     path.write_text(text, encoding="utf-8")
 
 
+def write_curriculum(path: Path, units: list[dict]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"units": units}, ensure_ascii=False), encoding="utf-8")
+
+
+def curriculum_lesson(lesson_id: str, order: str, title: str, objective_id: str) -> dict:
+    return {
+        "lesson_id": lesson_id,
+        "order": order,
+        "title": title,
+        "learning_objectives": [{"id": objective_id}],
+    }
+
+
 @pytest.fixture
 def sample_root(tmp_path: Path) -> Path:
     shutil.copytree(ROOT / "site", tmp_path / "site")
     lesson_id = "lesson.info1.programming.variables.v1"
+    objective_id = "obj.info1.programming.variables.002.v1"
     problem_id = "prob.info1.variables.001.v1"
     answer_id = "ans.prob.info1.variables.001.v1"
     rubric_id = "rubric.prob.info1.variables.001.v1"
@@ -63,6 +78,7 @@ def sample_root(tmp_path: Path) -> Path:
             "question": "変数 `score` に値を書きなさい。",
             "question_type": "short_code",
             "lesson_refs": [lesson_id],
+            "objective_refs": [objective_id],
             "answer_refs": [answer_id],
             "rubric_refs": [rubric_id],
             "common_mistakes": ["代入していない。"],
@@ -81,6 +97,14 @@ def sample_root(tmp_path: Path) -> Path:
             "explanation": "教師用の説明です。",
             "verification_evidence": [{"method": "test", "expected": "secret", "result": "passed"}],
             "status": "human_review_requested",
+        }],
+    )
+    write_curriculum(
+        tmp_path / "curriculum" / "highschool_information_i.curriculum.json",
+        [{
+            "id": "unit.info1.programming.v1",
+            "title": "Computers, Algorithms, and Programming",
+            "lessons": [curriculum_lesson(lesson_id, "C2", "Variables and Assignment", objective_id)],
         }],
     )
     write_ndjson(
@@ -138,8 +162,10 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     first = run_builder(sample_root)
     assert first.returncode == 0, first.stdout + first.stderr
     first_snapshot = snapshot_files(sample_root)
-    learner = first_snapshot["lessons/fixture-lesson.html"].decode("utf-8")
-    teacher = first_snapshot["teacher/fixture-lesson.html"].decode("utf-8")
+    learner = first_snapshot["lessons/programming-variables.html"].decode("utf-8")
+    teacher = first_snapshot["teacher/programming-variables.html"].decode("utf-8")
+    book = first_snapshot["book.html"].decode("utf-8")
+    index = first_snapshot["index.html"].decode("utf-8")
 
     assert "SECRET_ANSWER_TOKEN" not in learner
     assert "SECRET_ACCEPTABLE_TOKEN" not in learner
@@ -149,8 +175,17 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert "&lt;script&gt;alert('unsafe')&lt;/script&gt;" in learner
     assert "SECRET_ANSWER_TOKEN" in teacher
     assert "SECRET_RUBRIC_TOKEN" in teacher
+    assert "SECRET_ANSWER_TOKEN" not in book
+    assert "SECRET_ACCEPTABLE_TOKEN" not in book
+    assert "SECRET_RUBRIC_TOKEN" not in book
+    assert "prob.info1.variables.001.v1" not in book
+    assert 'id="lesson-programming-variables"' in book
+    assert 'href="book.html"' in index
+    assert "ユニット C" in index
+    assert "C2" in learner
     assert teacher.count("<h1") == 1
-    assert 'href="../lessons/fixture-lesson.html"' in teacher
+    assert 'href="../lessons/programming-variables.html"' in teacher
+    assert "lessons/fixture-lesson.html" not in first_snapshot
     assert all(b"http://" not in content and b"https://" not in content for content in first_snapshot.values())
 
     site_root = sample_root / "build" / "site"
@@ -199,6 +234,76 @@ def test_broken_reference_fails_clearly(sample_root: Path) -> None:
     result = run_builder(sample_root)
     assert result.returncode == 1
     assert "broken reference in answer_refs" in result.stderr
+
+
+def test_curriculum_order_units_and_navigation_ignore_body_filenames(sample_root: Path) -> None:
+    lessons_path = sample_root / "data" / "collections" / "lessons.ndjson"
+    variables = json.loads(lessons_path.read_text(encoding="utf-8"))
+    protocols_id = "lesson.info1.networks.protocols.v1"
+    protocols_objective = "obj.info1.networks.protocols.001.v1"
+    protocols = {
+        **variables,
+        "id": protocols_id,
+        "title": "ネットワークとプロトコル",
+        "unit": "ネットワークとデータ",
+        "body_ref": "lessons/highschool_information_i/networks/00_first_by_filename.md",
+    }
+    write_ndjson(lessons_path, [protocols, variables])
+    protocols_body = sample_root / protocols["body_ref"]
+    protocols_body.parent.mkdir(parents=True)
+    protocols_body.write_text("# ネットワークとプロトコル\n\n本文です。\n", encoding="utf-8")
+    protocols_teacher = sample_root / "teacher_guides/highschool_information_i/networks/00_first_by_filename.md"
+    protocols_teacher.parent.mkdir(parents=True)
+    protocols_teacher.write_text("# 教師用ガイド\n\n指導用です。\n", encoding="utf-8")
+    write_curriculum(
+        sample_root / "curriculum/highschool_information_i.curriculum.json",
+        [
+            {
+                "id": "unit.info1.programming.v1",
+                "title": "Computers, Algorithms, and Programming",
+                "lessons": [curriculum_lesson(
+                    str(variables["id"]),
+                    "C2",
+                    "Variables and Assignment",
+                    "obj.info1.programming.variables.002.v1",
+                )],
+            },
+            {
+                "id": "unit.info1.networks.data.v1",
+                "title": "Networks, Information Systems, and Data",
+                "lessons": [curriculum_lesson(
+                    protocols_id,
+                    "D1",
+                    "Networks and Protocols",
+                    protocols_objective,
+                )],
+            },
+        ],
+    )
+
+    result = run_builder(sample_root)
+    assert result.returncode == 0, result.stdout + result.stderr
+    site = sample_root / "build/site"
+    index = (site / "index.html").read_text(encoding="utf-8")
+    variables_page = (site / "lessons/programming-variables.html").read_text(encoding="utf-8")
+    protocols_page = (site / "lessons/networks-protocols.html").read_text(encoding="utf-8")
+
+    assert index.index("programming-variables.html") < index.index("networks-protocols.html")
+    assert index.count('class="curriculum-unit"') == 2
+    assert 'rel="next" href="networks-protocols.html"' in variables_page
+    assert 'rel="prev" href="programming-variables.html"' in protocols_page
+    assert not (site / "lessons/00-first-by-filename.html").exists()
+
+
+def test_problem_objective_must_belong_to_referenced_curriculum_lesson(sample_root: Path) -> None:
+    problems = sample_root / "data" / "collections" / "problems.ndjson"
+    problem = json.loads(problems.read_text(encoding="utf-8"))
+    problem["objective_refs"] = ["obj.info1.networks.protocols.001.v1"]
+    write_ndjson(problems, [problem])
+
+    result = run_builder(sample_root)
+    assert result.returncode == 1
+    assert "objective_refs must belong to a referenced curriculum lesson" in result.stderr
 
 
 def test_replace_retries_transient_permission_error(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:

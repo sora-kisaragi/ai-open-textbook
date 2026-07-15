@@ -32,6 +32,12 @@ flowchart TD
 9. Release
 10. Continuous revision
 
+Machine validation includes executable JSON Schema checks, typed references,
+revision history, objective coverage, isolated Python examples, SQLite
+projection, offline HTML and leakage verification, reproducible PDF generation,
+and automated tests. Passing these checks is evidence for review, not a human
+pedagogy, accessibility, copyright, alignment, or publication decision.
+
 ## Current Review-Candidate Target
 
 - Stage: High school
