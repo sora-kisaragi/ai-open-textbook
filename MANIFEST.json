@@ -155,9 +155,14 @@
     "bytes": 876
   },
   {
+    "path": "README.ja.md",
+    "sha256": "dbaeef91836e08a4194e187fa9a803784ede1435b696b39ee9110d3f9cb4ac6f",
+    "bytes": 5080
+  },
+  {
     "path": "README.md",
-    "sha256": "5eb06a159361bc907f6f54fe1517cec5e58be7f0f90f5d1658b921a854cfe902",
-    "bytes": 3247
+    "sha256": "ac5c987d5cfebfc605777870c04a0f6f64692e9b1515564b05c2590053e1b8e3",
+    "bytes": 3297
   },
   {
     "path": "SECURITY.md",
