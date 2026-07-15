@@ -1,11 +1,14 @@
 # Lesson Requirements Template
 
-Status: `draft`
+Status: `legacy_v0_1`
 Review status: `needs_human_review`
 
-Use this template for lesson requirements before drafting student-facing
-lesson bodies, problem records, answer records, rubric records, or teacher
-guides.
+This template is retained for the v0.1 standalone-requirements history. New
+full-scope Information I lessons use validated entries in
+`curriculum/highschool_information_i.curriculum.json` as the maintained
+requirements source. Use this standalone template only when a future Issue
+explicitly requires a separate requirements document; do not duplicate a
+canonical curriculum entry by default.
 
 ## Metadata
 

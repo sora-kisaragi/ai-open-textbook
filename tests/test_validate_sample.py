@@ -40,7 +40,7 @@ def validation_errors(root: Path) -> list[str]:
 def test_validate_current_repository() -> None:
     errors, count = validate_ndjson.validate_repository(ROOT)
     assert errors == []
-    assert count == 1144
+    assert count == 1187
 
 
 def test_invalid_calendar_date_is_rejected(validation_root: Path) -> None:
@@ -173,5 +173,23 @@ def test_duplicate_objective_coverage_is_rejected(validation_root: Path) -> None
 
     assert any(
         "coverage contains duplicate objective_ref values" in error
+        for error in validation_errors(validation_root)
+    )
+
+
+def test_performance_criterion_requires_performance_task_problem(validation_root: Path) -> None:
+    path = validation_root / "data" / "collections" / "problems.ndjson"
+    records = read_ndjson(path)
+    target = next(
+        record
+        for record in records
+        if record["id"] == "prob.info1.society.inquiry.project.004.v1"
+    )
+    target["question_type"] = "extended_response"
+    write_ndjson(path, records)
+
+    assert any(
+        "performance criterion problem prob.info1.society.inquiry.project.004.v1 must use question_type performance_task"
+        in error
         for error in validation_errors(validation_root)
     )

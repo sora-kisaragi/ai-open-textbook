@@ -35,6 +35,46 @@
     "bytes": 608
   },
   {
+    "path": ".codex/agents/copyright-reviewer.toml",
+    "sha256": "51e9d37ea880df9291efc83eabed8f9d081b499f0c492351f21d659a79c0acc8",
+    "bytes": 626
+  },
+  {
+    "path": ".codex/agents/curriculum-planner.toml",
+    "sha256": "119128eb89e01139abc7d8c83b2f6b1a6f5016e3b5b8a5313d9f7e5e465a9282",
+    "bytes": 643
+  },
+  {
+    "path": ".codex/agents/lesson-writer.toml",
+    "sha256": "33bcb1af0a5f3fb379671c95b68c03384f7ac965f6c5f589ebbcf45ce1989c06",
+    "bytes": 578
+  },
+  {
+    "path": ".codex/agents/pedagogy-reviewer.toml",
+    "sha256": "056ce9818866171f5dcacb0daad7c9f5e9403cf9a185d4262e667dcf2b9b7fc3",
+    "bytes": 617
+  },
+  {
+    "path": ".codex/agents/problem-writer.toml",
+    "sha256": "e5694458680045ecc50e7ae92c0ef71efcac27bb40286bc95d931ff1569d9c5c",
+    "bytes": 584
+  },
+  {
+    "path": ".codex/agents/release-editor.toml",
+    "sha256": "ed5178ad37b500372dff21ce5370f5bdcdd82940fafb35f56a02a0eb06a0fe06",
+    "bytes": 618
+  },
+  {
+    "path": ".codex/agents/schema-validator.toml",
+    "sha256": "3156b884a4891259d029eac4829777a2e7c976d7c9e0ceeba25c405e2aafd22e",
+    "bytes": 615
+  },
+  {
+    "path": ".editorconfig",
+    "sha256": "b42ef3b4c2d2276a5d46f9607651f249b829ac5aa2efc40e8ae54659ba6bd845",
+    "bytes": 170
+  },
+  {
     "path": ".github/ISSUE_TEMPLATE/config.yml",
     "sha256": "e71bea835ed1158881306294d96968f125b0b0c5eff66cd94df559336bd0b210",
     "bytes": 45
@@ -56,23 +96,28 @@
   },
   {
     "path": ".github/PULL_REQUEST_TEMPLATE.md",
-    "sha256": "73f784efdd0b4e0641823fb9e9db8eea88515144c38d25004ef2beb903ebe40c",
-    "bytes": 374
+    "sha256": "2d4a36cc4420637dfa857f4f391526cfb6a86a61a2ddc9576745a7850d9cec3d",
+    "bytes": 592
   },
   {
     "path": ".github/workflows/validate.yml",
-    "sha256": "c6ce7050a866397da8a2f92ec026cef898533a05033e632b2ef5c0983e19f1bc",
-    "bytes": 340
+    "sha256": "184f682f188d73167fa7bbd178649aebf1264a657b115dbfa9b1df57eb3662e2",
+    "bytes": 2296
+  },
+  {
+    "path": ".gitignore",
+    "sha256": "43e63d6b370e70dbce7023fd769072b3fb42344cdf8726f55d2413acb53982ea",
+    "bytes": 142
   },
   {
     "path": "AGENTS.md",
-    "sha256": "2ff2ee4bd8f5a2bb5e0a47d69979f62ea5c105b41dabe1d75e6301787b0a9bf0",
-    "bytes": 3611
+    "sha256": "87d36f6247ceddbf26adef4be93ab41f6121c20524ec90a46c40115b19164c3d",
+    "bytes": 4967
   },
   {
     "path": "CHANGELOG.md",
-    "sha256": "e969c5e15b0bae679ea8753185e3390591b46c77d59522c201166d703dede641",
-    "bytes": 200
+    "sha256": "c035a0015460299cf68a2d7e481461379f19ad5256ae56abc06f5d3e69142745",
+    "bytes": 718
   },
   {
     "path": "CLAUDE.md",
@@ -86,8 +131,8 @@
   },
   {
     "path": "CONTRIBUTING.md",
-    "sha256": "c792caaaaded036f8a77fdc4dd0772a0ed0dfaa2f8d5e6812e639d92e33b6ee2",
-    "bytes": 824
+    "sha256": "12b9e8c63df41497fa4511b42b9a14356f27c8d40b1fc74f9859b16e3a041439",
+    "bytes": 1178
   },
   {
     "path": "GOVERNANCE.md",
@@ -105,19 +150,14 @@
     "bytes": 378
   },
   {
-    "path": "MANIFEST.json",
-    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "bytes": 0
-  },
-  {
     "path": "Makefile",
-    "sha256": "3dc77274d0b93756f656241a712738a2bad840416b12ce44dd99a8b528d95cb0",
-    "bytes": 147
+    "sha256": "e4c6b3cb655393db6258aa1dccd15fd0adb9d41ea75683621cc6d88269e0170c",
+    "bytes": 876
   },
   {
     "path": "README.md",
-    "sha256": "45385dd0031d242addc6a033a5a5e2cf7dd7a11f0608bac7d93c1e78e1e692ec",
-    "bytes": 1904
+    "sha256": "5eb06a159361bc907f6f54fe1517cec5e58be7f0f90f5d1658b921a854cfe902",
+    "bytes": 3247
   },
   {
     "path": "SECURITY.md",
@@ -126,8 +166,8 @@
   },
   {
     "path": "curriculum/highschool_information_i.curriculum.json",
-    "sha256": "e8ade80087127e9ef18d6dd326fc36a242d097d7f6216f8dd925808ee00096d9",
-    "bytes": 502
+    "sha256": "fee91d304003baf7c43162905657af307973b98a6364515364901b2b86bc7ac0",
+    "bytes": 116116
   },
   {
     "path": "data/README.md",
@@ -136,33 +176,33 @@
   },
   {
     "path": "data/collections/answers.ndjson",
-    "sha256": "ef3da3a68cdb217eb469421234c7e4ecd5a6dfe384db8f39d07a4dd671b782ea",
-    "bytes": 1250
+    "sha256": "783739eca4c8c1fadb4302eea05ffa0deecadc8ee12dda0631ce450225d65a39",
+    "bytes": 146378
   },
   {
     "path": "data/collections/lessons.ndjson",
-    "sha256": "a77711bc775bd60a71a349d38d265c0c5fd1d5dff422a9a8d05e56fbee77e88a",
-    "bytes": 615
+    "sha256": "e84e3713826736e606b1e59c11bc3c6aa55a89556e099d4c0d1a4840f84f14f6",
+    "bytes": 31211
   },
   {
     "path": "data/collections/problems.ndjson",
-    "sha256": "783b17e01a3a2faca47f2f875b0db439990a7627c4743f61ef6b45c6310b6a1c",
-    "bytes": 1335
+    "sha256": "ee6dee5923b9eec813eb475e744480d59addcd1a0b6cbfe2935ee739e9fb020c",
+    "bytes": 141802
   },
   {
     "path": "data/collections/revisions.ndjson",
-    "sha256": "9e686c049e3496959eb3cf59c2d744aa52c4fd0a93d8e3016a00a82ae1ffe097",
-    "bytes": 525
+    "sha256": "ac4ed34401889b8fb34732553d3d586d80c10e0b99795fe7c92d7a47dc82e339",
+    "bytes": 238983
   },
   {
     "path": "data/collections/rubrics.ndjson",
-    "sha256": "65ea489a6a6192ddda61c7d25dfa1caef3bdf6b51ec66c61cb25c860b1483d16",
-    "bytes": 829
+    "sha256": "cf4ef826958407717afc1c1629405c1631e2a3743d6e44c0f995391beaf287f0",
+    "bytes": 75104
   },
   {
     "path": "data/collections/sources.ndjson",
-    "sha256": "534797f690b1a7508997a03be83f621b0e98e2d211ff477f1f4734c693ac7730",
-    "bytes": 381
+    "sha256": "7b7b0d91f1e5d41a9634539226906dde969aab2e54ebd40046ec0569c224a8c8",
+    "bytes": 13881
   },
   {
     "path": "data/indexes/.gitkeep",
@@ -186,8 +226,18 @@
   },
   {
     "path": "docs/AI_USAGE_POLICY.md",
-    "sha256": "efc7f9b8efe9e0138e90830dc1b5e725993a3313a9e2b46750d117be63de6caf",
-    "bytes": 542
+    "sha256": "6025e8473d0ce6367e9540605f43cdf9ce9188121359a166dd6675cf1b8fadee",
+    "bytes": 874
+  },
+  {
+    "path": "docs/ANSWER_RUBRIC_VERSIONING.md",
+    "sha256": "f7ba2502cdea2e8f74674961ce595f1f15bdc3d794a59507419e3a79b8d201a7",
+    "bytes": 5000
+  },
+  {
+    "path": "docs/ATTRIBUTION.md",
+    "sha256": "121dee8ceabe9775758bd852c6a69a80c9e2e79529e9b94c7666553499a389ce",
+    "bytes": 1577
   },
   {
     "path": "docs/COPYRIGHT_POLICY.md",
@@ -195,9 +245,44 @@
     "bytes": 710
   },
   {
+    "path": "docs/CURRICULUM_MAP.md",
+    "sha256": "83bfb62a65f0e320d9622e3ae3b8a351cef08379b7ed59223d5f83380fdc6c27",
+    "bytes": 8031
+  },
+  {
     "path": "docs/DATA_MODEL.md",
-    "sha256": "29c7cc6fcdd46bf31de607492e308449c3c658aaa2bdd8cc14c8b5a1d190cb3b",
-    "bytes": 1800
+    "sha256": "9972f89e3409ea1c584e00a0bc29db97510e6a3d2be0e49de9bd381efbfe499b",
+    "bytes": 10167
+  },
+  {
+    "path": "docs/EXPORT_INDEX_WORKFLOW.md",
+    "sha256": "98840db814aad72bff98fe51cbb7b20a095994e03cb2350b6ea1b04903f709db",
+    "bytes": 6739
+  },
+  {
+    "path": "docs/EXTERNAL_PROSE_TOOLING_ADOPTION.md",
+    "sha256": "905a3ab3ad8056168ec4683b54b5747859b08aaeeeb72babf5ffee2d0220a356",
+    "bytes": 9521
+  },
+  {
+    "path": "docs/GIT_WORKFLOW.md",
+    "sha256": "01b8a114ab8068ab05fb9e67cbae3930c8f45d072a6218863b44e285ca85ff19",
+    "bytes": 2371
+  },
+  {
+    "path": "docs/INFORMATION_I_COMPLETION_MATRIX.md",
+    "sha256": "68e67102815e88a498e107eb2a070509565ae11294be5cedf4d8b86cb8d9e69a",
+    "bytes": 7529
+  },
+  {
+    "path": "docs/MVP_REVIEW_CHECKLIST.md",
+    "sha256": "5ec3e7d7e29b2371e1b88f5111c8a923553b64265bc6bee33894ce64fc72e332",
+    "bytes": 374
+  },
+  {
+    "path": "docs/MVP_SCOPE.md",
+    "sha256": "cdf7e69cde6f60036cb20218671e9b48105a6a04f9b1c95ae495462203f107db",
+    "bytes": 8084
   },
   {
     "path": "docs/OPERATING_RULES.md",
@@ -205,9 +290,24 @@
     "bytes": 1683
   },
   {
+    "path": "docs/PROBLEM_BANK_DESIGN.md",
+    "sha256": "ba134c100ac471b29be1cf443ab5d34d61e3e2c34faf951d3570789120221b2d",
+    "bytes": 10974
+  },
+  {
     "path": "docs/PROCESS.md",
-    "sha256": "254194693a470ea113862c8927edcd8b4ead44f29eef84d799ad5a56642b587b",
-    "bytes": 1162
+    "sha256": "b05f77d27fda0d4263c1cb39c9c748b3643a2002612bbc78ee45d66dc72f3f86",
+    "bytes": 2201
+  },
+  {
+    "path": "docs/PROSE_LINTING_EVALUATION.md",
+    "sha256": "0c9846507012e3343a86ef83612b32643327de603652bfd4230041a3e331666c",
+    "bytes": 15229
+  },
+  {
+    "path": "docs/PROSE_WARNING_CHECKS.md",
+    "sha256": "316a8e7ca92af21fa03b1ec94d002581c15e6fdb6c4a12421fe8478855af2a9a",
+    "bytes": 6046
   },
   {
     "path": "docs/RELEASE_POLICY.md",
@@ -216,23 +316,373 @@
   },
   {
     "path": "docs/REVIEW_GUIDE.md",
-    "sha256": "4c0da1a0881a0043f4d14f6fb3e43cf50bb53033f198f41cfd943b0a811441df",
-    "bytes": 688
+    "sha256": "027cee0ccc5475b6110fa2016ab09cf76d31bd536fbfbc87cde9a9cabd4ae998",
+    "bytes": 865
   },
   {
     "path": "docs/STYLE_GUIDE.md",
-    "sha256": "499f174619d1e089ce2d86628bf11ec19dadac59a21a95b1810459b9b9ee40d9",
-    "bytes": 745
+    "sha256": "7a3814fb519de0d622acaa0a77d50613e4b45b10c6b19919ea7202c9f3cf7743",
+    "bytes": 3905
+  },
+  {
+    "path": "docs/TOOLING_GATES.md",
+    "sha256": "c2e0dcec8549dace7b2f744675a51eb56e54ea07ce953e68d2793511aa0a731f",
+    "bytes": 3771
+  },
+  {
+    "path": "docs/WRITING_QUALITY_POLICY.md",
+    "sha256": "27716fab0cc76d8c1a4fc9c026a13c209fa1b061db52cc298c4c1c677a940921",
+    "bytes": 7101
+  },
+  {
+    "path": "docs/issue-drafts/01-comment-scope-proposal.md",
+    "sha256": "fb41a78d44fda105dda180e0576f51782a31835ea8f4bdaeeb11a1fe256adb56",
+    "bytes": 1476
+  },
+  {
+    "path": "docs/issue-drafts/01-mvp-scope.md",
+    "sha256": "224efaa14380c17e7c1c3700e153c248c4faf5f54644be4cc02bc30984ce3052",
+    "bytes": 1191
+  },
+  {
+    "path": "docs/issue-drafts/02-curriculum-map.md",
+    "sha256": "fba2b3ad72735620954ada68ce82cec5703a96318ed0f52d7b0d404b2d4f1a19",
+    "bytes": 1102
+  },
+  {
+    "path": "docs/issue-drafts/03-schema-validation-policy.md",
+    "sha256": "09dff59920cac4add35f7e6fe274bc0ba06aa49aeb53cfcf602373a4fba3d644",
+    "bytes": 1074
+  },
+  {
+    "path": "docs/issue-drafts/04-lesson-01-variables.md",
+    "sha256": "3861f09fe8168d224ff1135335f8a398c2b8b5778d1987528723cf22f75dd0a5",
+    "bytes": 1213
+  },
+  {
+    "path": "docs/issue-drafts/05-lesson-02-conditionals.md",
+    "sha256": "690686874f964c01e96d6acd64364c40b55aafe253dd73e6199109f3c24435ee",
+    "bytes": 1081
+  },
+  {
+    "path": "docs/issue-drafts/06-lesson-03-loops.md",
+    "sha256": "11d222984a6321dcca41b3b723b6a3535d1a3bb25312cc616f9d1ba0d34baca9",
+    "bytes": 1103
+  },
+  {
+    "path": "docs/issue-drafts/07-problem-bank-design.md",
+    "sha256": "7f65aaea74977738f440d751557366f123d2935c48852d24180a4718bc146192",
+    "bytes": 1113
+  },
+  {
+    "path": "docs/issue-drafts/08-answer-rubric-versioning.md",
+    "sha256": "e39e595b0b7429c55d907b78fdde767707f2db0064e4a562da65ca5461e3b4c1",
+    "bytes": 969
+  },
+  {
+    "path": "docs/issue-drafts/09-teacher-guide-requirements.md",
+    "sha256": "9508e87d378805983fddd0b8d5f85e1d1db312470350ce22dcdd5f35aa8e29b0",
+    "bytes": 919
+  },
+  {
+    "path": "docs/issue-drafts/10-review-checklist.md",
+    "sha256": "d75747853589e0d4d1e51860161766e8b61485e2c9d285b8400c4da7d7611707",
+    "bytes": 1027
+  },
+  {
+    "path": "docs/issue-drafts/11-export-index-workflow.md",
+    "sha256": "2c78a512d3423ca95db83daca9d1ec54e92d8408de453556fd1987b42c55aa99",
+    "bytes": 999
+  },
+  {
+    "path": "docs/issue-drafts/12-release-checklist.md",
+    "sha256": "b9f31e8df38377e6cfd3f38572876fc8cc819e07007172a2b1946d5ffbdfb4bf",
+    "bytes": 1119
+  },
+  {
+    "path": "docs/issue-drafts/create_issues.sh",
+    "sha256": "1b9d83f19b76a7d4a67e08e3c87326ef09e60ded81e8f8c6d2d33c5746705985",
+    "bytes": 3816
+  },
+  {
+    "path": "docs/issue-updates/README.md",
+    "sha256": "50b322ff448eaa2457663a0d64379862c54d46fb7c3bbae08a76b505d9bb24bf",
+    "bytes": 357
+  },
+  {
+    "path": "docs/issue-updates/ai-writing-quality-assessment.md",
+    "sha256": "3f7636bbb099676a93e53449ecda6813eb0029bcb04604b114199ad6107db1c2",
+    "bytes": 3208
+  },
+  {
+    "path": "docs/issue-updates/close_issue_009.md",
+    "sha256": "cccf0f3f075fc7a4c3c2bbf99c528cb0c0a1c90ad9d6aa22e391753ccbcd0a1a",
+    "bytes": 920
+  },
+  {
+    "path": "docs/issue-updates/close_issue_009.sh",
+    "sha256": "620b3b08c8d08dbc9375db6bef6d21288544c0a66d28f6376dcae457673ad394",
+    "bytes": 159
+  },
+  {
+    "path": "docs/issue-updates/comment_issue_010.sh",
+    "sha256": "47438de09efeb11d0bf80f710323397d02491dafc6ae5633f05efb36ce3238a9",
+    "bytes": 432
+  },
+  {
+    "path": "docs/issue-updates/comment_issue_012.sh",
+    "sha256": "a5dfed0bd2b5077d4691360ac18bcc08e3807eb4dc744b5524e67c36d4260295",
+    "bytes": 503
+  },
+  {
+    "path": "docs/issue-updates/create_pr_10_12_checklists.md",
+    "sha256": "04b5f122153763fcd2a139c5dfab56a490f25ecced19d7f49bf0d6bdea09acf7",
+    "bytes": 751
+  },
+  {
+    "path": "docs/issue-updates/issue-049-lesson-01-language-audit.md",
+    "sha256": "56897ac9b8aa515f3cd5cad2e486099ec57b85ed9e8bfebcbe9b130316c43e5f",
+    "bytes": 9619
+  },
+  {
+    "path": "docs/issue-updates/merge_pr_020_instructions.md",
+    "sha256": "3d366c2bfa1d62d1899b445e1a7544532327fc6dd0da1604dd7c1bbe0ca94302",
+    "bytes": 749
+  },
+  {
+    "path": "docs/issue-updates/pr_10_12_checklists_body.md",
+    "sha256": "1d808cb052a9f58f1645420cc50a2357e226ce02359cbacc057aaea1051149a8",
+    "bytes": 1262
+  },
+  {
+    "path": "docs/release/MVP_RELEASE_CHECKLIST.md",
+    "sha256": "f4ffd42daf38c096cbee792c8674de115decddd9086af6aa693dda450eb9e15f",
+    "bytes": 6073
+  },
+  {
+    "path": "docs/requirements/lesson-01-variables.md",
+    "sha256": "f42ec5570b2738892185e4c338aea267e2afac4f983efc4e512c5b6015a0f3f7",
+    "bytes": 9786
+  },
+  {
+    "path": "docs/requirements/lesson-02-conditionals.md",
+    "sha256": "1497a697eb21dfced8ba1b5c8947fff5e8dd3ed4983a29f771b82e798e91d21a",
+    "bytes": 6974
+  },
+  {
+    "path": "docs/requirements/lesson-03-loops.md",
+    "sha256": "8651479450a7e0976bb669cb1453e48fd95b193128ed33ed82520519d8265936",
+    "bytes": 7150
+  },
+  {
+    "path": "docs/requirements/lesson-requirements-template.md",
+    "sha256": "1fc1e25d960632c3c2208af610d90fbe59e96873d418eb8747556e3f55deb182",
+    "bytes": 2714
+  },
+  {
+    "path": "docs/requirements/teacher-guide-requirements.md",
+    "sha256": "44a0be80bec4f4b039a9a5409d4943aaaf655b8e962ac323b172cf9c7bec94d5",
+    "bytes": 14654
+  },
+  {
+    "path": "docs/review-notes/pr-020-teacher-guide-requirements-review.md",
+    "sha256": "9c5f1f6ca4659069becf22f3f1a331c19552f0b4ac44ac3faa75398537ada1e7",
+    "bytes": 2931
+  },
+  {
+    "path": "docs/review/HUMAN_REVIEW_ROUND_1.md",
+    "sha256": "aa514289012e1c4507acc368fba449f867fdf3e1f923cd2c492b758cbd4b320e",
+    "bytes": 6388
+  },
+  {
+    "path": "docs/review/INFORMATION_I_FINAL_REVIEW_DOSSIER.md",
+    "sha256": "5a9dc854df4e88a1c368401cb56cb90855e1d1051ba2c2ba5da5f222a760a808",
+    "bytes": 10739
+  },
+  {
+    "path": "docs/review/INFORMATION_I_TERMINOLOGY_AUDIT.md",
+    "sha256": "a452aa7e4738bfde9876a0e906330a014bd3765d01552fc5f9bb32990f407cc5",
+    "bytes": 2971
+  },
+  {
+    "path": "docs/review/LESSON_01_VERTICAL_SLICE_REVIEW.md",
+    "sha256": "5eb71504c32193f709f27a37b37781619205f7a6dc96737539c363c33d3285c3",
+    "bytes": 10600
+  },
+  {
+    "path": "docs/review/MVP_REVIEW_CHECKLIST.md",
+    "sha256": "285bf7485fca248c2cd9bed0b3077f13a93cea25e11e1e82d802c8dea6571a35",
+    "bytes": 14890
+  },
+  {
+    "path": "lessons/highschool_information_i/design/01_communication_media.md",
+    "sha256": "a512d5514956c0c414ba881adb73e31b0ae8139d790458e55504f9b41e7cbbeb",
+    "bytes": 5919
+  },
+  {
+    "path": "lessons/highschool_information_i/design/02_digital_representation.md",
+    "sha256": "f13fb98a72b16d5d249508190ec77c901d56763cc8dff6f5c1deebc2ff81f0d5",
+    "bytes": 6851
+  },
+  {
+    "path": "lessons/highschool_information_i/design/03_audience_accessibility.md",
+    "sha256": "6e10c60dcea8400c10a472e081cf21c2d2f6c4e21bbd92dd86d38811f3907ec4",
+    "bytes": 5897
+  },
+  {
+    "path": "lessons/highschool_information_i/design/04_information_structure.md",
+    "sha256": "69748bbb5fcdd62f85583d7ce18a5d3e004db39b79b4115cb0d942892d6213c9",
+    "bytes": 5525
+  },
+  {
+    "path": "lessons/highschool_information_i/design/05_data_visualization.md",
+    "sha256": "b3e21ee9464e96c7f6f223b43d92891d9d6af428bdec89243454bbf79906472f",
+    "bytes": 5627
+  },
+  {
+    "path": "lessons/highschool_information_i/design/06_prototype_usability.md",
+    "sha256": "17e6fc399602cba32558a738d34cc6606a57ffe84e2ac8c4b90846de05e1f5fa",
+    "bytes": 6459
+  },
+  {
+    "path": "lessons/highschool_information_i/design/07_information_design_project.md",
+    "sha256": "0cc5b0e540d46e37a80863ff58e62471f5afe8d1871b0088ae3b18ee4a159ce5",
+    "bytes": 8444
+  },
+  {
+    "path": "lessons/highschool_information_i/networks_data/00_networks_protocols.md",
+    "sha256": "391bdcf38410d42d3f2e45165e0112023590c70fea5cde4d6515cbd812c86dbf",
+    "bytes": 6511
+  },
+  {
+    "path": "lessons/highschool_information_i/networks_data/01_internet_web_services.md",
+    "sha256": "143e9cb1ba235b3092b9980e8018585de26fa8c1434a137c1b837fa008950b31",
+    "bytes": 6304
+  },
+  {
+    "path": "lessons/highschool_information_i/networks_data/02_security.md",
+    "sha256": "bde80a301e50ddf31c20e2ee44398b647da925a58c239f89b86ff44069baf147",
+    "bytes": 6059
+  },
+  {
+    "path": "lessons/highschool_information_i/networks_data/03_data_lifecycle.md",
+    "sha256": "7ae8c16ef37c56778117f625bf773aba65f695650fc2ddb011b603740ed89b68",
+    "bytes": 6447
+  },
+  {
+    "path": "lessons/highschool_information_i/networks_data/04_tabular_cleaning.md",
+    "sha256": "c7211596935ceb209daa5748404345d069a31b2853cd7ce3ebb8e3ae952f72b9",
+    "bytes": 6443
+  },
+  {
+    "path": "lessons/highschool_information_i/networks_data/05_descriptive_analysis.md",
+    "sha256": "652263175c72fc981e8f7ecdefbdeaa114f5db756c65c89b0941c50cea4952bc",
+    "bytes": 5096
+  },
+  {
+    "path": "lessons/highschool_information_i/networks_data/06_visualization_interpretation.md",
+    "sha256": "904f30970f79d3cb51cce002df2aaaca560a0635360a2506cc14f5424c9b18a1",
+    "bytes": 5834
+  },
+  {
+    "path": "lessons/highschool_information_i/networks_data/07_databases_queries.md",
+    "sha256": "7fd362f57b77d2e0d3db79da014bbc339713cb0586294812be4f8a0ed544ce96",
+    "bytes": 6441
+  },
+  {
+    "path": "lessons/highschool_information_i/networks_data/08_data_investigation_project.md",
+    "sha256": "360b6417d71c91f8cb840b33417a04e20beb7e5a468ab1ebddc9affbe68fa4cd",
+    "bytes": 7610
+  },
+  {
+    "path": "lessons/highschool_information_i/programming/00_computer_systems.md",
+    "sha256": "a98090e0d0442287198808a98afa319eac33604960a45c2c153c5fdf828c70cb",
+    "bytes": 8323
   },
   {
     "path": "lessons/highschool_information_i/programming/01_variables.md",
-    "sha256": "b84fd559886f92221817c35854d29dd2c737a7ccbd6c40f8a800aee11935f114",
-    "bytes": 1126
+    "sha256": "7641a0291224b8fc660c57e19f7e0d68a071aef6bd6271b7cdc775daab292f00",
+    "bytes": 4677
+  },
+  {
+    "path": "lessons/highschool_information_i/programming/02_conditionals.md",
+    "sha256": "a7787d13db6fd24918f3092573efa80a8f2d94ed7d0cb729b33e06276e3f094f",
+    "bytes": 6772
+  },
+  {
+    "path": "lessons/highschool_information_i/programming/03_loops.md",
+    "sha256": "5f5c0af79ecaa8715b8718d4b8e4be69b0f9298bfc0ba38b95871c6781bab01a",
+    "bytes": 7375
+  },
+  {
+    "path": "lessons/highschool_information_i/programming/04_collections_strings.md",
+    "sha256": "0a88f45c2981a24abfd7dbf651b2711a3a454544a1c809859674cbf0babfc2ec",
+    "bytes": 7838
+  },
+  {
+    "path": "lessons/highschool_information_i/programming/05_functions.md",
+    "sha256": "64c1a3f80ec6ae9e62a2c97b4dd9715e2db3ea88da97e35e307a250fd2953f12",
+    "bytes": 6877
+  },
+  {
+    "path": "lessons/highschool_information_i/programming/06_algorithms.md",
+    "sha256": "ca5367c09151cb4143c33a6673396311550c3a78755c03317311445d97017a37",
+    "bytes": 6465
+  },
+  {
+    "path": "lessons/highschool_information_i/programming/07_modeling_simulation.md",
+    "sha256": "10ad7c7b3836e656a4ce8d54b97f4533e586d6f2ee19fcd7b2549e609c1b7b66",
+    "bytes": 7928
+  },
+  {
+    "path": "lessons/highschool_information_i/programming/08_programming_project.md",
+    "sha256": "d44733d8d1479454aa374ad586ef67af79ef0e1db4ddacb1809e215cda6b3d01",
+    "bytes": 12315
+  },
+  {
+    "path": "lessons/highschool_information_i/society/01_information_media.md",
+    "sha256": "60680205bf546f3c5648c873e139f2b2b9b99b1ebe679322d71d19aad6f7e4a2",
+    "bytes": 4565
+  },
+  {
+    "path": "lessons/highschool_information_i/society/02_source_evaluation.md",
+    "sha256": "523e13ed1a38098e432ce0dab27c10b215e97c430654738848ade25b70f02a0d",
+    "bytes": 4697
+  },
+  {
+    "path": "lessons/highschool_information_i/society/03_rights_responsibility.md",
+    "sha256": "2e40dbe18c274f8d2412ee41b205f1f06e725ae32e5c0bb68aef7d2df9a58e05",
+    "bytes": 6687
+  },
+  {
+    "path": "lessons/highschool_information_i/society/04_problem_definition.md",
+    "sha256": "8f0420e9134b2e1b53d524fd5da05377d338fbcc914f2015001597ca6b5ffe93",
+    "bytes": 4300
+  },
+  {
+    "path": "lessons/highschool_information_i/society/05_decomposition_modeling.md",
+    "sha256": "99cf2a4ea0f0aa22d55cb0b27c267b08a890e90bba202e99bac6e2d9f598b9c7",
+    "bytes": 4583
+  },
+  {
+    "path": "lessons/highschool_information_i/society/06_solution_evaluation.md",
+    "sha256": "387e0f477234043500615cc0949fdc0080a6577d1bbac894e32f182cc7ef5591",
+    "bytes": 5436
+  },
+  {
+    "path": "lessons/highschool_information_i/society/07_inquiry_project.md",
+    "sha256": "baaa844bfbc6e3b4abf81c9c69268c3669daa1fdf68ab0a9c06ec39a51ea8c0e",
+    "bytes": 7100
   },
   {
     "path": "prompts/fable-planner.md",
     "sha256": "ebac2d3a3eb97db83158706f0f309e8f9882d562110d749b7240ed88e9437634",
     "bytes": 488
+  },
+  {
+    "path": "prompts/japanese-educational-prose-cleanup.md",
+    "sha256": "46339fe54a7f36ffb0d51f0a0f66e73b1c0d4f68cd20ba463c2566cf7a6c13f4",
+    "bytes": 5423
   },
   {
     "path": "prompts/opus-reviewer.md",
@@ -246,62 +696,322 @@
   },
   {
     "path": "pyproject.toml",
-    "sha256": "fad6ef7432db1cf2bdc3e7a2e28590f628f2a622c8ada90b6370b2d04976b6d4",
-    "bytes": 326
+    "sha256": "ee9da238a669dcdaa48e0ee2b10e6610a20cfa73187151fa7ce31a15bdca853e",
+    "bytes": 640
   },
   {
     "path": "schemas/answer.schema.json",
-    "sha256": "fd7c63dd45c73b4411b90644b2c572dbee7135137566b13043a57b79341f4c60",
-    "bytes": 517
+    "sha256": "9742795b08e3e715c9e2a2061859227a230e87b69e20d685c0f1a051e6d1d9fd",
+    "bytes": 3051
+  },
+  {
+    "path": "schemas/curriculum.schema.json",
+    "sha256": "8cca9767ebdccfab9624fc7317338a54f66d4a6c7f1e0138611ce08960d8a287",
+    "bytes": 7141
   },
   {
     "path": "schemas/lesson.schema.json",
-    "sha256": "2fe7ddf8bf41c55ae032d79628d4282a2cdc247d7d5d0ae5785ef51761ad2dc1",
-    "bytes": 517
+    "sha256": "becbc9b61abe2e702809395f7a9e2c1c6e5a916ad38a6ef5cda8dc4d1908087b",
+    "bytes": 2013
   },
   {
     "path": "schemas/problem.schema.json",
-    "sha256": "54df1aaca30df0adac6c86aae85ae636834e7543c16d5df12d8b12f93601ba58",
-    "bytes": 519
+    "sha256": "a56120e24c20a92f9da1eeee645198287457abe0c6789556bea2802726844e25",
+    "bytes": 2839
   },
   {
     "path": "schemas/revision.schema.json",
-    "sha256": "2938d22b6eb90b409a3c744b22fc4f0e94b8096d4ed5faaaaa06286f7a6f2ca7",
-    "bytes": 521
+    "sha256": "61a501227279706c4fb5be9cd28f67e31ef68146a2c817f99e809077bd2a1a95",
+    "bytes": 1163
   },
   {
     "path": "schemas/rubric.schema.json",
-    "sha256": "07401c520862713f61143d2e524ef7c839092753da9213c4f89455b5faf74f9e",
-    "bytes": 517
+    "sha256": "5a2fecb5c005a3dd14042136368b8a9ffeda24f627b0375f217f038d848ab30f",
+    "bytes": 1836
   },
   {
     "path": "schemas/source.schema.json",
-    "sha256": "9c8d28b33eba4e6e87153ca748391192368c6df6e42479c25ab1ef74053cc07d",
-    "bytes": 517
+    "sha256": "10eaa0c58cf4e209515c8abdfd715befa223eb92044d7b9630e641892001f1ec",
+    "bytes": 1703
+  },
+  {
+    "path": "scripts/build_pdf.py",
+    "sha256": "464bbea2f460a3c1b221c0859a77910c8710c33769c533979e9a54c34210e54f",
+    "bytes": 12709
   },
   {
     "path": "scripts/build_sqlite_index.py",
-    "sha256": "fd7eb95f08bca86bb5371a8ae262545961040e25bf5294a41d979ad823603642",
-    "bytes": 2621
+    "sha256": "de58dda241e4c33387dfb892d2260689051699c7104496018a4c9abc2b0391d5",
+    "bytes": 11513
+  },
+  {
+    "path": "scripts/build_static_site.py",
+    "sha256": "2faccadd370d1579d33c04bb94a33c6871be4741e6db42669336f2ca27df3bb1",
+    "bytes": 31806
+  },
+  {
+    "path": "scripts/check_examples.py",
+    "sha256": "242be51acf67a774186845fb9037e868cde4cfd02658cb49bc95c705fb0d7f40",
+    "bytes": 26703
+  },
+  {
+    "path": "scripts/check_prose_warnings.py",
+    "sha256": "26aa89efd99204128aac16a5c703fc4c15000dc59ff0caed426210574b2cd10b",
+    "bytes": 14532
+  },
+  {
+    "path": "scripts/check_revision_history.py",
+    "sha256": "3ec790659b6ef5bf094aa8793e028126518be376015daf03c8ee4e343fa436fe",
+    "bytes": 9829
   },
   {
     "path": "scripts/export_manifest.py",
-    "sha256": "b73c4bc1483a994cd45afc7a90fd4f051d4bde1a39af45f40b7ff263e90a7747",
-    "bytes": 797
+    "sha256": "4afd44253de85a790339dfd0a1cd8673a4cb503ea2acf420e0d4f5b3208c3c89",
+    "bytes": 1643
   },
   {
     "path": "scripts/validate_ndjson.py",
-    "sha256": "9f1abd0ffeb476494dafd7bc3b70a51356000719b8757b1bf247e8fc281a42b3",
-    "bytes": 3917
+    "sha256": "061a34479854f43d43e47d2c0f1084331df58ddba3382e8acda6414c2e5fb564",
+    "bytes": 25129
+  },
+  {
+    "path": "scripts/verify_static_site.py",
+    "sha256": "73e89ad6a956f6a80246a75622caabab71f08073f05f31baccc7fe5b25d57aad",
+    "bytes": 19475
+  },
+  {
+    "path": "site/assets/styles.css",
+    "sha256": "f4c946623e8f7c2b9947125f5f7a63059cbc221e096bef9dfd68f301812426f0",
+    "bytes": 14544
+  },
+  {
+    "path": "site/templates/book.html",
+    "sha256": "283054ae4dc857d719a2e797e01c54a47129c2e44cfca938e0c1b90f8920bf5d",
+    "bytes": 3056
+  },
+  {
+    "path": "site/templates/index.html",
+    "sha256": "9d7d2346ada615b39be8b0744f6c4b7e9a030bf58b803a5076c6155acf3dc549",
+    "bytes": 1929
+  },
+  {
+    "path": "site/templates/learner.html",
+    "sha256": "d34b4610af7ea0f0e9e0c7aca35ebce6fcf9b0e13ccd2fc74ed0c37e162db8e3",
+    "bytes": 1748
+  },
+  {
+    "path": "site/templates/teacher.html",
+    "sha256": "a75b53a6de57c98c39d650917a9a0d751f33338cd90469168112e15c89751380",
+    "bytes": 2950
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/design/01_communication_media.md",
+    "sha256": "7ef0d776806ef1d8019158bc4207131e127dbe75ac6b36c6b869343c75a461ac",
+    "bytes": 3372
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/design/02_digital_representation.md",
+    "sha256": "18231b0c95580379421cd03cc8932669a3f132f5750a094f99868bb451b622b9",
+    "bytes": 3901
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/design/03_audience_accessibility.md",
+    "sha256": "c5177fba1df77bd1142ac96c813ede7b4da3688a403ac2ec7040b90d5cf72b0a",
+    "bytes": 3596
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/design/04_information_structure.md",
+    "sha256": "30800e8a8fb01f4793e936a083e35b41ac3938f932aec62f04e3924198f7dd36",
+    "bytes": 3417
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/design/05_data_visualization.md",
+    "sha256": "3ad91ba029c0210fe0b400311bd8f196cdb1b818f22084d36ff8614f3ee2c057",
+    "bytes": 3671
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/design/06_prototype_usability.md",
+    "sha256": "de6494843f562f1a12f825a7fc9f0990d357774fe0a47ab3b5253903a98a463e",
+    "bytes": 3678
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/design/07_information_design_project.md",
+    "sha256": "de93725b8e80601f15eb17ed0ed6e68f9017c9e89d91b4d455f0b4136cddcce0",
+    "bytes": 4823
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/networks_data/00_networks_protocols.md",
+    "sha256": "b5c1366f91f84e151c64c3527721724f56fb3de461f395108948b349ac66cbd9",
+    "bytes": 3056
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/networks_data/01_internet_web_services.md",
+    "sha256": "606bf667b731db2f46316727b269cc9a766cfd81300db9fbcc41011ef25b524f",
+    "bytes": 2823
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/networks_data/02_security.md",
+    "sha256": "fababeab5343e2b23ae8710638a0003ba2bcb3fa4a812e1364193671c9bab271",
+    "bytes": 2844
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/networks_data/03_data_lifecycle.md",
+    "sha256": "6f14cf2d3e2ecc85ba8993b6774e16b42c840b2b8eb77e19b2513943ef832987",
+    "bytes": 2852
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/networks_data/04_tabular_cleaning.md",
+    "sha256": "0639ca454627fa3896e917b70715ca2b4a367f55408da838387e0ab329862c98",
+    "bytes": 2745
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/networks_data/05_descriptive_analysis.md",
+    "sha256": "435b41fff3e4561b5b7dc42712a14ae92904b1fd181a19c7a06bab8bcaf04a0f",
+    "bytes": 2623
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/networks_data/06_visualization_interpretation.md",
+    "sha256": "5f40405cf10be82562df57b272146153ff501f8a2e92750650b8b7e4bd8f06f9",
+    "bytes": 2490
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/networks_data/07_databases_queries.md",
+    "sha256": "b415027f1fb5252acf33d390c29b5ccd6ad74bd14de1f7a0a8a9562e9b36b407",
+    "bytes": 2735
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/networks_data/08_data_investigation_project.md",
+    "sha256": "9df2b4583bcd1dfd38a4f59b29ba49b2565f911d9ecc3702a7f92ee9dace7233",
+    "bytes": 3234
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/programming/00_computer_systems.md",
+    "sha256": "1d944358b42b80e008add77408915562307de1cbacb124485f6ffeb7f2b84729",
+    "bytes": 5912
   },
   {
     "path": "teacher_guides/highschool_information_i/programming/01_variables.md",
-    "sha256": "235edf40790fc2625f8f7fc2f2128faf765dffe31d59b22b66857328844b2e18",
-    "bytes": 661
+    "sha256": "8803ef8e72d57b05ab93cfb5cb533ad46f7eceaf54b24079487863c8093cd304",
+    "bytes": 4211
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/programming/02_conditionals.md",
+    "sha256": "d6a11bdf39da151a6980ddbaaf197ccb22f9dce7bb7c2763195021cecb8de023",
+    "bytes": 6069
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/programming/03_loops.md",
+    "sha256": "b3c2cfd489cbf04b2275c6641fece6ddd170d87d205bfd8f74d5cec8c9047c25",
+    "bytes": 6180
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/programming/04_collections_strings.md",
+    "sha256": "d05a26f4e086ea7ad479b5af088277307ab308809e81c168897b2f21511db0ed",
+    "bytes": 6212
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/programming/05_functions.md",
+    "sha256": "3e181a6a5d6b2e0a5915ced67a5170043b0dfa6dc15f6d3a0853e78ddd6fa430",
+    "bytes": 4922
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/programming/06_algorithms.md",
+    "sha256": "07a65e01de32e1fa3ec0ec2b058b5c57f824a2c108616e221f063abc2d7ca144",
+    "bytes": 4620
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/programming/07_modeling_simulation.md",
+    "sha256": "9517d33b9862a411bea5c9a163030309fe056d77d81b24bd77bbab8ddd3fad99",
+    "bytes": 4993
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/programming/08_programming_project.md",
+    "sha256": "0224e847301d64f50bd7036a4d233c0533bc8a88ca8d988d06127ef18af60e70",
+    "bytes": 9304
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/society/01_information_media.md",
+    "sha256": "b2147e0c53a423695a2f337277a511cd62bef7478a0b71803c3eb31e5cbf2df4",
+    "bytes": 2981
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/society/02_source_evaluation.md",
+    "sha256": "1c9990ca9864e6ebbe948fe0b87e402fe8da5d6310fc0a34b31c07023c609339",
+    "bytes": 3166
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/society/03_rights_responsibility.md",
+    "sha256": "f356f83d2968cf5df2b5849fbea2ab17785f5d6c46364e9ddeba0fd89fa408ea",
+    "bytes": 4138
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/society/04_problem_definition.md",
+    "sha256": "654543f6cb97730a742e51a6c5defdb7b04b2a75bdf67ae878d361cbcaa5425e",
+    "bytes": 2957
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/society/05_decomposition_modeling.md",
+    "sha256": "7e74f94e16097c1de04471974af6b95acd9c5a5db14016d7292136ebdce2d2a2",
+    "bytes": 3186
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/society/06_solution_evaluation.md",
+    "sha256": "47f028fdcdd8397c1f1368bf951939c06c85873d3752a5b8cd90c8222f3bac3a",
+    "bytes": 3441
+  },
+  {
+    "path": "teacher_guides/highschool_information_i/society/07_inquiry_project.md",
+    "sha256": "cce4a4e25efc9416e651eceb4aca5b4354fc9756b26b0e06889a550a358ab589",
+    "bytes": 4794
+  },
+  {
+    "path": "tests/test_build_sqlite_index.py",
+    "sha256": "246a290dfec95ee72fd14c70d9cf3ac735212e002b3944f98fa5308f6c346710",
+    "bytes": 2295
+  },
+  {
+    "path": "tests/test_build_static_site.py",
+    "sha256": "0f2b286c69c1f632eb61801d1255e3abc9767bcc1fb59e85f2c86eda82f4ca0e",
+    "bytes": 16450
+  },
+  {
+    "path": "tests/test_check_examples.py",
+    "sha256": "d85874828b399846b2c535813fbd793138e09d4dc06ab81a3ae61f0d929ba6dc",
+    "bytes": 10181
+  },
+  {
+    "path": "tests/test_curriculum_plan.py",
+    "sha256": "d290ed3693032abc3067de6bcd88c20d827d1d0035b6ea813e8fd1e48bf5ed67",
+    "bytes": 21725
+  },
+  {
+    "path": "tests/test_export_manifest.py",
+    "sha256": "6b5ee0b3f948233062687ce5cbc29ea8180eb213185cec2aca4f40d39d79bfe4",
+    "bytes": 1710
+  },
+  {
+    "path": "tests/test_pdf_workflow.py",
+    "sha256": "f927360f7ace2baadabcf689bb8642da10d7b75e10b090791e6b96ea02806cc7",
+    "bytes": 4195
+  },
+  {
+    "path": "tests/test_revision_history.py",
+    "sha256": "4acea720d6f2f57e1d40fa36804280aa4a6859d1df9081caa8f0a1b526b974d1",
+    "bytes": 6109
   },
   {
     "path": "tests/test_validate_sample.py",
-    "sha256": "7945828e2f962f0c001369c248c0a8a98fa6085d9b5c35eee2055f868b3ed11a",
-    "bytes": 357
+    "sha256": "2043a3d27762730173e925cc4101542f05fc4ab52d08df9c31388393ff6b01a6",
+    "bytes": 7622
+  },
+  {
+    "path": "tests/test_verify_static_site.py",
+    "sha256": "106502c43d22afbc915efa6fce42ae2444df954f2fda6341639120f1bbdcc24c",
+    "bytes": 9100
+  },
+  {
+    "path": "uv.lock",
+    "sha256": "59f27bb007e2995c9a55e58c3d5ee86c4b93fb1d560bf1ce1d3c227d6663fcec",
+    "bytes": 131779
   }
 ]

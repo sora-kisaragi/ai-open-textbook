@@ -282,6 +282,9 @@ def verify(root: Path) -> tuple[int, int]:
     site = root / "build" / "site"
     if not site.is_dir():
         raise SiteVerificationError("missing generated site: build/site")
+    content_license = site / "LICENSE-CONTENT-CC-BY-4.0.txt"
+    if not content_license.is_file():
+        raise SiteVerificationError("missing generated content license")
 
     by_id, by_type = build_static_site.load_records(root)
     curriculum = build_static_site.load_curriculum(root)
@@ -323,6 +326,19 @@ def verify(root: Path) -> tuple[int, int]:
     included_units = {curriculum[str(lesson["id"])].unit_id for lesson in lessons}
     if index_parser.count("section", css_class="curriculum-unit") != len(included_units):
         raise SiteVerificationError("index.html: curriculum unit count does not match source data")
+
+    book_parser = pages[book_path]
+    require_structure(
+        book_parser,
+        "book.html",
+        [("section", "book-imprint", "book-imprint"), ("ol", None, "source-bibliography")],
+    )
+    active_source_count = sum(
+        source.get("status") not in {"deprecated", "superseded"}
+        for source in by_type.get("source", [])
+    )
+    if book_parser.count("li", css_class="source-bibliography-item") != active_source_count:
+        raise SiteVerificationError("book.html: source bibliography is incomplete")
 
     learner_parsers: dict[Path, PageParser] = {}
     allowed_sources: dict[Path, str] = {}
@@ -396,7 +412,13 @@ def verify(root: Path) -> tuple[int, int]:
     if any(link.startswith("teacher/") for link in book_parser.links()):
         raise SiteVerificationError("book.html: teacher/reviewer link found in learner-only book")
     learner_parsers[book_path] = book_parser
-    allowed_sources[book_path] = "\n".join(all_allowed_sources)
+    bibliography_metadata = "\n".join(
+        str(source.get(field, ""))
+        for source in by_type.get("source", [])
+        if source.get("status") not in {"deprecated", "superseded"}
+        for field in ("title", "issuer", "publication_date", "accessed_at", "url")
+    )
+    allowed_sources[book_path] = "\n".join([*all_allowed_sources, bibliography_metadata])
 
     verify_references(site.resolve(), pages)
     verify_css(site.resolve(), pages)

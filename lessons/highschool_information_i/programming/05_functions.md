@@ -61,11 +61,9 @@ print(result)
 def is_valid_job(pages, copies):
     if pages < 1:
         return False
-    else:
-        if copies < 1:
-            return False
-        else:
-            return True
+    if copies < 1:
+        return False
+    return True
 
 
 def sheet_count(pages, copies):
@@ -97,7 +95,7 @@ M202 入力エラー
 M203 12 枚
 ```
 
-この例で使うのは、値を受け取る関数、単純な `if` / `else`、リスト行、添字、繰り返しだけです。
+この例で使うのは、値を受け取る関数、順に判定する単純な `if`、リスト行、添字、繰り返しだけです。条件に当てはまればその場で `False` を返し、二つの確認を通ったときだけ最後に `True` を返します。
 
 ## 呼び出しを明示的にたどる
 

@@ -75,8 +75,9 @@ A6 + B6 + D3 + D7 + D8 -> D9
 
 - Problem discovery, evaluation, information ethics, security, accessibility,
   and improvement recur across units rather than appearing once as isolated facts.
-- Existing Lesson 01 maps to C2 and remains the only implemented lesson at this
-  planning stage.
+- Existing Lesson 01 maps to C2. All 32 planned lessons now have learner bodies,
+  teacher guides, canonical lesson records, and aligned assessment packages in
+  the stacked Draft PR review candidate.
 - C2 is a true beginner entry point. It introduces ordered execution and simple
   arithmetic expressions in context; C1 is recommended background, not a hard
   prerequisite.
@@ -99,22 +100,23 @@ A6 + B6 + D3 + D7 + D8 -> D9
   evidence for each objective is explicit.
 - Assessment-item references and performance-criterion references are stored
   separately so the completion rule can be checked mechanically.
-- The existing C2 package has partial evidence for labels `C2.O2` and `C2.O3`;
-  `C2.O1` remains unassessed against the full-scope rule.
+- All 96 objective coverage entries are `complete` against the structural rule.
+  This proves resolving assessment evidence, not pedagogical adequacy.
 
 ## Instructional Time Model
 
 - One classroom period is 50 minutes.
-- The planned sequence totals 70-76 classroom periods. This is a design estimate,
+- The planned sequence totals 71-77 classroom periods. This is a design estimate,
   not a mandatory allocation or an official timetable.
-- The 70-period route is the core plan. Up to six additional periods support
+- The 71-period route is the core plan. Up to six additional periods support
   extension, reteaching, and longer project feedback. Ordinary lesson assessment
   is included, but school events and local examinations require separate buffer.
 - Ordinary lessons use one to three periods according to concept density. Dense
   lessons must use worked examples and staged practice instead of adding more
   objectives to a single sitting.
-- A7 and B7 use three to four periods; C9 and D9 use four to five periods. These
-  projects include planning, production, feedback, revision, and reflection.
+- A7 and B7 use three to four periods, C9 uses five to six periods, and D9 uses
+  four to five periods. These projects include planning, production, feedback,
+  revision, and reflection.
 - Self-study estimates are recorded separately in the curriculum JSON and must be
   checked during learner trials.
 

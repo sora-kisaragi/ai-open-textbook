@@ -1,5 +1,6 @@
 # Generated artifacts
 build/
+tmp/
 *.sqlite
 *.sqlite3
 

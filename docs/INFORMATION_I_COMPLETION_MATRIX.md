@@ -4,6 +4,7 @@ Status: `draft`
 Review status: `needs_human_review`
 Tracking: #59, #60
 Baseline date: 2026-07-14
+Evidence updated: 2026-07-15
 
 ## Purpose
 
@@ -11,23 +12,29 @@ Provide measurable evidence for subject-wide completeness without confusing
 machine completeness with human approval. This matrix is the completion contract
 for the autonomous Draft PR stack.
 
-## Baseline and Target
+## Baseline, Evidence, and Target
 
-| Artifact | Baseline | Review-candidate target |
-| --- | ---: | ---: |
-| Planned curriculum lessons | 3 | 32 |
-| Requirements documents | 3 | 32 |
-| Learner lesson bodies | 1 | 32 |
-| Teacher guides | 1 | 32 |
-| Canonical lesson records | 1 | 32 |
-| Problem records | 2 | At least 140 |
-| Answer records | 2 | One or more resolving answers per problem as designed |
-| Rubric records | 2 | At least one resolving rubric per problem |
-| Source records | 1 generic draft | Distinct claim-appropriate primary sources |
-| Executable answer evidence | 2 | Every deterministic executable answer |
-| Offline learner pages | 1 | 32 plus complete navigation |
-| Offline teacher/reviewer pages | 1 | 32 plus complete navigation |
-| Print/PDF workflow | Print CSS QA only | Reproducible full-book PDF with visual QA |
+| Artifact | Initial baseline | Integrated Draft evidence | Review-candidate target |
+| --- | ---: | ---: | ---: |
+| Planned curriculum lessons | 3 | 32 | 32 |
+| Structured lesson requirements | 3 standalone documents | 32 validated curriculum lesson entries | 32 |
+| Learner lesson bodies | 1 | 32 | 32 |
+| Teacher guides | 1 | 32 | 32 |
+| Canonical lesson records | 1 | 32 | 32 |
+| Problem records | 2 | 140 | At least 140 |
+| Answer records | 2 | 140 | One resolving answer per problem |
+| Rubric records | 2 | 140 | One resolving rubric per problem |
+| Source records | 1 generic draft | 18 active draft records plus 1 deprecated legacy record | Distinct claim-appropriate primary sources |
+| Executable evidence | 2 answers | 32 lesson blocks, 10 problem blocks, and 7 code-answer variants checked | Every deterministic executable example and answer |
+| Offline learner pages | 1 | 32 with complete navigation | 32 plus complete navigation |
+| Offline teacher/reviewer pages | 1 | 32 with source and revision context | 32 plus complete navigation |
+| Print/PDF workflow | Print CSS QA only | Reproducible 183-page A4 learner PDF | Reproducible full-book PDF with visual QA |
+
+The canonical curriculum lesson objects are the maintained requirements source.
+They avoid 32 duplicated Markdown documents drifting away from validated IDs,
+objectives, dependencies, time bands, sources, and assessment coverage. The
+three standalone v0.1 requirements documents remain in history and are not
+counted as the current source for other lessons.
 
 The 140-problem minimum uses four problems for every lesson and preserves the
 earlier eight-problem target for C2, C3, and C4. A performance task may assess
@@ -58,27 +65,27 @@ rubric.
 
 | Unit | Lessons | Learner content | Teacher support | Assessment | Integration |
 | --- | ---: | --- | --- | --- | --- |
-| A. Information society and problem solving | 7 | 0/7 | 0/7 | 0/7 packages | 0/1 inquiry task |
-| B. Communication and information design | 7 | 0/7 | 0/7 | 0/7 packages | 0/1 design task |
-| C. Computers, algorithms, and programming | 9 | 1/9 | 1/9 | 1/9 partial packages | 0/1 programming task |
-| D. Networks, information systems, and data | 9 | 0/9 | 0/9 | 0/9 packages | 0/1 investigation task |
+| A. Information society and problem solving | 7 | 7/7 | 7/7 | 7/7 packages, 28 problems | 1/1 inquiry task |
+| B. Communication and information design | 7 | 7/7 | 7/7 | 7/7 packages, 28 problems | 1/1 design task |
+| C. Computers, algorithms, and programming | 9 | 9/9 | 9/9 | 9/9 packages, 48 problems | 1/1 programming task |
+| D. Networks, information systems, and data | 9 | 9/9 | 9/9 | 9/9 packages, 36 problems | 1/1 investigation task |
 
-Lesson C2 currently has one learner body, one teacher guide, two problems, two
-answers, and two rubrics. It remains incomplete against the full-scope assessment
-target and must not be counted as approved. Its current records provide partial
-evidence for `C2.O2` and `C2.O3`; `C2.O1` remains `not_started`.
+Lesson C2 now has one learner body, one teacher guide, eight problems, eight
+answers, and eight rubrics. All three C2 objectives meet the structural coverage
+rule. This does not make the lesson approved or prove that the assessment design
+is age-appropriate.
 
 ## Instructional Time Baseline
 
 | Measure | Planning total |
 | --- | ---: |
-| Classroom periods (50 minutes) | 70-76 |
+| Classroom periods (50 minutes) | 71-77 |
 | Self-study time | 2,665-4,200 minutes |
 | Multi-session performance tasks | 4 |
 
 The four performance tasks are A7, B7, C9, and D9. Time bands are design inputs
 for teacher review and learner trials, not official allocations or evidence that
-the planned workload is age-appropriate. The 70-period route is the core plan;
+the planned workload is age-appropriate. The 71-period route is the core plan;
 the six-period upper-range allowance supports extension, reteaching, and longer
 project feedback. Ordinary lesson assessment is included, while school events
 and local examinations require separate scheduling buffer.
@@ -125,6 +132,11 @@ order, examples, and explanation structure must not be imitated.
 
 ## Completion State
 
-Current result: **not complete**. This baseline establishes measurable targets for
-Issues #61 through #66. Updating a count requires direct artifact evidence; planned
-or partially drafted work does not count.
+Current result: **machine-evidence targets satisfied; final human decisions
+pending**. All measured artifact and structural coverage targets have direct
+repository evidence. Treating the 32 canonical curriculum entries as the current
+requirements source is a provisional anti-duplication decision that remains in
+the final human checklist. This state does not approve, publish, stabilize,
+release, or finally curriculum-align the material. Issue #66 records the final
+integration evidence, and Issue #59 remains open through the human review and
+ordered merge decision.

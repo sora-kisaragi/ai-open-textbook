@@ -27,6 +27,10 @@ def write_ndjson(path: Path, records: list[dict]) -> None:
 @pytest.fixture
 def built_site_root(tmp_path: Path) -> Path:
     shutil.copytree(ROOT / "site", tmp_path / "site")
+    shutil.copyfile(
+        ROOT / "LICENSE-CONTENT-CC-BY-4.0.md",
+        tmp_path / "LICENSE-CONTENT-CC-BY-4.0.md",
+    )
     lesson_id = "lesson.info1.programming.variables.v1"
     objective_id = "obj.info1.programming.variables.002.v1"
     problem_id = "prob.info1.variables.001.v1"
