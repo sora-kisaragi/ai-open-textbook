@@ -199,7 +199,10 @@ def test_curriculum_dependencies_are_resolved_and_acyclic() -> None:
 def test_curriculum_sources_and_existing_lessons_resolve() -> None:
     curriculum = load_curriculum()
     source_ids = load_collection_ids("sources.ndjson")
-    canonical_lesson_ids = load_collection_ids("lessons.ndjson")
+    canonical_lessons = {
+        record["id"]: record
+        for record in load_collection("lessons.ndjson")
+    }
     planned_lessons = {
         lesson["lesson_id"]: lesson
         for unit in curriculum["units"]
@@ -214,6 +217,6 @@ def test_curriculum_sources_and_existing_lessons_resolve() -> None:
         for lesson in unit["lessons"]:
             assert set(lesson["source_refs"]) <= source_ids
 
-    assert canonical_lesson_ids <= planned_lessons.keys()
-    for lesson_id in canonical_lesson_ids:
-        assert planned_lessons[lesson_id]["status"] == "human_review_requested"
+    assert canonical_lessons.keys() <= planned_lessons.keys()
+    for lesson_id, canonical in canonical_lessons.items():
+        assert planned_lessons[lesson_id]["status"] == canonical["status"]

@@ -131,7 +131,8 @@ def sample_root(tmp_path: Path) -> Path:
     lesson_body = tmp_path / "lessons" / "highschool_information_i" / "programming" / "fixture_lesson.md"
     lesson_body.parent.mkdir(parents=True)
     lesson_body.write_text(
-        "# 変数と代入\n\n<script>alert('unsafe')</script>\n\n## 練習\n\n"
+        "# 変数と代入\n\n<script>alert('unsafe')</script>\n\n"
+        "## 比較\n\n| 案 | 点 |\n| --- | ---: |\n| A | 2 |\n\n## 練習\n\n"
         "- `prob.info1.variables.001.v1`: 内部ID付きの一覧。\n",
         encoding="utf-8",
     )
@@ -172,6 +173,8 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert "SECRET_RUBRIC_TOKEN" not in learner
     assert "prob.info1.variables.001.v1" not in learner
     assert "練習 1" in learner
+    assert "<table>" in learner
+    assert "<th>案</th>" in learner
     assert "&lt;script&gt;alert('unsafe')&lt;/script&gt;" in learner
     assert "SECRET_ANSWER_TOKEN" in teacher
     assert "SECRET_RUBRIC_TOKEN" in teacher
@@ -180,6 +183,7 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert "SECRET_RUBRIC_TOKEN" not in book
     assert "prob.info1.variables.001.v1" not in book
     assert 'id="lesson-programming-variables"' in book
+    assert "<table>" in book
     assert 'href="book.html"' in index
     assert "ユニット C" in index
     assert "C2" in learner

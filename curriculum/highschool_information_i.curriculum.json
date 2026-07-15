@@ -16,6 +16,7 @@
   "notes": [
     "This is an original project decomposition for planning and coverage review.",
     "Lesson count, order, titles, and assessment design are project decisions, not MEXT-prescribed requirements.",
+    "Unit A objectives are draft project interpretations of Information I content (1), using the Course of Study PDF pages 191-192 and Information commentary PDF pages 30-34 as scope locators rather than official objective wording.",
     "No official textbook, final curriculum alignment, approval, or publication claim is made."
   ],
   "units": [
@@ -86,22 +87,31 @@
             {
               "objective_ref": "obj.info1.society.information.media.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.information.media.001.v1",
+                "prob.info1.society.information.media.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.society.information.media.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.information.media.002.v1",
+                "prob.info1.society.information.media.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.society.information.media.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.information.media.003.v1",
+                "prob.info1.society.information.media.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -164,22 +174,31 @@
             {
               "objective_ref": "obj.info1.society.source.evaluation.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.source.evaluation.001.v1",
+                "prob.info1.society.source.evaluation.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.society.source.evaluation.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.source.evaluation.002.v1",
+                "prob.info1.society.source.evaluation.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.society.source.evaluation.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.source.evaluation.003.v1",
+                "prob.info1.society.source.evaluation.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -204,7 +223,7 @@
             },
             {
               "id": "obj.info1.society.rights.responsibility.003.v1",
-              "statement": "Propose a risk-reducing action while explaining its trade-offs.",
+              "statement": "Explain why information security matters and propose a risk-reducing action with trade-offs.",
               "expected_evidence": "evaluation",
               "label": "A3.O3"
             }
@@ -217,10 +236,11 @@
             "privacy",
             "responsibility",
             "information ethics",
+            "information security",
             "risk",
             "stakeholder"
           ],
-          "assessment_intent": "Analyze a fictional scenario without making unsupported legal claims.",
+          "assessment_intent": "Analyze a fictional scenario, explain the importance of information security, and avoid unsupported legal claims.",
           "depends_on": [
             "lesson.info1.society.information.media.v1",
             "lesson.info1.society.source.evaluation.v1"
@@ -244,22 +264,31 @@
             {
               "objective_ref": "obj.info1.society.rights.responsibility.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.rights.responsibility.001.v1",
+                "prob.info1.society.rights.responsibility.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.society.rights.responsibility.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.rights.responsibility.002.v1",
+                "prob.info1.society.rights.responsibility.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.society.rights.responsibility.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.rights.responsibility.003.v1",
+                "prob.info1.society.rights.responsibility.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -322,22 +351,31 @@
             {
               "objective_ref": "obj.info1.society.problem.definition.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.problem.definition.001.v1",
+                "prob.info1.society.problem.definition.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.society.problem.definition.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.problem.definition.002.v1",
+                "prob.info1.society.problem.definition.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.society.problem.definition.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.problem.definition.003.v1",
+                "prob.info1.society.problem.definition.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -400,22 +438,31 @@
             {
               "objective_ref": "obj.info1.society.decomposition.modeling.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.decomposition.modeling.001.v1",
+                "prob.info1.society.decomposition.modeling.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.society.decomposition.modeling.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.decomposition.modeling.002.v1",
+                "prob.info1.society.decomposition.modeling.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.society.decomposition.modeling.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.decomposition.modeling.003.v1",
+                "prob.info1.society.decomposition.modeling.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -480,22 +527,31 @@
             {
               "objective_ref": "obj.info1.society.solution.evaluation.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.solution.evaluation.001.v1",
+                "prob.info1.society.solution.evaluation.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.society.solution.evaluation.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.solution.evaluation.002.v1",
+                "prob.info1.society.solution.evaluation.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.society.solution.evaluation.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.solution.evaluation.003.v1",
+                "prob.info1.society.solution.evaluation.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -514,7 +570,7 @@
             },
             {
               "id": "obj.info1.society.inquiry.project.002.v1",
-              "statement": "Propose and evaluate a response that accounts for stakeholders, responsibility, and risk.",
+              "statement": "Analyze reciprocal effects between information technology and social practice, then propose and evaluate a response.",
               "expected_evidence": "evaluation",
               "label": "A7.O2"
             },
@@ -532,6 +588,7 @@
           "key_concepts": [
             "inquiry",
             "evidence trail",
+            "technology-society interaction",
             "proposal",
             "limitation",
             "reflection"
@@ -560,23 +617,44 @@
             {
               "objective_ref": "obj.info1.society.inquiry.project.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
-              "performance_criterion_refs": []
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.inquiry.project.001.v1"
+              ],
+              "performance_criterion_refs": [
+                {
+                  "rubric_ref": "rubric.prob.info1.society.inquiry.project.004.v1",
+                  "criterion_id": "c1"
+                }
+              ]
             },
             {
               "objective_ref": "obj.info1.society.inquiry.project.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
-              "performance_criterion_refs": []
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.inquiry.project.002.v1"
+              ],
+              "performance_criterion_refs": [
+                {
+                  "rubric_ref": "rubric.prob.info1.society.inquiry.project.004.v1",
+                  "criterion_id": "c2"
+                }
+              ]
             },
             {
               "objective_ref": "obj.info1.society.inquiry.project.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
-              "performance_criterion_refs": []
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.society.inquiry.project.003.v1"
+              ],
+              "performance_criterion_refs": [
+                {
+                  "rubric_ref": "rubric.prob.info1.society.inquiry.project.004.v1",
+                  "criterion_id": "c3"
+                }
+              ]
             }
           ]
         }

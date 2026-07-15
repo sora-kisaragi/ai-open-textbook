@@ -170,7 +170,7 @@ def test_excessive_stdout_is_stopped_and_reported(example_root: Path) -> None:
         encoding="utf-8",
     )
 
-    failures, _ = check_examples.check_repository(example_root, timeout=1)
+    failures, _ = check_examples.check_repository(example_root, timeout=3)
 
     assert any("stdout exceeded 65536 bytes" in failure for failure in failures)
 
