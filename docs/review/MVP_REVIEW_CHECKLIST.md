@@ -207,8 +207,9 @@ These judgments must remain human review decisions:
 
 ## Problem-Bank Review
 
-- [ ] MVP target remains 8 problems per lesson and 24 problems total unless a
-      maintainer changes the scope.
+- [ ] Assessment counts follow the active scope in
+      `docs/INFORMATION_I_COMPLETION_MATRIX.md`; the earlier eight-problem target
+      remains in force for C2 through C4 unless a maintainer changes it.
 - [ ] Per-lesson difficulty distribution follows the accepted design when
       problem generation is in scope.
 - [ ] Machine-checkable and human-reviewed problem types are clearly
@@ -318,8 +319,8 @@ Each PR should include:
 
 ## Open Questions
 
-- Should teacher guides be included in v0.1 public preview or treated as beta
-  support material?
+- Should full-scope teacher guides appear in a future public preview or be
+  distributed separately as supplemental support material?
 - Should lesson records later add explicit teacher-guide reference fields?
 - Should timing examples use flexible bands only, or include 45/50-minute
   examples?

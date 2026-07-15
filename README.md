@@ -1,22 +1,28 @@
-# AI Open Textbook Starter
+# AI Open Textbook
 
-This repository is a starter kit for building AI-native open educational materials.
-It is designed for public GitHub development, agent-assisted workflows, human review, and versioned educational data.
+This repository builds Japanese open educational material for Information I.
+It is designed for public GitHub development, agent-assisted workflows, human
+review, and versioned educational data.
 
 ## Scope
 
-The first MVP targets:
+The current v0.2 review-candidate plan targets:
 
 - Stage: High school
 - Subject: Information I
-- Unit: Programming Basics
-- Lessons:
-  1. Variables and Assignment
-  2. Conditionals
-  3. Loops
+- Scope: all four provisional Information I content areas
+- Curriculum: 4 units and 32 planned lessons
+- Delivery: Japanese learner material, supplemental teacher guides, offline HTML,
+  and reproducible print/PDF output
+- Example programming language: Python, used to teach transferable concepts
 
-This repository does **not** claim to be an official government-approved textbook.
-It is an open educational material, supplemental teaching aid, and self-study resource.
+See `docs/MVP_SCOPE.md`, `docs/CURRICULUM_MAP.md`, and
+`docs/INFORMATION_I_COMPLETION_MATRIX.md` for the active draft scope and direct
+evidence requirements.
+
+This repository does **not** claim to be an official government-approved
+textbook or finally curriculum-aligned. It is an open educational material,
+supplemental teaching aid, and self-study resource under human review.
 
 ## Design choice
 
@@ -35,6 +41,7 @@ Why:
 ```bash
 python3 scripts/validate_ndjson.py
 python3 scripts/build_sqlite_index.py
+python3 scripts/build_static_site.py
 ```
 
 Optional:
@@ -42,6 +49,7 @@ Optional:
 ```bash
 make validate
 make sqlite
+make site
 ```
 
 ## Key files
