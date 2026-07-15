@@ -395,8 +395,8 @@ def check_curriculum(
         sum(lesson.get("instructional_time", {}).get("class_periods_50_min", [0, 0])[index] for lesson in lessons)
         for index in (0, 1)
     )
-    if period_totals != (70, 76):
-        add_error(errors, curriculum, f"classroom period totals must be 70-76, got {period_totals[0]}-{period_totals[1]}")
+    if period_totals != (71, 77):
+        add_error(errors, curriculum, f"classroom period totals must be 71-77, got {period_totals[0]}-{period_totals[1]}")
 
     for problem in (record for record in records if record.get("type") == "problem"):
         for objective_ref in problem.get("objective_refs", []) or []:

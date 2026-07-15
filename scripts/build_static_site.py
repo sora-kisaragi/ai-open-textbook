@@ -252,6 +252,21 @@ def render_without_leading_h1(md: MarkdownIt, source: str) -> str:
     return md.renderer.render(tokens, md.options, {})
 
 
+def render_source_context(lesson: dict, by_id: dict[str, dict]) -> str:
+    items: list[str] = []
+    for source_ref in lesson.get("source_refs", []) or []:
+        source = require_reference(by_id, source_ref, "source", "source_refs")
+        items.append(f"<li><strong>{escape(source.get('title', source_ref))}</strong></li>")
+
+    source_list = f'<ul class="source-context-list">{"".join(items)}</ul>' if items else "<p>参照出典はありません。</p>"
+    return (
+        '<p class="source-scope-note">ここに示す出典は、一般的な教育課程上の位置付けや技術事項を確認するための参照です。'
+        "各レッスンの学習目標、順序、例、時間配分、問題、評価方法は本プロジェクトが作成したドラフトであり、"
+        "文部科学省が定めた表現や授業案ではありません。</p>"
+        f"{source_list}"
+    )
+
+
 def slug_for_lesson(lesson: dict) -> str:
     lesson_id = str(lesson.get("id", ""))
     parts = lesson_id.split(".")
@@ -483,6 +498,7 @@ def write_site(
             entity_ids.update(problem.get("answer_refs", []) or [])
             entity_ids.update(problem.get("rubric_refs", []) or [])
         revision_html = render_revisions(revisions, entity_ids)
+        source_context_html = render_source_context(lesson, by_id)
         teacher_page = render_template(
             root,
             "teacher.html",
@@ -495,6 +511,7 @@ def write_site(
                 "learner_href": f"../lessons/{escape(slug)}.html",
                 "teacher_guide_html": teacher_html,
                 "review_html": review_html,
+                "source_context_html": source_context_html,
                 "revision_html": revision_html,
             },
         )

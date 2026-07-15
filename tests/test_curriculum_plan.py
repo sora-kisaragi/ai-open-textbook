@@ -2,6 +2,7 @@
 """Contract tests for the full Information I curriculum plan."""
 from __future__ import annotations
 
+import ast
 import json
 import re
 from pathlib import Path
@@ -121,8 +122,10 @@ def test_time_and_assessment_baselines() -> None:
         for lesson in lessons
         if lesson["instructional_time"]["is_multi_session_project"]
     }
-    assert (period_minimum, period_maximum) == (70, 76)
+    assert (period_minimum, period_maximum) == (71, 77)
     assert project_orders == {"A7", "B7", "C9", "D9"}
+    c9 = next(lesson for lesson in lessons if lesson["order"] == "C9")
+    assert c9["instructional_time"]["class_periods_50_min"] == [5, 6]
 
     for lesson in lessons:
         for entry in lesson["assessment_coverage"]:
@@ -153,7 +156,35 @@ def test_time_and_assessment_baselines() -> None:
             else:
                 assert complete
 
-    c2 = next(lesson for lesson in lessons if lesson["order"] == "C2")
+    unit_c = next(unit for unit in curriculum["units"] if unit["id"] == "unit.info1.programming.v1")
+    unit_c_lessons = unit_c["lessons"]
+    unit_c_lesson_ids = {lesson["lesson_id"] for lesson in unit_c_lessons}
+    unit_c_problem_counts = {
+        lesson_id: sum(
+            lesson_id in problem["lesson_refs"]
+            for problem in load_collection("problems.ndjson")
+        )
+        for lesson_id in unit_c_lesson_ids
+    }
+    assert unit_c_problem_counts == {
+        "lesson.info1.programming.computer.systems.v1": 4,
+        "lesson.info1.programming.variables.v1": 8,
+        "lesson.info1.programming.conditionals.v1": 8,
+        "lesson.info1.programming.loops.v1": 8,
+        "lesson.info1.programming.collections.strings.v1": 4,
+        "lesson.info1.programming.functions.v1": 4,
+        "lesson.info1.programming.algorithms.v1": 4,
+        "lesson.info1.programming.modeling.simulation.v1": 4,
+        "lesson.info1.programming.project.v1": 4,
+    }
+    assert sum(unit_c_problem_counts.values()) == 48
+    assert all(
+        entry["status"] == "complete"
+        for lesson in unit_c_lessons
+        for entry in lesson["assessment_coverage"]
+    )
+
+    c2 = next(lesson for lesson in unit_c_lessons if lesson["order"] == "C2")
     assert c2["depends_on"] == []
     c2_objective_labels = {
         objective["id"]: objective["label"]
@@ -162,7 +193,64 @@ def test_time_and_assessment_baselines() -> None:
     assert {
         c2_objective_labels[entry["objective_ref"]]: entry["status"]
         for entry in c2["assessment_coverage"]
-    } == {"C2.O1": "not_started", "C2.O2": "partial", "C2.O3": "partial"}
+    } == {"C2.O1": "complete", "C2.O2": "complete", "C2.O3": "complete"}
+    c2_coverage_refs = {
+        c2_objective_labels[entry["objective_ref"]]: entry["assessment_item_refs"]
+        for entry in c2["assessment_coverage"]
+    }
+    assert c2_coverage_refs == {
+        "C2.O1": [
+            "prob.info1.variables.003.v1",
+            "prob.info1.variables.004.v1",
+            "prob.info1.variables.008.v1",
+        ],
+        "C2.O2": [
+            "prob.info1.variables.005.v1",
+            "prob.info1.variables.007.v1",
+            "prob.info1.variables.008.v1",
+        ],
+        "C2.O3": [
+            "prob.info1.variables.006.v1",
+            "prob.info1.variables.007.v1",
+            "prob.info1.variables.008.v1",
+        ],
+    }
+    assert all(
+        "prob.info1.variables.001.v1" not in item_refs
+        and "prob.info1.variables.002.v1" not in item_refs
+        for item_refs in c2_coverage_refs.values()
+    )
+
+    c9 = next(lesson for lesson in unit_c_lessons if lesson["order"] == "C9")
+    assert {
+        entry["objective_ref"]: (
+            entry["assessment_item_refs"],
+            entry["performance_criterion_refs"],
+        )
+        for entry in c9["assessment_coverage"]
+    } == {
+        "obj.info1.programming.project.001.v1": (
+            ["prob.info1.programming.project.001.v1"],
+            [{
+                "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                "criterion_id": "c5_executable_evidence",
+            }],
+        ),
+        "obj.info1.programming.project.002.v1": (
+            ["prob.info1.programming.project.002.v1"],
+            [{
+                "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                "criterion_id": "c6_test_classes",
+            }],
+        ),
+        "obj.info1.programming.project.003.v1": (
+            ["prob.info1.programming.project.003.v1"],
+            [{
+                "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                "criterion_id": "c7_requirement_evaluation",
+            }],
+        ),
+    }
 
 
 def test_curriculum_dependencies_are_resolved_and_acyclic() -> None:
@@ -194,6 +282,162 @@ def test_curriculum_dependencies_are_resolved_and_acyclic() -> None:
     assert "lesson.info1.data.descriptive.analysis.v1" in graph[
         "lesson.info1.data.databases.queries.v1"
     ]
+
+
+def test_unit_c_review_contracts() -> None:
+    curriculum = load_curriculum()
+    unit_c = next(
+        unit for unit in curriculum["units"]
+        if unit["id"] == "unit.info1.programming.v1"
+    )
+    planned = {lesson["order"]: lesson for lesson in unit_c["lessons"]}
+    lessons = {
+        record["id"]: record for record in load_collection("lessons.ndjson")
+    }
+    problems = {
+        record["id"]: record for record in load_collection("problems.ndjson")
+    }
+    answers = {
+        record["id"]: record for record in load_collection("answers.ndjson")
+    }
+    rubrics = {
+        record["id"]: record for record in load_collection("rubrics.ndjson")
+    }
+    sources = {
+        record["id"]: record for record in load_collection("sources.ndjson")
+    }
+
+    assert any(
+        "All unit objectives, sequencing, and assessments are project-authored interpretations, not MEXT wording"
+        in note
+        for note in curriculum["notes"]
+    )
+    assert planned["C2"]["prerequisites"] == [
+        "No prior programming is assumed; required arithmetic expressions and ordered execution are introduced and checked inside this lesson."
+    ]
+
+    c7 = planned["C7"]
+    assert "diagram" not in c7["learning_objectives"][0]["statement"].lower()
+    assert "shortest-job-first" not in c7["assessment_intent"].lower()
+    for number in range(1, 5):
+        suffix = f"{number:03d}.v1"
+        problem = problems[f"prob.info1.programming.algorithms.{suffix}"]
+        answer = answers[f"ans.prob.info1.programming.algorithms.{suffix}"]
+        rubric = rubrics[f"rubric.prob.info1.programming.algorithms.{suffix}"]
+        canonical_text = " ".join([
+            problem["question"],
+            answer["canonical_answer"],
+            answer["explanation"],
+            *[criterion["description"] for criterion in rubric["criteria"]],
+        ])
+        assert "受付順" in canonical_text or "FIFO" in canonical_text
+        assert "短い印刷優先" not in canonical_text
+        assert "公平" not in canonical_text
+
+    c9_problem = problems["prob.info1.programming.project.004.v1"]["question"]
+    for signature in (
+        "validation_error(arrival, sheets)",
+        "keep_valid_jobs(jobs)",
+        "fifo_order(jobs)",
+        "simulate_fifo(ordered_jobs, speed)",
+        "average_wait(results)",
+    ):
+        assert signature in c9_problem
+    c9_answer = answers["ans.prob.info1.programming.project.004.v1"]
+    c9_rubric = rubrics["rubric.prob.info1.programming.project.004.v1"]
+    assert "assert" not in c9_answer["canonical_answer"]
+    assert "assert" not in " ".join(
+        criterion["description"] for criterion in c9_rubric["criteria"]
+    )
+    assert "項目不足" not in c9_answer["canonical_answer"]
+    assert " or " not in c9_answer["canonical_answer"]
+    assert "依頼数は10件以下" in c9_answer["canonical_answer"]
+    assert "期待値:" in c9_answer["canonical_answer"]
+    assert "実際値:" in c9_answer["canonical_answer"]
+    for schema in (
+        "[id, arrival, sheets]",
+        "[id, reason]",
+        "[id, start, finish, wait]",
+    ):
+        assert schema in c9_problem
+        assert schema in c9_answer["canonical_answer"]
+        assert schema in " ".join(
+            criterion["description"] for criterion in c9_rubric["criteria"]
+        )
+
+    c8_answer = answers["ans.prob.info1.programming.modeling.simulation.004.v1"]
+    c8_tree = ast.parse(c8_answer["canonical_answer"])
+    assert not any(isinstance(node, (ast.Assert, ast.Tuple)) for node in ast.walk(c8_tree))
+    assert not any(
+        isinstance(node, ast.Call)
+        and (
+            isinstance(node.func, ast.Name) and node.func.id in {"len", "max"}
+            or isinstance(node.func, ast.Attribute) and node.func.attr == "append"
+        )
+        for node in ast.walk(c8_tree)
+    )
+    assert "simulate_and_display" in c8_answer["canonical_answer"]
+
+    c6_problem = problems["prob.info1.programming.functions.004.v1"]
+    c6_answer = answers["ans.prob.info1.programming.functions.004.v1"]
+    c6_rubric = rubrics["rubric.prob.info1.programming.functions.004.v1"]
+    assert "display_result(job_id, sheets)" in c6_problem["question"]
+    assert 'print(job_id, sheets, "枚")' in c6_answer["canonical_answer"]
+    assert "str(" not in c6_answer["canonical_answer"]
+    assert "make_message" not in c6_answer["canonical_answer"]
+    assert "表示" in " ".join(
+        criterion["description"] for criterion in c6_rubric["criteria"]
+    )
+
+    for suffix in ("003", "008"):
+        assignment_answer = answers[f"ans.prob.info1.variables.{suffix}.v1"]
+        assert "初心者向けモデル" in assignment_answer["canonical_answer"]
+        assert "結び付け" in assignment_answer["canonical_answer"]
+        assert assignment_answer["source_refs"] == [
+            "src.python.assignment.reference.v1"
+        ]
+
+    c8_problem = problems[
+        "prob.info1.programming.modeling.simulation.002.v1"
+    ]["question"]
+    assert "for job in jobs:" in c8_problem
+    assert "job[0]" in c8_problem
+    assert "max(" not in c8_problem
+    assert "for job_id," not in c8_problem
+
+    required_sources = {
+        "src.python.assignment.reference.v1",
+        "src.python.compound.statements.v1",
+        "src.python.sequence.types.v1",
+        "src.python.functions.tutorial.v1",
+        "src.nist.csrc.storage.glossary.v1",
+    }
+    assert required_sources <= set(sources)
+    assert "src.nist.csrc.storage.glossary.v1" in lessons[
+        "lesson.info1.programming.computer.systems.v1"
+    ]["source_refs"]
+    for suffix in ("001", "003", "004"):
+        answer = answers[
+            f"ans.prob.info1.programming.computer.systems.{suffix}.v1"
+        ]
+        assert "src.nist.csrc.storage.glossary.v1" not in answer["source_refs"]
+    assert "Appendix A" in sources["src.nist.csrc.storage.glossary.v1"]["notes"]
+    assert "PDF page 42" in sources["src.nist.csrc.storage.glossary.v1"]["notes"]
+    for source_id in (
+        "src.mext.highschool.curriculum2018.v1",
+        "src.mext.information.commentary2018.v1",
+    ):
+        assert "project-authored interpretations" in sources[source_id]["notes"]
+        assert "not prescribed MEXT wording or requirements" in sources[source_id]["notes"]
+    assert "src.python.assignment.reference.v1" in lessons[
+        "lesson.info1.programming.variables.v1"
+    ]["source_refs"]
+    assert "src.python.sequence.types.v1" in lessons[
+        "lesson.info1.programming.collections.strings.v1"
+    ]["source_refs"]
+    assert "src.python.functions.tutorial.v1" in lessons[
+        "lesson.info1.programming.functions.v1"
+    ]["source_refs"]
 
 
 def test_curriculum_sources_and_existing_lessons_resolve() -> None:

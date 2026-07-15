@@ -40,7 +40,7 @@ def validation_errors(root: Path) -> list[str]:
 def test_validate_current_repository() -> None:
     errors, count = validate_ndjson.validate_repository(ROOT)
     assert errors == []
-    assert count == 468
+    assert count == 901
 
 
 def test_invalid_calendar_date_is_rejected(validation_root: Path) -> None:
@@ -150,7 +150,9 @@ def test_wrong_lesson_coverage_and_false_complete_are_rejected(validation_root: 
     a1_coverage["status"] = "complete"
 
     c2 = curriculum["units"][2]["lessons"][1]
-    c2["assessment_coverage"][1]["status"] = "complete"
+    c2_coverage = c2["assessment_coverage"][1]
+    c2_coverage["assessment_item_refs"] = c2_coverage["assessment_item_refs"][:1]
+    c2_coverage["status"] = "complete"
     curriculum_path.write_text(json.dumps(curriculum, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     errors = validation_errors(validation_root)
