@@ -2216,22 +2216,31 @@
             {
               "objective_ref": "obj.info1.networks.protocols.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.networks.protocols.001.v1",
+                "prob.info1.networks.protocols.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.networks.protocols.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.networks.protocols.002.v1",
+                "prob.info1.networks.protocols.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.networks.protocols.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.networks.protocols.003.v1",
+                "prob.info1.networks.protocols.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -2294,22 +2303,31 @@
             {
               "objective_ref": "obj.info1.networks.internet.web.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.networks.internet.web.001.v1",
+                "prob.info1.networks.internet.web.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.networks.internet.web.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.networks.internet.web.002.v1",
+                "prob.info1.networks.internet.web.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.networks.internet.web.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.networks.internet.web.003.v1",
+                "prob.info1.networks.internet.web.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -2374,22 +2392,31 @@
             {
               "objective_ref": "obj.info1.networks.security.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.networks.security.001.v1",
+                "prob.info1.networks.security.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.networks.security.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.networks.security.002.v1",
+                "prob.info1.networks.security.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.networks.security.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.networks.security.003.v1",
+                "prob.info1.networks.security.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -2454,22 +2481,31 @@
             {
               "objective_ref": "obj.info1.data.lifecycle.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.lifecycle.001.v1",
+                "prob.info1.data.lifecycle.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.data.lifecycle.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.lifecycle.002.v1",
+                "prob.info1.data.lifecycle.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.data.lifecycle.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.lifecycle.003.v1",
+                "prob.info1.data.lifecycle.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -2532,22 +2568,31 @@
             {
               "objective_ref": "obj.info1.data.cleaning.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.cleaning.001.v1",
+                "prob.info1.data.cleaning.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.data.cleaning.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.cleaning.002.v1",
+                "prob.info1.data.cleaning.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.data.cleaning.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.cleaning.003.v1",
+                "prob.info1.data.cleaning.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -2610,22 +2655,31 @@
             {
               "objective_ref": "obj.info1.data.descriptive.analysis.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.descriptive.analysis.001.v1",
+                "prob.info1.data.descriptive.analysis.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.data.descriptive.analysis.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.descriptive.analysis.002.v1",
+                "prob.info1.data.descriptive.analysis.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.data.descriptive.analysis.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.descriptive.analysis.003.v1",
+                "prob.info1.data.descriptive.analysis.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -2690,22 +2744,31 @@
             {
               "objective_ref": "obj.info1.data.visualization.interpretation.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.visualization.interpretation.001.v1",
+                "prob.info1.data.visualization.interpretation.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.data.visualization.interpretation.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.visualization.interpretation.002.v1",
+                "prob.info1.data.visualization.interpretation.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.data.visualization.interpretation.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.visualization.interpretation.003.v1",
+                "prob.info1.data.visualization.interpretation.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -2772,22 +2835,31 @@
             {
               "objective_ref": "obj.info1.data.databases.queries.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.databases.queries.001.v1",
+                "prob.info1.data.databases.queries.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.data.databases.queries.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.databases.queries.002.v1",
+                "prob.info1.data.databases.queries.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.data.databases.queries.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.databases.queries.003.v1",
+                "prob.info1.data.databases.queries.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -2858,23 +2930,44 @@
             {
               "objective_ref": "obj.info1.data.investigation.project.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
-              "performance_criterion_refs": []
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.investigation.project.001.v1"
+              ],
+              "performance_criterion_refs": [
+                {
+                  "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                  "criterion_id": "c1_question_ethics"
+                }
+              ]
             },
             {
               "objective_ref": "obj.info1.data.investigation.project.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
-              "performance_criterion_refs": []
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.investigation.project.002.v1"
+              ],
+              "performance_criterion_refs": [
+                {
+                  "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                  "criterion_id": "c2_reproducible_workflow"
+                }
+              ]
             },
             {
               "objective_ref": "obj.info1.data.investigation.project.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
-              "performance_criterion_refs": []
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.data.investigation.project.003.v1"
+              ],
+              "performance_criterion_refs": [
+                {
+                  "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                  "criterion_id": "c4_bounded_conclusion"
+                }
+              ]
             }
           ]
         }
