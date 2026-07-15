@@ -33,6 +33,24 @@ def load_collection_ids(filename: str) -> set[str]:
     return {record["id"] for record in load_collection(filename)}
 
 
+def learner_facing_text() -> str:
+    paths = [
+        *sorted((ROOT / "lessons").rglob("*.md")),
+        *sorted((ROOT / "teacher_guides").rglob("*.md")),
+        ROOT / "data" / "collections" / "lessons.ndjson",
+        ROOT / "data" / "collections" / "problems.ndjson",
+        ROOT / "data" / "collections" / "answers.ndjson",
+        ROOT / "data" / "collections" / "rubrics.ndjson",
+    ]
+    return "\n".join(path.read_text(encoding="utf-8") for path in paths)
+
+
+def test_selected_display_terminology_is_consistent() -> None:
+    text = learner_facing_text()
+    for rejected in ("情報Ⅰ", "Ｗｅｂ", "データーベース", "シュミレーション"):
+        assert rejected not in text
+
+
 def test_full_scope_curriculum_contract() -> None:
     curriculum = load_curriculum()
     units = curriculum["units"]

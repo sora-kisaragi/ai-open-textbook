@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+from urllib.parse import urlsplit
 
 import pytest
 
@@ -26,7 +27,8 @@ class AssetReferenceParser(HTMLParser):
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         for name, value in attrs:
             if name in {"href", "src"} and value and not value.startswith("#"):
-                self.references.append(value)
+                if urlsplit(value).scheme not in {"http", "https"}:
+                    self.references.append(value)
 
 
 def write_ndjson(path: Path, records: list[dict]) -> None:
@@ -52,6 +54,10 @@ def curriculum_lesson(lesson_id: str, order: str, title: str, objective_id: str)
 @pytest.fixture
 def sample_root(tmp_path: Path) -> Path:
     shutil.copytree(ROOT / "site", tmp_path / "site")
+    shutil.copyfile(
+        ROOT / "LICENSE-CONTENT-CC-BY-4.0.md",
+        tmp_path / "LICENSE-CONTENT-CC-BY-4.0.md",
+    )
     lesson_id = "lesson.info1.programming.variables.v1"
     objective_id = "obj.info1.programming.variables.002.v1"
     problem_id = "prob.info1.variables.001.v1"
@@ -180,6 +186,7 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert "SECRET_ANSWER_TOKEN" in teacher
     assert "SECRET_RUBRIC_TOKEN" in teacher
     assert "各レッスンの学習目標、順序、例、時間配分、問題、評価方法は本プロジェクトが作成したドラフト" in teacher
+    assert "説明、比較、分析、制作、コードなどの課題" in learner
     assert "SECRET_ANSWER_TOKEN" not in book
     assert "SECRET_ACCEPTABLE_TOKEN" not in book
     assert "SECRET_RUBRIC_TOKEN" not in book
@@ -188,12 +195,16 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert "<table>" in book
     assert '<div class="table-wrap"><table>' in book
     assert 'href="book.html"' in index
+    assert "Creative Commons Attribution 4.0 International" in book
+    assert "Python Software Foundationから独立" in book
+    assert 'id="book-imprint"' in book
+    assert "LICENSE-CONTENT-CC-BY-4.0.txt" in first_snapshot
     assert "ユニット C" in index
     assert "C2" in learner
     assert teacher.count("<h1") == 1
     assert 'href="../lessons/programming-variables.html"' in teacher
     assert "lessons/fixture-lesson.html" not in first_snapshot
-    assert all(b"http://" not in content and b"https://" not in content for content in first_snapshot.values())
+    assert all(b"<script" not in content and b"<iframe" not in content for content in first_snapshot.values())
 
     site_root = sample_root / "build" / "site"
     for relative_path, content in first_snapshot.items():
@@ -209,6 +220,74 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert second.returncode == 0, second.stdout + second.stderr
     assert snapshot_files(sample_root) == first_snapshot
     assert index_db.read_bytes() == b"keep-this-index"
+
+
+def test_source_context_includes_traceability_metadata() -> None:
+    lesson = {"source_refs": ["src.example.v1"]}
+    records = {
+        "src.example.v1": {
+            "id": "src.example.v1",
+            "type": "source",
+            "title": "Example Source",
+            "source_type": "official_standard",
+            "url": "https://example.test/source",
+            "accessed_at": "2026-07-15",
+            "notes": "Use only for the stated technical definition.",
+        }
+    }
+
+    rendered = build_static_site.render_source_context(lesson, records)
+
+    assert 'href="https://example.test/source"' in rendered
+    assert "official_standard" in rendered
+    assert "2026-07-15" in rendered
+    assert "Use only for the stated technical definition." in rendered
+
+
+def test_source_bibliography_omits_deprecated_sources() -> None:
+    sources = [
+        {
+            "id": "src.active.v1",
+            "type": "source",
+            "status": "draft",
+            "issuer": "Example Issuer",
+            "title": "Active Source",
+            "url": "https://example.test/active",
+            "publication_date": "2026-07",
+            "accessed_at": "2026-07-15",
+        },
+        {
+            "id": "src.old.v1",
+            "type": "source",
+            "status": "deprecated",
+            "title": "Deprecated Source",
+            "url": "https://example.test/old",
+        },
+    ]
+
+    rendered = build_static_site.render_source_bibliography(sources)
+
+    assert "Active Source" in rendered
+    assert "Example Issuer" in rendered
+    assert "2026-07" in rendered
+    assert "2026-07-15" in rendered
+    assert "Deprecated Source" not in rendered
+
+
+def test_problem_instructional_order_prioritizes_difficulty_then_id() -> None:
+    problems = [
+        {"id": "prob.example.001.v1", "difficulty": "standard"},
+        {"id": "prob.example.003.v1", "difficulty": "advanced"},
+        {"id": "prob.example.002.v1", "difficulty": "basic"},
+    ]
+
+    ordered = sorted(problems, key=build_static_site.problem_instructional_order)
+
+    assert [problem["difficulty"] for problem in ordered] == [
+        "basic",
+        "standard",
+        "advanced",
+    ]
 
 
 def test_missing_body_ref_fails_clearly(sample_root: Path) -> None:

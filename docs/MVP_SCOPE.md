@@ -2,7 +2,7 @@
 
 Status: `draft`
 Review status: `needs_human_review`
-Last updated: 2026-07-14
+Last updated: 2026-07-15
 Tracking issue: #59
 
 This document is the current planning baseline for a complete Japanese
@@ -64,7 +64,7 @@ objective IDs and their assessment history must remain stable.
 The curriculum assumes everyday experience with digital information, basic
 arithmetic, and basic chart reading. Required mathematical ideas are refreshed
 where they are used, and no prior programming is assumed. The current time model
-is 70-76 classroom periods of 50 minutes, with separate self-study estimates and
+is 71-77 classroom periods of 50 minutes, with separate self-study estimates and
 four multi-session performance tasks. These are planning bands for human review,
 not official allocations.
 
@@ -72,7 +72,13 @@ not official allocations.
 
 Each lesson must include:
 
-- A requirements document with measurable objectives and explicit prerequisites.
+- A validated structured requirements entry in
+  `curriculum/highschool_information_i.curriculum.json` with measurable
+  objectives, explicit prerequisites, dependencies, key concepts, assessment
+  intent, source references, time bands, and objective coverage. The three
+  standalone v0.1 Markdown requirements files remain historical detail; they
+  are not duplicated for the other lessons because the canonical curriculum is
+  the maintained requirements source.
 - A Japanese learner lesson with introduction, examples or worked analysis,
   common mistakes, practice, self-check, and summary.
 - A Japanese supplemental teacher guide with timing bands, prerequisite checks,

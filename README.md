@@ -1,5 +1,7 @@
 # AI Open Textbook
 
+[English](README.md) | [日本語](README.ja.md)
+
 This repository builds Japanese open educational material for Information I.
 It is designed for public GitHub development, agent-assisted workflows, human
 review, and versioned educational data.

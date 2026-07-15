@@ -440,6 +440,12 @@ def check_coverage(
         if not isinstance(problem_id, str) or problem is None:
             continue
         criterion_problem_ids.add(problem_id)
+        if problem.get("question_type") != "performance_task":
+            add_error(
+                errors,
+                curriculum,
+                f"performance criterion problem {problem_id} must use question_type performance_task",
+            )
         if lesson_id not in (problem.get("lesson_refs", []) or []):
             add_error(errors, curriculum, f"performance criterion problem {problem_id} does not belong to {lesson_id}")
         if objective_ref not in (problem.get("objective_refs", []) or []):

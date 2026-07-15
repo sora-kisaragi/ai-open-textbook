@@ -28,6 +28,7 @@ COLLECTION_FILES = (
     "sources.ndjson",
     "revisions.ndjson",
 )
+DIFFICULTY_ORDER = {"basic": 0, "standard": 1, "advanced": 2}
 
 
 class SiteBuildError(RuntimeError):
@@ -266,7 +267,22 @@ def render_source_context(lesson: dict, by_id: dict[str, dict]) -> str:
     items: list[str] = []
     for source_ref in lesson.get("source_refs", []) or []:
         source = require_reference(by_id, source_ref, "source", "source_refs")
-        items.append(f"<li><strong>{escape(source.get('title', source_ref))}</strong></li>")
+        accessed_at = source.get("accessed_at")
+        accessed_html = (
+            f'<span><strong>確認日:</strong> {escape(accessed_at)}</span>'
+            if accessed_at
+            else ""
+        )
+        notes = source.get("notes")
+        notes_html = f'<p class="source-context-note">{escape(notes)}</p>' if notes else ""
+        items.append(
+            "<li>"
+            f'<a href="{escape(source.get("url", ""))}">'
+            f'<strong>{escape(source.get("title", source_ref))}</strong></a>'
+            '<p class="source-context-meta">'
+            f'<span><strong>種別:</strong> {escape(source.get("source_type", ""))}</span>'
+            f"{accessed_html}</p>{notes_html}</li>"
+        )
 
     source_list = f'<ul class="source-context-list">{"".join(items)}</ul>' if items else "<p>参照出典はありません。</p>"
     return (
@@ -275,6 +291,34 @@ def render_source_context(lesson: dict, by_id: dict[str, dict]) -> str:
         "文部科学省が定めた表現や授業案ではありません。</p>"
         f"{source_list}"
     )
+
+
+def render_source_bibliography(sources: list[dict]) -> str:
+    active_sources = sorted(
+        (source for source in sources if source.get("status") not in {"deprecated", "superseded"}),
+        key=lambda source: (str(source.get("issuer", "")), str(source.get("title", "")), str(source.get("id", ""))),
+    )
+    if not active_sources:
+        return '<p class="muted">参照出典はありません。</p><ol class="source-bibliography"></ol>'
+
+    items: list[str] = []
+    for source in active_sources:
+        metadata = []
+        if source.get("issuer"):
+            metadata.append(f'<span><strong>発行:</strong> {escape(source["issuer"])}</span>')
+        if source.get("publication_date"):
+            metadata.append(f'<span><strong>公開:</strong> {escape(source["publication_date"])}</span>')
+        if source.get("accessed_at"):
+            metadata.append(f'<span><strong>確認:</strong> {escape(source["accessed_at"])}</span>')
+        items.append(
+            '<li class="source-bibliography-item"><a href="{}"><strong>{}</strong></a>'
+            '<p class="source-context-meta">{}</p></li>'.format(
+                escape(source.get("url", "")),
+                escape(source.get("title", source.get("id", ""))),
+                "".join(metadata),
+            )
+        )
+    return f'<ol class="source-bibliography">{"".join(items)}</ol>'
 
 
 def slug_for_lesson(lesson: dict) -> str:
@@ -307,6 +351,13 @@ def render_practices(md: MarkdownIt, problems: list[dict], id_prefix: str = "pra
             "</section>".format(section_id, number, section_id, question)
         )
     return "".join(blocks)
+
+
+def problem_instructional_order(problem: dict) -> tuple[int, str]:
+    return (
+        DIFFICULTY_ORDER.get(str(problem.get("difficulty", "")), len(DIFFICULTY_ORDER)),
+        str(problem.get("id", "")),
+    )
 
 
 def render_verification(evidence: list[dict]) -> str:
@@ -415,6 +466,10 @@ def write_site(
     if not stylesheet.is_file():
         raise SiteBuildError(f"missing site asset: {stylesheet.relative_to(root)}")
     shutil.copyfile(stylesheet, assets / "styles.css")
+    content_license = root / "LICENSE-CONTENT-CC-BY-4.0.md"
+    if not content_license.is_file():
+        raise SiteBuildError(f"missing content license: {content_license.relative_to(root)}")
+    shutil.copyfile(content_license, destination / "LICENSE-CONTENT-CC-BY-4.0.txt")
 
     output_slugs: set[str] = set()
     lessons = sorted(
@@ -433,7 +488,7 @@ def write_site(
         position = curriculum[lesson_id]
         linked_problems = sorted(
             (problem for problem in problems if lesson_id in (problem.get("lesson_refs", []) or [])),
-            key=lambda item: str(item.get("id", "")),
+            key=problem_instructional_order,
         )
         body_path = repository_path(root, lesson["body_ref"], "body_ref")
         body_source = body_path.read_text(encoding="utf-8")
@@ -632,6 +687,7 @@ def write_site(
         {
             "book_toc": "".join(book_toc_units),
             "book_units": "".join(book_units),
+            "source_bibliography": render_source_bibliography(by_type.get("source", [])),
         },
     )
     (destination / "book.html").write_text(book_page, encoding="utf-8", newline="\n")

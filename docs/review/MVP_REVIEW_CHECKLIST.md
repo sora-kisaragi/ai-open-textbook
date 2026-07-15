@@ -46,8 +46,9 @@ data-only PR may need data/versioning and validation evidence.
 - [ ] Target age fit is appropriate for high school learners.
 - [ ] Cognitive load is controlled by short examples and limited new concepts.
 - [ ] Prerequisite gaps are identified and either remediated or deferred.
-- [ ] Lesson order is consistent with the MVP path: variables, conditionals,
-      then loops.
+- [ ] Lesson order and prerequisites are consistent with the 32-lesson graph in
+      `docs/CURRICULUM_MAP.md`, including the variables, conditionals, and loops
+      progression inside Unit C.
 - [ ] Expected misconceptions are listed before practice or assessment is
       generated.
 - [ ] Feedback strategy addresses the reasoning step behind each misconception.

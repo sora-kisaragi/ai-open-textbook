@@ -112,30 +112,36 @@ Generated PDF and site artifacts remain uncommitted review outputs.
 
 ## Export Manifest Expectations
 
-`MANIFEST.json` is the current review-build file manifest at the repository
+`MANIFEST.json` is the current review-build source manifest at the repository
 root. It should track files that reviewers need to reproduce or inspect a
 review build, including source documents, scripts, schemas, prompts, workflow
 configuration, and checksums. It should not track generated `build/` contents.
+The exporter reads the Git index rather than walking the working directory. New
+source files must therefore be staged before a manifest refresh. It excludes
+`MANIFEST.json` itself, local environments, test caches, temporary QA files, and
+generated outputs. Ignored local files such as `.env` and
+`.claude/settings.local.json` cannot enter the source manifest.
 
 Regenerate the manifest only when the PR scope explicitly includes a manifest
 refresh or when maintainers request updated checksums as review evidence. Use
-the repository manifest exporter:
+the repository manifest exporter after staging the intended source scope:
 
 ```bash
+git add <intended-source-files>
 python3 scripts/export_manifest.py > MANIFEST.json
 ```
 
 Windows fallback:
 
 ```bash
+git add <intended-source-files>
 .venv\Scripts\python.exe scripts/export_manifest.py > MANIFEST.json
 ```
 
-The long-term manifest location is still a maintainer decision. The current
-repository keeps `MANIFEST.json` at the root, while a future workflow may move
-release-specific manifests under `build/` or another generated review-artifact
-directory. Maintainers should also decide whether the root manifest should
-continue tracking `MANIFEST.json` itself.
+The source manifest complements, but does not replace, the frozen Git commit
+identity and the generated PDF manifest under `build/`. The current repository
+keeps `MANIFEST.json` at the root. A future governance decision may add or move
+release-specific manifests without changing the canonical-source policy.
 
 ## Failure Reporting
 
@@ -158,8 +164,5 @@ policy.
 
 ## Open Maintainer Decisions
 
-- Decide whether `MANIFEST.json` remains committed at the repository root.
-- Decide whether release-specific manifests should instead be generated under
-  `build/` and excluded from commits.
-- Decide when manifest regeneration is required for documentation-only workflow
-  changes.
+- Decide whether a future release should add a signed or release-specific
+  manifest in addition to the source and PDF manifests.

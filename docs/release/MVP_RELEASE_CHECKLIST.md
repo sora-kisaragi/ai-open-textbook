@@ -5,7 +5,7 @@ Review status: `needs_human_review`
 
 ## Purpose
 
-Define the evidence needed before a future MVP v0.1 public preview or stable
+Define the evidence needed before a future v0.2 public preview or stable
 release decision. This checklist does not grant approval and does not make this
 project an official textbook.
 
@@ -17,21 +17,21 @@ Release candidates must follow the release boundary terminology in
 - Draft: work exists but has not completed machine checks or human review.
 - Review candidate: required files exist and machine checks have passed.
 - Public preview: maintainer-approved preview material with known limitations.
-- Stable release: post-v0.1 release stage unless maintainers explicitly decide
+- Stable release: a separate future release stage unless maintainers explicitly decide
   otherwise; requires completed review gates and release notes.
 
-The v0.1 public preview is not the same as a stable release. No file or record
+The v0.2 public preview is not the same as a stable release. No file or record
 may use `approved`, `published`, `stable`, or equivalent final status without
 explicit human approval. Do not introduce status values that conflict with
 `AGENTS.md` or `docs/DATA_MODEL.md`.
 
 ## Required Content Artifacts
 
-- [ ] MVP lesson requirements for variables, conditionals, and loops.
-- [ ] Student-facing lesson bodies required for the release boundary.
-- [ ] Teacher-guide requirements and any included teacher-guide drafts.
-- [ ] Problem-bank design and any included problem prompts.
-- [ ] Answer and rubric materials for included problem records.
+- [ ] All 32 structured lesson requirements in the canonical curriculum.
+- [ ] All 32 Japanese learner lesson bodies.
+- [ ] All 32 supplemental teacher guides.
+- [ ] All 140 problem prompts and their objective coverage.
+- [ ] Separate answer and rubric materials for all 140 problems.
 - [ ] Release notes or changelog entry for the release candidate.
 
 ## Required Data Artifacts
@@ -131,10 +131,10 @@ material, and changes from `approved` to `published`.
 
 ## Open Maintainer Decisions
 
-- Whether teacher guides are included in v0.1 public preview or treated as beta
+- Whether teacher guides are included in a future v0.2 public preview or treated as beta
   support material.
 - Whether lesson records should add explicit teacher-guide reference fields.
 - Whether timing guidance should remain flexible or include 45/50-minute
   examples.
 - Whether pedagogy review is mandatory before teacher-guide body drafting.
-- Which artifacts define the minimum v0.1 public preview boundary.
+- Which artifacts define the minimum v0.2 public preview boundary.
