@@ -14,6 +14,12 @@ from scripts import build_pdf
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_compact_extracted_text_ignores_renderer_whitespace() -> None:
+    assert build_pdf.compact_extracted_text("インターネット、Web、\n情報サービス") == (
+        "インターネット、Web、情報サービス"
+    )
+
+
 def test_pdf_build_is_repeatable_and_verified(tmp_path: Path) -> None:
     first = tmp_path / "first.pdf"
     second = tmp_path / "second.pdf"
