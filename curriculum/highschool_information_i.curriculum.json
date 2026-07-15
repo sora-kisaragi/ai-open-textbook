@@ -729,22 +729,31 @@
             {
               "objective_ref": "obj.info1.design.communication.media.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.communication.media.001.v1",
+                "prob.info1.design.communication.media.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.design.communication.media.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.communication.media.002.v1",
+                "prob.info1.design.communication.media.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.design.communication.media.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.communication.media.003.v1",
+                "prob.info1.design.communication.media.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -807,22 +816,31 @@
             {
               "objective_ref": "obj.info1.design.digital.representation.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.digital.representation.001.v1",
+                "prob.info1.design.digital.representation.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.design.digital.representation.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.digital.representation.002.v1",
+                "prob.info1.design.digital.representation.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.design.digital.representation.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.digital.representation.003.v1",
+                "prob.info1.design.digital.representation.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -887,22 +905,31 @@
             {
               "objective_ref": "obj.info1.design.audience.accessibility.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.audience.accessibility.001.v1",
+                "prob.info1.design.audience.accessibility.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.design.audience.accessibility.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.audience.accessibility.002.v1",
+                "prob.info1.design.audience.accessibility.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.design.audience.accessibility.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.audience.accessibility.003.v1",
+                "prob.info1.design.audience.accessibility.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -967,22 +994,31 @@
             {
               "objective_ref": "obj.info1.design.information.structure.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.information.structure.001.v1",
+                "prob.info1.design.information.structure.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.design.information.structure.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.information.structure.002.v1",
+                "prob.info1.design.information.structure.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.design.information.structure.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.information.structure.003.v1",
+                "prob.info1.design.information.structure.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -1047,22 +1083,31 @@
             {
               "objective_ref": "obj.info1.design.data.visualization.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.data.visualization.001.v1",
+                "prob.info1.design.data.visualization.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.design.data.visualization.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.data.visualization.002.v1",
+                "prob.info1.design.data.visualization.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.design.data.visualization.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.data.visualization.003.v1",
+                "prob.info1.design.data.visualization.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -1127,22 +1172,31 @@
             {
               "objective_ref": "obj.info1.design.prototype.usability.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.prototype.usability.001.v1",
+                "prob.info1.design.prototype.usability.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.design.prototype.usability.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.prototype.usability.002.v1",
+                "prob.info1.design.prototype.usability.004.v1"
+              ],
               "performance_criterion_refs": []
             },
             {
               "objective_ref": "obj.info1.design.prototype.usability.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.prototype.usability.003.v1",
+                "prob.info1.design.prototype.usability.004.v1"
+              ],
               "performance_criterion_refs": []
             }
           ]
@@ -1161,7 +1215,7 @@
             },
             {
               "id": "obj.info1.design.project.002.v1",
-              "statement": "Test the artifact for communication effectiveness and accessibility.",
+              "statement": "Evaluate supplied test evidence and inspect the revised artifact against communication and accessibility requirements.",
               "expected_evidence": "application",
               "label": "B7.O2"
             },
@@ -1173,7 +1227,6 @@
             }
           ],
           "prerequisites": [
-            "B5: Data Visualization and Misleading Presentation.",
             "B6: Prototyping and Usability Evaluation."
           ],
           "key_concepts": [
@@ -1185,7 +1238,6 @@
           ],
           "assessment_intent": "Performance task with requirements, artifact, evaluation evidence, and revision rationale.",
           "depends_on": [
-            "lesson.info1.design.data.visualization.v1",
             "lesson.info1.design.prototype.usability.v1"
           ],
           "source_refs": [
@@ -1207,23 +1259,44 @@
             {
               "objective_ref": "obj.info1.design.project.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
-              "performance_criterion_refs": []
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.project.001.v1"
+              ],
+              "performance_criterion_refs": [
+                {
+                  "rubric_ref": "rubric.prob.info1.design.project.004.v1",
+                  "criterion_id": "c1"
+                }
+              ]
             },
             {
               "objective_ref": "obj.info1.design.project.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
-              "performance_criterion_refs": []
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.project.002.v1"
+              ],
+              "performance_criterion_refs": [
+                {
+                  "rubric_ref": "rubric.prob.info1.design.project.004.v1",
+                  "criterion_id": "c2"
+                }
+              ]
             },
             {
               "objective_ref": "obj.info1.design.project.003.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "not_started",
-              "assessment_item_refs": [],
-              "performance_criterion_refs": []
+              "status": "complete",
+              "assessment_item_refs": [
+                "prob.info1.design.project.003.v1"
+              ],
+              "performance_criterion_refs": [
+                {
+                  "rubric_ref": "rubric.prob.info1.design.project.004.v1",
+                  "criterion_id": "c3"
+                }
+              ]
             }
           ]
         }

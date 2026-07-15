@@ -24,6 +24,19 @@ INTERNAL_LEARNER_ID = re.compile(
 )
 CSS_URL = re.compile(r"url\(\s*(['\"]?)(.*?)\1\s*\)", re.IGNORECASE)
 CSS_IMPORT = re.compile(r"@import\s+(?:url\(\s*)?['\"]?([^'\"\s;)]+)", re.IGNORECASE)
+LOW_INFORMATION_SENSITIVE_VALUE = re.compile(
+    r"^(?:(?:[+-]?\d+(?:\.\d+)?)(?:\s+[+-]?\d+(?:\.\d+)?)*|True|False|None)$"
+)
+REVIEW_ONLY_CLASSES = frozenset(
+    {
+        "review-record",
+        "review-record-header",
+        "review-subsection",
+        "record-id",
+        "teacher-copy",
+        "rubric-list",
+    }
+)
 
 
 class SiteVerificationError(RuntimeError):
@@ -213,12 +226,14 @@ def flatten_strings(value: object) -> list[str]:
 
 
 def sensitive_values(by_type: dict[str, list[dict]]) -> list[tuple[str, str]]:
+    """Return values suitable for substring checks; structural checks cover low-information values."""
     values: list[tuple[str, str]] = []
     for answer in by_type.get("answer", []):
         answer_id = str(answer.get("id", "answer"))
         for field in ("canonical_answer", "acceptable_answers", "explanation", "verification_evidence"):
             for value in flatten_strings(answer.get(field)):
-                if normalize_text(value):
+                normalized = normalize_text(value)
+                if normalized and not LOW_INFORMATION_SENSITIVE_VALUE.fullmatch(normalized):
                     values.append((f"{answer_id}.{field}", value))
     for rubric in by_type.get("rubric", []):
         rubric_id = str(rubric.get("id", "rubric"))
@@ -238,6 +253,17 @@ def verify_learner_separation(
     for page, parser in learner_pages.items():
         page_text = normalize_text(parser.text)
         allowed_text = normalize_text(allowed_sources[page])
+        review_classes = sorted(
+            REVIEW_ONLY_CLASSES.intersection(
+                css_class
+                for _, attrs in parser.elements
+                for css_class in attrs.get("class", "").split()
+            )
+        )
+        if review_classes:
+            raise SiteVerificationError(
+                f"review-only structure leaked into {page.name}: {', '.join(review_classes)}"
+            )
         internal_id = INTERNAL_LEARNER_ID.search(page_text)
         if internal_id:
             raise SiteVerificationError(

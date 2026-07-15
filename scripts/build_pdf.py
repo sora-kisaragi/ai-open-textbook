@@ -15,6 +15,7 @@ import unicodedata
 from playwright.sync_api import Error as PlaywrightError
 from playwright.sync_api import sync_playwright
 from pypdf import PdfReader, PdfWriter
+from pypdf.generic import ArrayObject, DictionaryObject, IndirectObject, StreamObject
 
 try:
     from scripts import build_static_site
@@ -38,6 +39,67 @@ def sha256(path: Path) -> str:
     with path.open("rb") as stream:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
+    return digest.hexdigest()
+
+
+def canonical_pdf_object(value: object, active: set[int] | None = None) -> bytes:
+    """Serialize a PDF object without indirect object numbers or stream encoding details."""
+    if isinstance(value, IndirectObject):
+        value = value.get_object()
+    active = active or set()
+    if isinstance(value, (DictionaryObject, ArrayObject)):
+        marker = id(value)
+        if marker in active:
+            return b"<cycle>"
+        active.add(marker)
+        try:
+            if isinstance(value, StreamObject):
+                ignored = {"/Length", "/Filter", "/DecodeParms"}
+                entries = [
+                    canonical_pdf_object(key, active) + b":" + canonical_pdf_object(item, active)
+                    for key, item in sorted(value.items(), key=lambda pair: str(pair[0]))
+                    if str(key) not in ignored
+                ]
+                return b"stream{" + b",".join(entries) + b"}" + value.get_data()
+            if isinstance(value, DictionaryObject):
+                entries = [
+                    canonical_pdf_object(key, active) + b":" + canonical_pdf_object(item, active)
+                    for key, item in sorted(value.items(), key=lambda pair: str(pair[0]))
+                ]
+                return b"dict{" + b",".join(entries) + b"}"
+            return b"array[" + b",".join(canonical_pdf_object(item, active) for item in value) + b"]"
+        finally:
+            active.remove(marker)
+    if isinstance(value, bytes):
+        return b"bytes:" + value
+    return f"{type(value).__name__}:{value}".encode("utf-8")
+
+
+def semantic_sha256(path: Path) -> str:
+    """Hash stable page semantics without depending on PDF object numbering."""
+    reader = PdfReader(path)
+    digest = hashlib.sha256()
+
+    def add(value: bytes) -> None:
+        digest.update(len(value).to_bytes(8, "big"))
+        digest.update(value)
+
+    add(str(len(reader.pages)).encode("ascii"))
+    for page in reader.pages:
+        boxes = (page.mediabox, page.cropbox, page.bleedbox, page.trimbox, page.artbox)
+        geometry = ";".join(
+            ",".join(f"{float(coordinate):.4f}" for coordinate in box)
+            for box in boxes
+        )
+        geometry += f";rotate={int(page.get('/Rotate', 0)) % 360};userunit={float(page.get('/UserUnit', 1)):.4f}"
+        text = unicodedata.normalize("NFKC", page.extract_text() or "").replace("\r\n", "\n")
+        contents = page.get_contents()
+        content_data = contents.get_data() if contents is not None else b""
+        resources = canonical_pdf_object(page.get("/Resources"))
+        add(geometry.encode("ascii"))
+        add(text.encode("utf-8"))
+        add(content_data)
+        add(resources)
     return digest.hexdigest()
 
 
@@ -191,13 +253,14 @@ def build(root: Path, output: Path) -> dict:
             },
             "output": output.name,
             "output_sha256": sha256(output),
+            "semantic_sha256": semantic_sha256(output),
             "page_count": page_count,
             "implemented_lesson_count": len(implemented_titles(root)),
             "planned_lesson_count": len(curriculum_lessons(root)),
             "playwright_version": version("playwright"),
             "chromium_version": browser_version,
             "pypdf_version": version("pypdf"),
-            "reproducibility": "Pinned repeatable workflow; byte identity is checked only within the same toolchain.",
+            "reproducibility": "Pinned repeatable workflow; semantic identity is checked within the same toolchain while output_sha256 identifies the exact artifact.",
             "review_status": "needs_human_review",
         }
         manifest_path = output.with_suffix(".manifest.json")
