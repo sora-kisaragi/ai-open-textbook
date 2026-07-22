@@ -31,10 +31,10 @@ REVISION_DATE_RE = re.compile(r"^rev\.(?P<date>[0-9]{8})\.[0-9]{4}$")
 LESSON_ID_DIGEST = "3e70077afec6375a2fd09ac48ac74ababf69a1bde2cdae916a9145daff5805f5"
 OBJECTIVE_ID_DIGEST = "c516448693d76e035d8720de968f5dd5eff10a4711cf5d1703539b9479589c47"
 EXPECTED_UNIT_PERIODS = {
-    "mext.info1.1": 9,
+    "mext.info1.1": 10,
     "mext.info1.2": 12,
     "mext.info1.3": 21,
-    "mext.info1.4": 23,
+    "mext.info1.4": 22,
 }
 EXPECTED_UNIT_ORDERS = {
     "mext.info1.1": [f"A{index}" for index in range(1, 8)],

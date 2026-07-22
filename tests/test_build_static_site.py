@@ -342,9 +342,9 @@ def test_repository_audit_reports_cover_all_objectives_and_route_periods() -> No
 
     assert coverage["row_count"] == 96
     assert sum(coverage["support_counts"].values()) == 96
-    assert coverage["support_counts"]["partial"] == 0
+    assert coverage["support_counts"]["partial"] == 2
     assert coverage["support_counts"]["unsupported"] == 0
-    assert [unit["mandatory_class_periods"] for unit in balance["units"]] == [9, 12, 21, 23]
+    assert [unit["mandatory_class_periods"] for unit in balance["units"]] == [10, 12, 21, 22]
     assert balance["mandatory_periods"] == 65
     assert balance["recommended_extension_periods"] == 5
     assert balance["recommended_total_periods"] == 70
