@@ -14,7 +14,7 @@ an official sequence or final alignment decision.
 | ---: | --- | --- | --- |
 | A1 | `lesson.info1.society.information.media.v1` | Information and Media | None |
 | A2 | `lesson.info1.society.source.evaluation.v1` | Reliability and Source Evaluation | A1 |
-| A3 | `lesson.info1.society.rights.responsibility.v1` | Rights, Responsibility, Privacy, and Risk | A1, A2 |
+| A3 | `lesson.info1.society.rights.responsibility.v1` | Rights, Responsibility, Privacy, Copyright, and Risk | A1, A2 |
 | A4 | `lesson.info1.society.problem.definition.v1` | Problem Definition and Requirements | A1 |
 | A5 | `lesson.info1.society.decomposition.modeling.v1` | Decomposition and Modeling | A4 |
 | A6 | `lesson.info1.society.solution.evaluation.v1` | Comparing and Evaluating Solutions | A2, A5 |
