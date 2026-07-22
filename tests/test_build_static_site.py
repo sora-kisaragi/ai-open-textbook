@@ -268,6 +268,25 @@ def test_source_context_includes_traceability_metadata() -> None:
     assert "Use only for the stated technical definition." in rendered
 
 
+def test_canonical_answer_uses_prose_or_code_rendering_by_answer_type() -> None:
+    md = build_static_site.markdown_renderer()
+
+    prose = build_static_site.render_canonical_answer(md, {
+        "answer_type": "text",
+        "canonical_answer": "URLの `host` を確認する。",
+    })
+    code = build_static_site.render_canonical_answer(md, {
+        "answer_type": "code",
+        "canonical_answer": "print('<safe>')",
+    })
+
+    assert 'class="canonical-answer canonical-answer-prose"' in prose
+    assert "<p>URLの <code>host</code> を確認する。</p>" in prose
+    assert "<pre" not in prose
+    assert 'class="canonical-answer canonical-answer-code"' in code
+    assert "print(&#x27;&lt;safe&gt;&#x27;)" in code
+
+
 def test_source_bibliography_omits_deprecated_sources() -> None:
     sources = [
         {

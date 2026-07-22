@@ -366,6 +366,13 @@ def render_practices(md: MarkdownIt, problems: list[dict], id_prefix: str = "pra
     return "".join(blocks)
 
 
+def render_canonical_answer(md: MarkdownIt, answer: dict) -> str:
+    canonical = str(answer.get("canonical_answer", ""))
+    if answer.get("answer_type") == "text":
+        return f'<div class="canonical-answer canonical-answer-prose">{md.render(canonical)}</div>'
+    return f'<pre class="canonical-answer canonical-answer-code"><code>{escape(canonical)}</code></pre>'
+
+
 def render_self_study_practices(
     md: MarkdownIt,
     problems: list[dict],
@@ -401,7 +408,7 @@ def render_self_study_practices(
                 "<summary>解答例と解説を確認</summary>"
                 '<div class="answer-feedback">'
                 "<h4>解答例</h4>"
-                f'<pre><code>{escape(answer.get("canonical_answer", ""))}</code></pre>'
+                f'{render_canonical_answer(md, answer)}'
                 f"{acceptable_html}"
                 "<h4>解説</h4>"
                 f'<div class="answer-explanation">{explanation}</div>'
@@ -630,7 +637,7 @@ def render_review_problem(md: MarkdownIt, problem: dict, by_id: dict[str, dict])
             '<section class="review-subsection">'
             "<h4>Answer</h4>"
             f'<p class="record-id"><code>{escape(answer["id"])}</code></p>'
-            f'<pre><code>{escape(answer.get("canonical_answer", ""))}</code></pre>'
+            f'{render_canonical_answer(md, answer)}'
             f'<div class="teacher-copy">{md.render(str(answer.get("explanation", "")))}</div>'
             "<h5>Acceptable answers</h5>"
             f"{acceptable}"
