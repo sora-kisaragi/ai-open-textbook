@@ -2,8 +2,15 @@
 
 Status: `draft`
 Review status: `needs_human_review`
-Tracking: #59, #66
+Tracking: #59, #66, #74
 Evidence date: 2026-07-15
+
+> Planning update, 2026-07-22: This dossier preserves the evidence snapshot
+> assembled on 2026-07-15. Issue #74 and PR #82 supersede its 71-77-period band
+> with the authoritative v0.3 route of 65 mandatory periods plus five
+> recommended extension periods. Current review must use
+> `curriculum/highschool_information_i.curriculum.json` and
+> `docs/CURRICULUM_MAP.md` for timing and prerequisite decisions.
 
 ## Purpose and Decision Boundary
 
@@ -21,7 +28,7 @@ the final checklist.
 | Planned and implemented lessons | 32 / 32 |
 | Provisional curriculum objectives | 96 |
 | Structurally complete objective coverage rows | 96 / 96 |
-| Classroom planning band | 71-77 periods of 50 minutes |
+| Classroom planning band at evidence date | 71-77 periods of 50 minutes |
 | Learner lesson bodies | 32 |
 | Teacher guides | 32 |
 | Problems / answers / rubrics | 140 / 140 / 140 |
@@ -197,7 +204,8 @@ stack branch until its immediate child has been restacked successfully.
 
 ## Final Human Review Checklist
 
-- [ ] Confirm the 4-unit, 32-lesson decomposition and 71-77-period planning band.
+- [ ] Confirm the 4-unit, 32-lesson decomposition and the current 65-period
+      mandatory route plus five recommended extension periods.
 - [ ] Confirm the provisional MEXT mapping and the canonical-curriculum-as-
       requirements decision.
 - [ ] Review Japanese accuracy, age fit, cognitive load, examples, and progression.

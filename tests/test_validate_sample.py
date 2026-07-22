@@ -230,6 +230,24 @@ def test_curriculum_identity_and_route_positions_are_stable(validation_root: Pat
     assert any("stable 96-objective baseline" in error for error in errors)
 
 
+def test_malformed_instructional_range_reports_errors_without_crashing(
+    validation_root: Path,
+) -> None:
+    curriculum_path = validation_root / "curriculum" / "highschool_information_i.curriculum.json"
+    curriculum = json.loads(curriculum_path.read_text(encoding="utf-8"))
+    curriculum["units"][0]["lessons"][0]["instructional_time"][
+        "class_periods_50_min"
+    ] = [1]
+    curriculum_path.write_text(
+        json.dumps(curriculum, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    errors = validation_errors(validation_root)
+    assert any("class_periods_50_min" in error and "is too short" in error for error in errors)
+    assert any("mandatory classroom total must match lesson minima" in error for error in errors)
+
+
 def test_performance_criterion_requires_performance_task_problem(validation_root: Path) -> None:
     path = validation_root / "data" / "collections" / "problems.ndjson"
     records = read_ndjson(path)

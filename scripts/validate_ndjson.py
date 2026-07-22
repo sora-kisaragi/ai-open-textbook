@@ -58,6 +58,18 @@ def id_digest(ids: Iterable[str]) -> str:
     return hashlib.sha256("\n".join(sorted(ids)).encode()).hexdigest()
 
 
+def instructional_range(lesson: dict, field: str) -> tuple[int, int] | None:
+    time = lesson.get("instructional_time", {})
+    values = time.get(field) if isinstance(time, dict) else None
+    if (
+        not isinstance(values, list)
+        or len(values) != 2
+        or any(type(value) is not int for value in values)
+    ):
+        return None
+    return values[0], values[1]
+
+
 def read_json(path: Path) -> dict:
     try:
         value = json.loads(path.read_text(encoding="utf-8"))
@@ -401,10 +413,9 @@ def check_curriculum(
             if not body_path.is_file():
                 add_error(errors, curriculum, f"missing existing_body_ref: {body_ref}")
 
-        time = lesson.get("instructional_time", {})
         for field in ("class_periods_50_min", "self_study_minutes"):
-            values = time.get(field, []) if isinstance(time, dict) else []
-            if isinstance(values, list) and len(values) == 2 and values[0] > values[1]:
+            values = instructional_range(lesson, field)
+            if values is not None and values[0] > values[1]:
                 add_error(errors, curriculum, f"{lesson.get('order')} {field} minimum exceeds maximum")
 
     visiting: set[str] = set()
@@ -426,13 +437,14 @@ def check_curriculum(
     for lesson_id in graph:
         visit(lesson_id)
 
-    period_totals = tuple(
-        sum(lesson.get("instructional_time", {}).get("class_periods_50_min", [0, 0])[index] for lesson in lessons)
-        for index in (0, 1)
-    )
+    lesson_period_ranges = [
+        (lesson.get("lesson_id"), instructional_range(lesson, "class_periods_50_min") or (0, 0))
+        for lesson in lessons
+    ]
+    period_totals = tuple(sum(values[index] for _, values in lesson_period_ranges) for index in (0, 1))
     unit_periods = {
         unit.get("area"): sum(
-            lesson.get("instructional_time", {}).get("class_periods_50_min", [0, 0])[0]
+            (instructional_range(lesson, "class_periods_50_min") or (0, 0))[0]
             for lesson in unit.get("lessons", [])
         )
         for unit in curriculum.get("units", [])
@@ -484,11 +496,9 @@ def check_curriculum(
         add_error(errors, curriculum, "lesson extensions must target A7, B7, C9, and D9")
 
     lesson_range_extensions = {
-        lesson_id: lesson.get("instructional_time", {}).get("class_periods_50_min", [0, 0])[1]
-        - lesson.get("instructional_time", {}).get("class_periods_50_min", [0, 0])[0]
-        for lesson_id, lesson in lesson_by_id.items()
-        if lesson.get("instructional_time", {}).get("class_periods_50_min", [0, 0])[1]
-        > lesson.get("instructional_time", {}).get("class_periods_50_min", [0, 0])[0]
+        lesson_id: values[1] - values[0]
+        for lesson_id, values in lesson_period_ranges
+        if isinstance(lesson_id, str) and values[1] > values[0]
     }
     if lesson_allocations != lesson_range_extensions:
         add_error(errors, curriculum, "lesson extension allocations do not match instructional time ranges")

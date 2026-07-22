@@ -137,10 +137,11 @@ from unintended network, file-system, secret, or personal-data dependencies.
 
 ## 8. Workflow and Human Gate
 
-Issues #60 through #66 implement this scope as an ordered stack of small Draft
-PRs. Existing Issues #46 and #56 are reused. Autonomous work may draft, validate,
-and review the complete stack, but it must not merge the stack, close Issue #59,
-or mark any record approved or published.
+Issues #60 through #66 established the initial full-scope candidate. Issues #74
+through #81 implement the current remediation route as an ordered stack of small
+Draft PRs. Existing Issues #46 and #56 are reused. Autonomous work may draft,
+validate, and review the complete stack, but it must not close Issue #59 or mark
+any record approved or published.
 
 The single final human gate covers:
 
