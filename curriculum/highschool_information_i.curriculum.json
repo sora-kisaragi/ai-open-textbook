@@ -816,19 +816,19 @@
           "learning_objectives": [
             {
               "id": "obj.info1.design.digital.representation.001.v1",
-              "statement": "Explain that text, images, and sound require defined digital representations.",
+              "statement": "Trace binary place value and explain how bits, bytes, segmentation, and encoding rules determine a digital representation.",
               "expected_evidence": "explanation",
               "label": "B2.O1"
             },
             {
               "id": "obj.info1.design.digital.representation.002.v1",
-              "statement": "Predict how resolution, sampling, or encoding choices affect fidelity and size.",
+              "statement": "Predict how resolution, sampling, quantization, or encoding choices affect fidelity, size, and information loss.",
               "expected_evidence": "trace",
               "label": "B2.O2"
             },
             {
               "id": "obj.info1.design.digital.representation.003.v1",
-              "statement": "Choose a representation appropriate to a communication purpose.",
+              "statement": "Choose a representation for a communication purpose and explain its fidelity-size trade-off and irreversible limitations.",
               "expected_evidence": "application",
               "label": "B2.O3"
             }
@@ -838,9 +838,13 @@
           ],
           "key_concepts": [
             "digitization",
+            "binary place value",
+            "bit and byte",
             "encoding",
             "resolution",
             "sampling",
+            "quantization",
+            "irreversible information loss",
             "compression"
           ],
           "assessment_intent": "Reason about representation trade-offs without depending on one software tool.",
@@ -849,7 +853,8 @@
           ],
           "source_refs": [
             "src.mext.highschool.curriculum2018.v1",
-            "src.mext.information.commentary2018.v1"
+            "src.mext.information.commentary2018.v1",
+            "src.nist.csrc.byte.glossary.v1"
           ],
           "instructional_time": {
             "class_periods_50_min": [
@@ -1265,7 +1270,7 @@
             },
             {
               "id": "obj.info1.design.project.002.v1",
-              "statement": "Evaluate supplied test evidence and inspect the revised artifact against communication and accessibility requirements.",
+              "statement": "Evaluate supplied evidence and test the revised interactive artifact with forward and reverse focus navigation, visible focus, activation, and task completion.",
               "expected_evidence": "application",
               "label": "B7.O2"
             },
@@ -1283,16 +1288,19 @@
             "design brief",
             "artifact",
             "accessibility",
+            "keyboard operability",
+            "visible focus",
             "evaluation",
             "revision"
           ],
-          "assessment_intent": "Performance task with requirements, artifact, evaluation evidence, and revision rationale.",
+          "assessment_intent": "Performance task with requirements, an artifact, bounded evaluation evidence including an interactive keyboard test, and a revision rationale.",
           "depends_on": [
             "lesson.info1.design.prototype.usability.v1"
           ],
           "source_refs": [
             "src.mext.highschool.curriculum2018.v1",
-            "src.mext.information.commentary2018.v1"
+            "src.mext.information.commentary2018.v1",
+            "src.w3c.wcag22.v1"
           ],
           "instructional_time": {
             "class_periods_50_min": [

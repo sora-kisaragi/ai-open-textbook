@@ -306,6 +306,33 @@ def test_verifier_rejects_external_runtime_asset(built_site_root: Path) -> None:
     assert "external runtime reference" in result.stderr
 
 
+def test_verifier_rejects_inline_activity_handler(built_site_root: Path) -> None:
+    activity = built_site_root / "build/site/activities/b7_keyboard_start.html"
+    activity.write_text(
+        activity.read_text(encoding="utf-8").replace(
+            '<button type="submit">',
+            '<button type="submit" onclick="alert(1)">',
+            1,
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "inline event handler" in result.stderr
+
+
+def test_verifier_rejects_unexpected_activity_file(built_site_root: Path) -> None:
+    extra = built_site_root / "build/site/activities/unexpected.txt"
+    extra.write_text("unexpected", encoding="utf-8")
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "unexpected activity file set" in result.stderr
+
+
 def test_verifier_rejects_escaped_css_runtime_reference(built_site_root: Path) -> None:
     stylesheet = built_site_root / "build/site/assets/styles.css"
     stylesheet.write_text(

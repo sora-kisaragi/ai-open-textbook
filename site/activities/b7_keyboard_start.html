@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>B7 キーボード確認スターター: 入力</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body class="activity-page">
+  <main id="activity-content" class="activity-layout">
+    <p class="section-kicker">B7 対話型P2スターター</p>
+    <h1>防災学習会の申込み</h1>
+    <p>これは製品に依存しない教材用の最小フォームです。内容と順序を自分のP2に合わせて改訂し、完成版を実際に点検してください。</p>
+    <form action="b7_keyboard_confirm.html" method="get">
+      <div class="activity-field">
+        <label for="participant-name">名前</label>
+        <input id="participant-name" name="participant-name" autocomplete="name" required>
+      </div>
+      <div class="activity-field">
+        <label for="contact-method">連絡方法</label>
+        <select id="contact-method" name="contact-method">
+          <option value="email">メール</option>
+          <option value="phone">電話</option>
+        </select>
+      </div>
+      <button type="submit">内容を確認</button>
+    </form>
+    <aside class="activity-note" aria-labelledby="test-boundary-title">
+      <h2 id="test-boundary-title">確認範囲</h2>
+      <p>紙やカードは情報・論理順序の確認に使えます。キーボード操作の結果は、このような対話型P2を実際に操作して記録します。このスターターだけでアクセシビリティ適合を示すことはできません。</p>
+    </aside>
+  </main>
+</body>
+</html>

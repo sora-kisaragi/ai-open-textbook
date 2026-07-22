@@ -30,6 +30,11 @@ COLLECTION_FILES = (
     "revisions.ndjson",
 )
 DIFFICULTY_ORDER = {"basic": 0, "standard": 1, "advanced": 2}
+ACTIVITY_PAGES = (
+    Path("activities/b7_keyboard_start.html"),
+    Path("activities/b7_keyboard_confirm.html"),
+    Path("activities/b7_keyboard_complete.html"),
+)
 
 
 class SiteBuildError(RuntimeError):
@@ -705,6 +710,10 @@ def write_site(
     if not stylesheet.is_file():
         raise SiteBuildError(f"missing site asset: {stylesheet.relative_to(root)}")
     shutil.copyfile(stylesheet, assets / "styles.css")
+    activities_source = root / "site" / "activities"
+    if not activities_source.is_dir():
+        raise SiteBuildError(f"missing site activities: {activities_source.relative_to(root)}")
+    shutil.copytree(activities_source, destination / "activities")
     content_license = root / "LICENSE-CONTENT-CC-BY-4.0.md"
     if not content_license.is_file():
         raise SiteBuildError(f"missing content license: {content_license.relative_to(root)}")

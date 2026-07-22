@@ -361,6 +361,7 @@ def verify(root: Path) -> tuple[int, int, int, int]:
         *expected_learner,
         *expected_teacher,
         *expected_self_study,
+        *(site / relative for relative in build_static_site.ACTIVITY_PAGES),
     }
     actual_html = {path.resolve() for path in site.rglob("*.html") if path.is_file()}
     expected_html = {path.resolve() for path in expected_html}
@@ -369,12 +370,42 @@ def verify(root: Path) -> tuple[int, int, int, int]:
         extra = sorted(path.relative_to(site).as_posix() for path in actual_html - expected_html)
         raise SiteVerificationError(f"unexpected HTML page set; missing={missing}, extra={extra}")
 
+    expected_activity_files = {
+        (site / relative).resolve() for relative in build_static_site.ACTIVITY_PAGES
+    }
+    actual_activity_files = {
+        path.resolve() for path in (site / "activities").rglob("*") if path.is_file()
+    }
+    if actual_activity_files != expected_activity_files:
+        missing = sorted(
+            path.relative_to(site).as_posix()
+            for path in expected_activity_files - actual_activity_files
+        )
+        extra = sorted(
+            path.relative_to(site).as_posix()
+            for path in actual_activity_files - expected_activity_files
+        )
+        raise SiteVerificationError(
+            f"unexpected activity file set; missing={missing}, extra={extra}"
+        )
+
     pages = {path: parse_page(path) for path in sorted(expected_html)}
     for path, parser in pages.items():
         forbidden_tags = sorted({tag for tag, _ in parser.elements if tag in FORBIDDEN_RUNTIME_TAGS})
         if forbidden_tags:
             raise SiteVerificationError(
                 f"runtime element(s) in {path.relative_to(site)}: {', '.join(forbidden_tags)}"
+            )
+        inline_handlers = sorted(
+            f"{tag}[{name}]"
+            for tag, attributes in parser.elements
+            for name in attributes
+            if name.lower().startswith("on")
+        )
+        if inline_handlers:
+            raise SiteVerificationError(
+                f"inline event handler(s) in {path.relative_to(site)}: "
+                f"{', '.join(inline_handlers)}"
             )
 
     index_path = (site / "index.html").resolve()
