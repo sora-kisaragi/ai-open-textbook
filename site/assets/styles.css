@@ -158,6 +158,16 @@ a:hover {
   text-decoration: none;
 }
 
+.edition-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.book-link.secondary {
+  border-color: var(--ink);
+}
+
 .wide-container {
   max-width: var(--wide);
   margin: 0 auto;
@@ -379,6 +389,39 @@ pre code {
   min-height: 3rem;
   margin-top: 1.4rem;
   border-bottom: 1px dashed #aab5b0;
+}
+
+.answer-reveal {
+  margin-top: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f7faf8;
+}
+
+.answer-reveal summary {
+  padding: 0.85rem 1rem;
+  color: var(--green);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.answer-reveal summary:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.answer-feedback {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.answer-feedback h4 {
+  margin: 1rem 0 0.45rem;
+  font-size: 1rem;
+}
+
+.answer-feedback pre {
+  margin-top: 0.45rem;
 }
 
 .lesson-navigation {
@@ -797,6 +840,14 @@ th {
     margin: 0;
     padding-right: 0;
     padding-left: 0;
+  }
+
+  .self-study-book details.answer-reveal > :not(summary) {
+    display: block !important;
+  }
+
+  .self-study-book details.answer-reveal summary {
+    display: none;
   }
 
   .lesson-article h2,

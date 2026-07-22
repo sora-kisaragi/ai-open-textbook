@@ -50,7 +50,8 @@ uv run python scripts/build_sqlite_index.py
 uv run python scripts/check_examples.py
 uv run python scripts/build_static_site.py
 uv run python scripts/verify_static_site.py
-uv run python scripts/build_pdf.py
+uv run python scripts/build_pdf.py --edition classroom
+uv run python scripts/build_pdf.py --edition self-study
 uv run python -m pytest
 ```
 

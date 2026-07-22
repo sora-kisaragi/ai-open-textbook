@@ -23,7 +23,8 @@ uv run python scripts/build_sqlite_index.py
 uv run python scripts/check_examples.py
 uv run python scripts/build_static_site.py
 uv run python scripts/verify_static_site.py
-uv run python scripts/build_pdf.py
+uv run python scripts/build_pdf.py --edition classroom
+uv run python scripts/build_pdf.py --edition self-study
 uv run python -m pytest
 ```
 
@@ -37,7 +38,8 @@ report the fallback in the pull request:
 .venv\Scripts\python.exe scripts/check_examples.py
 .venv\Scripts\python.exe scripts/build_static_site.py
 .venv\Scripts\python.exe scripts/verify_static_site.py
-.venv\Scripts\python.exe scripts/build_pdf.py
+.venv\Scripts\python.exe scripts/build_pdf.py --edition classroom
+.venv\Scripts\python.exe scripts/build_pdf.py --edition self-study
 .venv\Scripts\python.exe -m pytest
 ```
 
@@ -83,16 +85,28 @@ Windows fallback:
 .venv\Scripts\python.exe scripts/build_static_site.py
 ```
 
-The builder pre-renders all pages and copies local styles so the generated
-`build/site/index.html` can be opened without a web server or network access.
-It replaces only `build/site/`; it does not remove or modify
+The builder pre-renders answer-free classroom pages, self-study pages with
+native `details`/`summary` answer reveals, and teacher/reviewer pages. It copies
+local styles so `build/site/index.html` can be opened without a web server or
+network access. It replaces only `build/site/`; it does not remove or modify
 `build/index.sqlite`. Learner pages exclude answer, rubric, verification, and
 review metadata, while teacher/reviewer pages present those records separately.
+The self-study pages include canonical answers, acceptable answers,
+explanations, and common-mistake feedback, but exclude rubrics, points,
+verification evidence, internal IDs, and lifecycle metadata.
+
+The same build writes deterministic reviewer artifacts to
+`build/site/reports/semantic-coverage-audit.json` and
+`build/site/reports/unit-balance-report.json`. The first classifies all
+curriculum objective claims as supported, partial, or unsupported from their
+declared cross-record links while retaining `needs_human_review` for semantic
+quality. The second derives lesson counts and period allocation from the
+curriculum source of truth.
 
 Run `scripts/verify_static_site.py` after generation. The verifier checks the
 actual output tree for broken local links and fragments, runtime remote assets,
-expected page counts, structural landmarks, and review-only data in learner
-pages or the aggregate print book.
+expected page and answer-reveal counts, native keyboard-operable disclosure
+controls, report consistency, and edition-specific learner-data separation.
 
 ## Runnable Examples and PDF
 
@@ -100,12 +114,15 @@ pages or the aggregate print book.
 twice in isolated temporary directories with time and output limits, and verifies
 predict-output answers without defining broader answer normalization policy.
 
-`scripts/build_pdf.py` rebuilds the learner-only `book.html`, prints it with the
-locked Playwright/Chromium toolchain, normalizes review metadata, and verifies
-page size, lesson headings, and review-only token exclusion. It writes:
+`scripts/build_pdf.py` rebuilds the selected edition, prints it with the locked
+Playwright/Chromium toolchain, normalizes review metadata, and verifies page
+size, lesson headings, and edition-specific review-only token exclusion. Run it
+once per edition. It writes:
 
 - `build/information-i-textbook.pdf`
 - `build/information-i-textbook.manifest.json`
+- `build/information-i-self-study.pdf`
+- `build/information-i-self-study.manifest.json`
 
 This is a repeatable pinned workflow, not a cross-platform byte-identity claim.
 Generated PDF and site artifacts remain uncommitted review outputs.

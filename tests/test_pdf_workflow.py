@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for the learner-only PDF workflow."""
+"""Tests for the classroom and self-study PDF workflow."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -28,11 +28,36 @@ def test_pdf_build_is_repeatable_and_verified(tmp_path: Path) -> None:
     second_manifest = build_pdf.build(ROOT, second)
 
     assert first_manifest["page_count"] >= 1
+    assert first_manifest["edition"] == "classroom"
+    assert first_manifest["answer_feedback_count"] == 0
     assert first_manifest["implemented_lesson_count"] == 32
     assert first_manifest["planned_lesson_count"] == 32
     assert first_manifest["input_sha256"] == second_manifest["input_sha256"]
     assert first_manifest["semantic_sha256"] == second_manifest["semantic_sha256"]
     assert build_pdf.verify_pdf(ROOT, first) == first_manifest["page_count"]
+
+
+def test_self_study_pdf_includes_all_answer_feedback(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    output = tmp_path / "self-study.pdf"
+
+    manifest = build_pdf.build(ROOT, output, edition="self-study")
+
+    assert manifest["edition"] == "self-study"
+    assert manifest["answer_feedback_count"] == 140
+    assert manifest["page_count"] >= 1
+    assert len(build_pdf.required_self_study_feedback(ROOT)) == 140
+    assert build_pdf.verify_pdf(ROOT, output, edition="self-study") == manifest["page_count"]
+
+    monkeypatch.setattr(
+        build_pdf,
+        "required_self_study_feedback",
+        lambda _root: [("ans.missing.v1", ["MISSING_FEEDBACK_MARKER"])],
+    )
+    with pytest.raises(build_pdf.PdfBuildError, match="missing answer explanation"):
+        build_pdf.verify_pdf(ROOT, output, edition="self-study")
 
 
 def test_semantic_hash_ignores_pdf_metadata(tmp_path: Path) -> None:
