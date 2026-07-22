@@ -1,8 +1,8 @@
-# Curriculum Map: Information I Review Candidate v0.2
+# Curriculum Map: Information I Review Candidate v0.3
 
 Status: `draft`
 Review status: `needs_human_review`
-Tracking issue: #60
+Tracking issues: #59, #74
 
 This map is an original project decomposition of the four Information I content
 areas identified in current MEXT primary sources. It is a planning artifact, not
@@ -106,11 +106,18 @@ A6 + B6 + D3 + D7 + D8 -> D9
 ## Instructional Time Model
 
 - One classroom period is 50 minutes.
-- The planned sequence totals 71-77 classroom periods. This is a design estimate,
-  not a mandatory allocation or an official timetable.
-- The 71-period route is the core plan. Up to six additional periods support
-  extension, reteaching, and longer project feedback. Ordinary lesson assessment
-  is included, but school events and local examinations require separate buffer.
+- The curriculum JSON is authoritative for lesson timing and prerequisite edges.
+- The mandatory route totals 65 periods: Unit A uses 9, Unit B uses 12, Unit C
+  uses 21, and Unit D uses 23.
+- The recommended route adds exactly five periods. A7, B7, C9, and D9 each have
+  one additional feedback-and-revision period, and one cumulative period is used
+  for diagnostic assessment and targeted reteaching across all four units.
+- Lesson time-range upper bounds include the four lesson-specific extensions and
+  therefore total 69 periods. The separate cumulative period brings the
+  recommended route to 70 periods.
+- These routes are project planning decisions, not mandatory allocations or an
+  official timetable. Ordinary lesson assessment is included, while school
+  events and local examinations require separate scheduling buffer.
 - Ordinary lessons use one to three periods according to concept density. Dense
   lessons must use worked examples and staged practice instead of adding more
   objectives to a single sitting.

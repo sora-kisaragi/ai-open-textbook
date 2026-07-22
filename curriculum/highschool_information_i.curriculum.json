@@ -7,7 +7,7 @@
   "locale": "ja",
   "status": "draft",
   "review_status": "needs_human_review",
-  "scope_version": "0.2",
+  "scope_version": "0.3",
   "tracking_issue": 59,
   "source_refs": [
     "src.mext.highschool.curriculum2018.v1",
@@ -19,6 +19,43 @@
     "The Course of Study and commentary locators define review scope; lesson counts, titles, examples, and evidence rules remain project decisions.",
     "No official textbook, final curriculum alignment, approval, or publication claim is made."
   ],
+  "classroom_route": {
+    "period_minutes": 50,
+    "mandatory_periods": 65,
+    "recommended_extension_periods": 5,
+    "recommended_total_periods": 70,
+    "extension_allocations": [
+      {
+        "kind": "lesson",
+        "lesson_ref": "lesson.info1.society.inquiry.project.v1",
+        "periods": 1,
+        "purpose": "Additional feedback and revision time for the A7 performance task."
+      },
+      {
+        "kind": "lesson",
+        "lesson_ref": "lesson.info1.design.project.v1",
+        "periods": 1,
+        "purpose": "Additional feedback and revision time for the B7 performance task."
+      },
+      {
+        "kind": "lesson",
+        "lesson_ref": "lesson.info1.programming.project.v1",
+        "periods": 1,
+        "purpose": "Additional feedback and revision time for the C9 performance task."
+      },
+      {
+        "kind": "lesson",
+        "lesson_ref": "lesson.info1.data.investigation.project.v1",
+        "periods": 1,
+        "purpose": "Additional feedback and revision time for the D9 performance task."
+      },
+      {
+        "kind": "cumulative",
+        "periods": 1,
+        "purpose": "Cumulative diagnostic and targeted reteaching across all four units."
+      }
+    ]
+  },
   "units": [
     {
       "id": "unit.info1.society.v1",
@@ -162,7 +199,7 @@
           "instructional_time": {
             "class_periods_50_min": [
               1,
-              2
+              1
             ],
             "self_study_minutes": [
               45,
@@ -251,8 +288,8 @@
           ],
           "instructional_time": {
             "class_periods_50_min": [
-              2,
-              2
+              1,
+              1
             ],
             "self_study_minutes": [
               70,
@@ -339,7 +376,7 @@
           "instructional_time": {
             "class_periods_50_min": [
               1,
-              2
+              1
             ],
             "self_study_minutes": [
               45,
@@ -425,8 +462,8 @@
           ],
           "instructional_time": {
             "class_periods_50_min": [
-              2,
-              2
+              1,
+              1
             ],
             "self_study_minutes": [
               70,
@@ -514,8 +551,8 @@
           ],
           "instructional_time": {
             "class_periods_50_min": [
-              2,
-              2
+              1,
+              1
             ],
             "self_study_minutes": [
               70,
@@ -981,8 +1018,8 @@
           ],
           "instructional_time": {
             "class_periods_50_min": [
-              2,
-              2
+              1,
+              1
             ],
             "self_study_minutes": [
               70,
@@ -1159,8 +1196,8 @@
           ],
           "instructional_time": {
             "class_periods_50_min": [
-              2,
-              2
+              1,
+              1
             ],
             "self_study_minutes": [
               70,
@@ -1627,8 +1664,8 @@
           ],
           "instructional_time": {
             "class_periods_50_min": [
-              3,
-              3
+              2,
+              2
             ],
             "self_study_minutes": [
               100,
@@ -2975,7 +3012,7 @@
     }
   ],
   "created_at": "2026-07-14",
-  "updated_at": "2026-07-15",
+  "updated_at": "2026-07-22",
   "global_prerequisites": [
     "Everyday experience using digital information and communication tools.",
     "Basic arithmetic including whole numbers, decimals, and simple proportions; required ideas are refreshed before use.",
