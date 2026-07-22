@@ -8,7 +8,7 @@ This document defines the MVP v0.1 problem-bank design for Issues #4, #5,
 records, rubric records, teacher guides, or lesson bodies.
 
 This design remains the lesson-level assessment baseline for C2 through C4 in
-the v0.2 full-scope plan. Subject-wide counts and objective coverage are defined
+the v0.3 full-scope plan. Subject-wide counts and objective coverage are defined
 in `docs/INFORMATION_I_COMPLETION_MATRIX.md`; this historical v0.1 document does
 not define completeness for the other 29 lessons.
 
