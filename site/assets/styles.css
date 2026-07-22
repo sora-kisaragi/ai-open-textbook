@@ -473,6 +473,14 @@ pre code {
   margin-top: 0.45rem;
 }
 
+.canonical-answer-prose {
+  overflow-wrap: anywhere;
+}
+
+.canonical-answer-prose > :last-child {
+  margin-bottom: 0;
+}
+
 .lesson-navigation {
   margin-top: 1rem;
   padding-top: 1.5rem;

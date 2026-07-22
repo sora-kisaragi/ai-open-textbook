@@ -2233,20 +2233,20 @@
           "learning_objectives": [
             {
               "id": "obj.info1.networks.protocols.001.v1",
-              "statement": "Identify endpoints, links, intermediary devices, and protocols in a small network.",
+              "statement": "Distinguish client and server roles, hubs, switches, routers, and LAN/WAN boundaries in a small network.",
               "expected_evidence": "identification",
               "label": "D1.O1"
             },
             {
               "id": "obj.info1.networks.protocols.002.v1",
-              "statement": "Explain why shared communication rules are necessary.",
-              "expected_evidence": "explanation",
+              "statement": "Trace packets across protocol layers using IP addressing, routing control, and transport control.",
+              "expected_evidence": "trace",
               "label": "D1.O2"
             },
             {
               "id": "obj.info1.networks.protocols.003.v1",
-              "statement": "Design a small network from stated communication and reliability needs.",
-              "expected_evidence": "creation",
+              "statement": "Diagnose a plausible failed layer from observations and design a small network from stated communication and reliability needs.",
+              "expected_evidence": "diagnosis_and_creation",
               "label": "D1.O3"
             }
           ],
@@ -2255,20 +2255,28 @@
             "C1: Computer Systems and Information Processing."
           ],
           "key_concepts": [
-            "network",
-            "endpoint",
-            "link",
-            "protocol",
-            "packet"
+            "client-server",
+            "hub",
+            "switch",
+            "router",
+            "LAN and WAN",
+            "packet",
+            "IP address",
+            "routing control",
+            "transport control",
+            "protocol layers"
           ],
-          "assessment_intent": "Interpret and improve a small network diagram without vendor-specific configuration.",
+          "assessment_intent": "Classify network roles, trace a packet across layers, diagnose a bounded failure, and explain a reliability trade-off without vendor configuration or subnet calculations.",
           "depends_on": [
             "lesson.info1.design.communication.media.v1",
             "lesson.info1.programming.computer.systems.v1"
           ],
           "source_refs": [
             "src.mext.highschool.curriculum2018.v1",
-            "src.mext.information.commentary2018.v1"
+            "src.mext.information.commentary2018.v1",
+            "src.ietf.rfc1122.v1",
+            "src.ietf.rfc5737.v1",
+            "src.ietf.rfc9293.v1"
           ],
           "instructional_time": {
             "class_periods_50_min": [
@@ -2322,40 +2330,53 @@
           "learning_objectives": [
             {
               "id": "obj.info1.networks.internet.web.001.v1",
-              "statement": "Distinguish the Internet, the Web, and an information service.",
+              "statement": "Distinguish the Internet, the Web, an information service, and the roles of a URI and URL.",
               "expected_evidence": "analysis",
               "label": "D2.O1"
             },
             {
               "id": "obj.info1.networks.internet.web.002.v1",
-              "statement": "Trace a simplified name-resolution, request-response, data-processing, and service-delivery path.",
+              "statement": "Trace a named HTTPS service from URL parsing through DNS, routing, transport, TLS, HTTP, service processing, and display.",
               "expected_evidence": "trace",
               "label": "D2.O2"
             },
             {
               "id": "obj.info1.networks.internet.web.003.v1",
-              "statement": "Evaluate how an information system's components and operation support or limit effective service use.",
-              "expected_evidence": "evaluation",
+              "statement": "Diagnose a plausible failed layer or service component from observations and evaluate its effect on service use.",
+              "expected_evidence": "diagnosis_and_evaluation",
               "label": "D2.O3"
             }
           ],
           "prerequisites": [
-            "D1: Networks and Protocols."
+            "D1: Networks, Devices, Packets, and Protocol Layers."
           ],
           "key_concepts": [
             "Internet",
             "Web",
-            "information system",
-            "service",
-            "client-server"
+            "information service",
+            "URI and URL",
+            "DNS",
+            "HTTP and HTTPS",
+            "TLS and certificates",
+            "layered diagnosis"
           ],
-          "assessment_intent": "Trace a simplified service flow, diagnose a failure location, and evaluate service use against a stated need.",
+          "assessment_intent": "Parse and trace one synthetic HTTPS service path, diagnose bounded failures from evidence, and evaluate performance, freshness, safety, and operational trade-offs.",
           "depends_on": [
             "lesson.info1.networks.protocols.v1"
           ],
           "source_refs": [
             "src.mext.highschool.curriculum2018.v1",
-            "src.mext.information.commentary2018.v1"
+            "src.mext.information.commentary2018.v1",
+            "src.ietf.rfc1122.v1",
+            "src.ietf.rfc5737.v1",
+            "src.ietf.rfc9499.v1",
+            "src.ietf.rfc9110.v1",
+            "src.ietf.rfc9846.v1",
+            "src.w3c.webarch.v1",
+            "src.ietf.rfc2606.v1",
+            "src.ietf.rfc3986.v1",
+            "src.ietf.rfc9293.v1",
+            "src.ietf.rfc9525.v1"
           ],
           "instructional_time": {
             "class_periods_50_min": [
@@ -2404,47 +2425,57 @@
         {
           "order": "D3",
           "lesson_id": "lesson.info1.networks.security.v1",
-          "title": "Authentication, Encryption, and Security",
+          "title": "Authentication, Cryptography, and Security",
           "status": "draft",
           "learning_objectives": [
             {
               "id": "obj.info1.networks.security.001.v1",
-              "statement": "Relate confidentiality, integrity, and availability to concrete risks.",
+              "statement": "Relate confidentiality, integrity, and availability to concrete risks while distinguishing authentication from authorization.",
               "expected_evidence": "analysis",
               "label": "D3.O1"
             },
             {
               "id": "obj.info1.networks.security.002.v1",
-              "statement": "Distinguish authentication, authorization, encryption, and backup.",
+              "statement": "Distinguish the roles and limits of encryption, hashing, digital signatures, and certificates.",
               "expected_evidence": "analysis",
               "label": "D3.O2"
             },
             {
               "id": "obj.info1.networks.security.003.v1",
-              "statement": "Select layered controls for a scenario and explain residual risk.",
+              "statement": "Match phishing, excessive privilege, delayed updates, and data loss to layered controls including MFA, least privilege, updates, backup, and residual-risk review.",
               "expected_evidence": "application",
               "label": "D3.O3"
             }
           ],
           "prerequisites": [
             "A3: Rights, Responsibility, Privacy, and Risk.",
-            "D2: Internet, Web, and Information Services."
+            "D2: Named HTTPS Service Tracing and Diagnosis."
           ],
           "key_concepts": [
-            "confidentiality",
-            "integrity",
-            "availability",
-            "authentication",
-            "encryption"
+            "confidentiality, integrity, and availability",
+            "authentication and authorization",
+            "encryption and hashing",
+            "digital signatures and certificates",
+            "MFA",
+            "least privilege",
+            "software updates",
+            "backup and residual risk",
+            "phishing and social engineering"
           ],
-          "assessment_intent": "Build a threat-control table using current primary technical sources where claims require them.",
+          "assessment_intent": "Distinguish security properties and cryptographic roles, then match synthetic threats and weaknesses to defensive layered controls while stating limits and residual risk.",
           "depends_on": [
             "lesson.info1.society.rights.responsibility.v1",
             "lesson.info1.networks.internet.web.v1"
           ],
           "source_refs": [
             "src.mext.highschool.curriculum2018.v1",
-            "src.mext.information.commentary2018.v1"
+            "src.mext.information.commentary2018.v1",
+            "src.nist.csf2.v1",
+            "src.ietf.rfc9846.v1",
+            "src.nist.sp800.63b4.v1",
+            "src.nist.fips1804.v1",
+            "src.nist.fips1865.v1",
+            "src.ietf.rfc9525.v1"
           ],
           "instructional_time": {
             "class_periods_50_min": [

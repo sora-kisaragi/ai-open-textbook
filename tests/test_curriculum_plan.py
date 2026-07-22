@@ -700,6 +700,134 @@ def test_unit_c_review_contracts() -> None:
     ]["source_refs"]
 
 
+def test_unit_d_network_security_contracts() -> None:
+    curriculum = load_curriculum()
+    unit_d = next(
+        unit for unit in curriculum["units"]
+        if unit["id"] == "unit.info1.networks.data.v1"
+    )
+    planned = {lesson["order"]: lesson for lesson in unit_d["lessons"]}
+    lessons = {
+        record["id"]: record for record in load_collection("lessons.ndjson")
+    }
+    problems = {
+        record["id"]: record for record in load_collection("problems.ndjson")
+    }
+    answers = {
+        record["id"]: record for record in load_collection("answers.ndjson")
+    }
+    rubrics = {
+        record["id"]: record for record in load_collection("rubrics.ndjson")
+    }
+    sources = {
+        record["id"]: record for record in load_collection("sources.ndjson")
+    }
+
+    unit_d_lesson_ids = {
+        planned[order]["lesson_id"] for order in ("D1", "D2", "D3")
+    }
+    unit_d_problems = [
+        problem for problem in problems.values()
+        if unit_d_lesson_ids.intersection(problem["lesson_refs"])
+    ]
+    assert len(unit_d_problems) == 12
+    assert all(problem["status"] == "draft" for problem in unit_d_problems)
+
+    d1_text = " ".join([
+        *[objective["statement"] for objective in planned["D1"]["learning_objectives"]],
+        *planned["D1"]["key_concepts"],
+        *[problem["question"] for problem in unit_d_problems if ".protocols." in problem["id"]],
+    ])
+    for term in (
+        "client", "server", "hub", "switch", "router", "LAN", "WAN",
+        "IP address", "routing control", "transport control", "protocol layers",
+    ):
+        assert term.lower() in d1_text.lower()
+    assert problems["prob.info1.networks.protocols.003.v1"]["question_type"] == "diagnosis"
+    assert "src.ietf.rfc9293.v1" in planned["D1"]["source_refs"]
+
+    d2_trace = " ".join([
+        problems["prob.info1.networks.internet.web.002.v1"]["question"],
+        answers["ans.prob.info1.networks.internet.web.002.v1"]["canonical_answer"],
+        *[criterion["description"] for criterion in rubrics[
+            "rubric.prob.info1.networks.internet.web.002.v1"
+        ]["criteria"]],
+    ])
+    for term in (
+        "https://library.example.test/books/B204?view=summary",
+        "DNS", "192.0.2.24", "スイッチ", "ルーター", "伝送制御",
+        "TLS", "証明書", "HTTP要求", "データベース", "表示",
+    ):
+        assert term in d2_trace
+    d2_diagnosis = " ".join([
+        problems["prob.info1.networks.internet.web.003.v1"]["question"],
+        answers["ans.prob.info1.networks.internet.web.003.v1"]["canonical_answer"],
+    ])
+    for term in ("DNS", "TLS", "証明書", "HTTP", "アプリケーション", "データベース"):
+        assert term in d2_diagnosis
+
+    d3_text = " ".join([
+        *[objective["statement"] for objective in planned["D3"]["learning_objectives"]],
+        *[problem["question"] for problem in unit_d_problems if ".security." in problem["id"]],
+        *[answer["canonical_answer"] for answer in answers.values() if answer["problem_id"].startswith("prob.info1.networks.security.")],
+    ])
+    for term in (
+        "confidentiality", "integrity", "availability", "authentication",
+        "authorization", "暗号化", "ハッシュ", "ディジタル署名", "証明書",
+        "MFA", "最小権限", "更新", "バックアップ", "フィッシング", "残余",
+    ):
+        assert term.lower() in d3_text.lower()
+    assert "身元確認とは別" in answers[
+        "ans.prob.info1.networks.security.001.v1"
+    ]["canonical_answer"]
+
+    required_sources = {
+        "src.ietf.rfc5737.v1",
+        "src.ietf.rfc2606.v1",
+        "src.ietf.rfc3986.v1",
+        "src.ietf.rfc9110.v1",
+        "src.ietf.rfc9293.v1",
+        "src.ietf.rfc9499.v1",
+        "src.ietf.rfc9525.v1",
+        "src.ietf.rfc9846.v1",
+        "src.nist.sp800.63b4.v1",
+        "src.nist.fips1804.v1",
+        "src.nist.fips1865.v1",
+    }
+    assert required_sources <= set(sources)
+    assert required_sources <= set().union(
+        *(set(planned[order]["source_refs"]) for order in ("D1", "D2", "D3"))
+    )
+    assert "updates RFC 1122" in sources["src.ietf.rfc9293.v1"]["notes"]
+    assert "obsoletes RFC 6125" in sources["src.ietf.rfc9525.v1"]["notes"]
+    assert "obsoletes RFC 8446" in sources["src.ietf.rfc9846.v1"]["notes"]
+    assert "supersedes SP 800-63B" in sources["src.nist.sp800.63b4.v1"]["notes"]
+    assert "planned revision" in sources["src.nist.fips1804.v1"]["notes"]
+
+    for problem in unit_d_problems:
+        answer = answers[problem["answer_refs"][0]]
+        rubric = rubrics[problem["rubric_refs"][0]]
+        assert answer["revision"] == 2
+        assert answer["status"] == "draft"
+        assert answer["review_status"] == "needs_human_review"
+        assert "verification_status" not in answer
+        assert "verification_evidence" not in answer
+        assert rubric["status"] == "draft"
+
+    learner_paths = [
+        ROOT / "lessons" / "highschool_information_i" / "networks_data" / filename
+        for filename in (
+            "00_networks_protocols.md",
+            "01_internet_web_services.md",
+            "02_security.md",
+        )
+    ]
+    learner_text = "\n".join(path.read_text(encoding="utf-8") for path in learner_paths)
+    assert "Python" not in learner_text
+    assert "実在するネットワークを許可なく調査" in learner_text
+    assert "実システムを許可なく調査" in learner_text
+
+
 def test_curriculum_sources_and_existing_lessons_resolve() -> None:
     curriculum = load_curriculum()
     source_ids = load_collection_ids("sources.ndjson")
