@@ -1379,19 +1379,19 @@
           "learning_objectives": [
             {
               "id": "obj.info1.programming.computer.systems.001.v1",
-              "statement": "Explain the roles of input, output, memory, processing, software, and external devices.",
+              "statement": "Explain how an operating system mediates applications and processor, memory, input, and output resources.",
               "expected_evidence": "explanation",
               "label": "C1.O1"
             },
             {
               "id": "obj.info1.programming.computer.systems.002.v1",
-              "statement": "Trace a simple instruction and data flow through a computer system.",
+              "statement": "Trace a simple instruction and data flow through operating-system mediation.",
               "expected_evidence": "trace",
               "label": "C1.O2"
             },
             {
               "id": "obj.info1.programming.computer.systems.003.v1",
-              "statement": "Relate digital representation and finite resources to a computation limit.",
+              "statement": "Distinguish finite numeric range, rounding error, and resource limits.",
               "expected_evidence": "analysis",
               "label": "C1.O3"
             }
@@ -1402,11 +1402,14 @@
           "key_concepts": [
             "hardware",
             "software",
+            "operating system",
             "processor",
             "memory",
-            "finite representation"
+            "input/output",
+            "finite numeric range",
+            "rounding error"
           ],
-          "assessment_intent": "Trace system components and explain a representation or resource limitation.",
+          "assessment_intent": "Trace operating-system mediation and distinguish numeric range, rounding, and resource limitations.",
           "depends_on": [
             "lesson.info1.design.digital.representation.v1"
           ],
@@ -1555,7 +1558,7 @@
           "learning_objectives": [
             {
               "id": "obj.info1.programming.conditionals.001.v1",
-              "statement": "Evaluate a Boolean comparison separately from assignment.",
+              "statement": "Evaluate Boolean propositions and compound and, or, and not logic before programming syntax.",
               "expected_evidence": "evaluation",
               "label": "C3.O1"
             },
@@ -1567,7 +1570,7 @@
             },
             {
               "id": "obj.info1.programming.conditionals.003.v1",
-              "statement": "Write and test a simple conditional for a stated rule.",
+              "statement": "Write and test a simple or compound conditional for a stated rule.",
               "expected_evidence": "application",
               "label": "C3.O3"
             }
@@ -1578,11 +1581,14 @@
           "key_concepts": [
             "Boolean value",
             "comparison",
-            "condition",
+            "and",
+            "or",
+            "not",
+            "compound condition",
             "branch",
             "control flow"
           ],
-          "assessment_intent": "Predict branch behavior, then implement and test a two-branch decision.",
+          "assessment_intent": "Evaluate compound Boolean logic without code, then trace, implement, and test stated decision rules.",
           "depends_on": [
             "lesson.info1.programming.variables.v1"
           ],
@@ -1920,19 +1926,19 @@
           "learning_objectives": [
             {
               "id": "obj.info1.programming.algorithms.001.v1",
-              "statement": "Express an algorithm using structured natural language or code.",
+              "statement": "Express linear search and one simple sorting method using structured natural language.",
               "expected_evidence": "creation",
               "label": "C7.O1"
             },
             {
               "id": "obj.info1.programming.algorithms.002.v1",
-              "statement": "Compare algorithms for correctness, clarity, and work as input grows.",
+              "statement": "Trace correctness and compare rough work growth for search and sorting.",
               "expected_evidence": "analysis",
               "label": "C7.O2"
             },
             {
               "id": "obj.info1.programming.algorithms.003.v1",
-              "statement": "Use tests and traces to improve an algorithm.",
+              "statement": "Use normal, absent-target, boundary, and empty tests to improve an algorithm.",
               "expected_evidence": "application",
               "label": "C7.O3"
             }
@@ -1944,12 +1950,14 @@
           ],
           "key_concepts": [
             "algorithm",
+            "linear search",
+            "selection sort",
             "correctness",
             "trace",
             "test",
-            "efficiency"
+            "work growth"
           ],
-          "assessment_intent": "Express, trace, test, and improve FIFO print scheduling while preserving the supplied request order.",
+          "assessment_intent": "Manually trace linear search and selection sort, explain correctness, test edge cases, and compare rough input-growth behavior.",
           "depends_on": [
             "lesson.info1.programming.loops.v1",
             "lesson.info1.programming.collections.strings.v1",
@@ -2017,13 +2025,13 @@
             },
             {
               "id": "obj.info1.programming.modeling.simulation.002.v1",
-              "statement": "Run a manual and a Python-based simulation for the same model.",
+              "statement": "Run a manual and a Python-based simulation for the same deterministic model.",
               "expected_evidence": "manual_trace_and_executable_output",
               "label": "C8.O2"
             },
             {
               "id": "obj.info1.programming.modeling.simulation.003.v1",
-              "statement": "Evaluate how assumptions or parameter changes affect results and limitations.",
+              "statement": "Compare two deterministic assumption sets and evaluate result differences and limitations.",
               "expected_evidence": "evaluation",
               "label": "C8.O3"
             }
@@ -2038,10 +2046,11 @@
             "model",
             "assumption",
             "parameter",
-            "simulation",
-            "sensitivity"
+            "deterministic simulation",
+            "model comparison",
+            "limitation"
           ],
-          "assessment_intent": "Manually trace and execute the same print-queue simulation, compare all outputs, and evaluate assumptions, sensitivity, and limits.",
+          "assessment_intent": "Manually and programmatically compare the same inputs under two deterministic assumption sets; probabilistic modeling remains optional.",
           "depends_on": [
             "lesson.info1.society.decomposition.modeling.v1",
             "lesson.info1.programming.conditionals.v1",
@@ -2104,19 +2113,19 @@
           "learning_objectives": [
             {
               "id": "obj.info1.programming.project.001.v1",
-              "statement": "Design an algorithm for a bounded problem and implement it in Python.",
+              "statement": "Define and implement a FIFO contract for nondecreasing arrivals while preserving tied input order.",
               "expected_evidence": "creation",
               "label": "C9.O1"
             },
             {
               "id": "obj.info1.programming.project.002.v1",
-              "statement": "Test normal, boundary, invalid, and empty cases appropriate to the design.",
+              "statement": "Test ordered, tied, descending, boundary, invalid, and empty inputs with expected and actual evidence.",
               "expected_evidence": "application",
               "label": "C9.O2"
             },
             {
               "id": "obj.info1.programming.project.003.v1",
-              "statement": "Evaluate the program against requirements and explain improvements and limits.",
+              "statement": "Evaluate requirements, implement an improvement, rerun regression tests, and explain limits.",
               "expected_evidence": "evaluation",
               "label": "C9.O3"
             }
@@ -2129,12 +2138,14 @@
           ],
           "key_concepts": [
             "requirement",
-            "algorithm",
+            "FIFO contract",
+            "nondecreasing input",
+            "tied arrival",
             "implementation",
-            "test case",
+            "deterministic test evidence",
             "evaluation"
           ],
-          "assessment_intent": "FIFO-core performance task using supplied starter signatures, an executable program, tests, requirement evaluation, and reflection; shortest-job-first is an optional extension.",
+          "assessment_intent": "FIFO-core performance task with fixed starter signatures, nondecreasing-arrival validation, tied-order preservation, deterministic evidence, improvement, and regression retesting.",
           "depends_on": [
             "lesson.info1.society.solution.evaluation.v1",
             "lesson.info1.design.prototype.usability.v1",
