@@ -16,18 +16,22 @@ uv run python scripts/build_static_site.py
 uv run python scripts/verify_static_site.py
 ```
 
-生成後、`build/site/index.html` をブラウザで開いてください。目次から学習者向けの
-各レッスンへ移動できます。教員向けページは学習者向けページと分けて表示されます。
+生成後、`build/site/index.html` をブラウザで開いてください。教室用の解答なし教材と、
+解答例・解説を開いて確認できる自習版を選べます。教員向けページは学習者向けページと
+分けて表示されます。96件の学習目標の監査結果と単元・授業時数レポートは
+`build/site/reports/` に生成されます。
 
 印刷・PDF版は次のコマンドで生成できます。
 
 ```bash
 uv run python -m playwright install chromium
-uv run python scripts/build_pdf.py
+uv run python scripts/build_pdf.py --edition classroom
+uv run python scripts/build_pdf.py --edition self-study
 ```
 
-出力先は `build/information-i-textbook.pdf` です。`build/` 以下は生成物であり、
-直接編集したりGitへコミットしたりしません。
+出力先は教室版が `build/information-i-textbook.pdf`、自習版が
+`build/information-i-self-study.pdf` です。`build/` 以下は生成物であり、直接編集したり
+Gitへコミットしたりしません。
 
 ## 対象範囲
 
@@ -91,7 +95,8 @@ uv run python scripts/build_sqlite_index.py
 uv run python scripts/check_examples.py
 uv run python scripts/build_static_site.py
 uv run python scripts/verify_static_site.py
-uv run python scripts/build_pdf.py
+uv run python scripts/build_pdf.py --edition classroom
+uv run python scripts/build_pdf.py --edition self-study
 uv run python -m pytest
 ```
 

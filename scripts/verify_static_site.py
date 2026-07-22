@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import json
 import re
 import sys
 from html.parser import HTMLParser
@@ -119,6 +120,42 @@ class PageParser(HTMLParser):
         return links
 
 
+class AnswerRevealParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.reveals: list[str] = []
+        self._depth = 0
+        self._parts: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attributes = {name: value or "" for name, value in attrs}
+        if tag == "details" and "answer-reveal" in attributes.get("class", "").split():
+            if self._depth == 0:
+                self._parts = []
+            self._depth += 1
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag != "details" or self._depth == 0:
+            return
+        self._depth -= 1
+        if self._depth == 0:
+            self.reveals.append(" ".join("".join(self._parts).split()))
+
+    def handle_data(self, data: str) -> None:
+        if self._depth:
+            self._parts.append(data)
+
+
+def answer_reveal_texts(path: Path) -> list[str]:
+    parser = AnswerRevealParser()
+    try:
+        parser.feed(path.read_text(encoding="utf-8"))
+        parser.close()
+    except (OSError, UnicodeError) as exc:
+        raise SiteVerificationError(f"cannot read answer reveals in {path}: {exc}") from exc
+    return parser.reveals
+
+
 def normalize_text(value: object) -> str:
     return " ".join(html.unescape(str(value)).split())
 
@@ -225,12 +262,19 @@ def flatten_strings(value: object) -> list[str]:
     return []
 
 
-def sensitive_values(by_type: dict[str, list[dict]]) -> list[tuple[str, str]]:
+def forbidden_values(
+    by_type: dict[str, list[dict]],
+    *,
+    include_answer_feedback: bool,
+) -> list[tuple[str, str]]:
     """Return values suitable for substring checks; structural checks cover low-information values."""
     values: list[tuple[str, str]] = []
     for answer in by_type.get("answer", []):
         answer_id = str(answer.get("id", "answer"))
-        for field in ("canonical_answer", "acceptable_answers", "explanation", "verification_evidence"):
+        fields = ["verification_evidence"]
+        if include_answer_feedback:
+            fields.extend(("canonical_answer", "acceptable_answers", "explanation"))
+        for field in fields:
             for value in flatten_strings(answer.get(field)):
                 normalized = normalize_text(value)
                 if normalized and not LOW_INFORMATION_SENSITIVE_VALUE.fullmatch(normalized):
@@ -277,7 +321,16 @@ def verify_learner_separation(
                 raise SiteVerificationError(f"teacher-only value from {source} leaked into {page.name}")
 
 
-def verify(root: Path) -> tuple[int, int]:
+def verify_report(path: Path, expected: dict) -> None:
+    try:
+        actual = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise SiteVerificationError(f"cannot read generated report {path.name}: {exc}") from exc
+    if actual != expected:
+        raise SiteVerificationError(f"generated report is stale or inconsistent: {path.name}")
+
+
+def verify(root: Path) -> tuple[int, int, int, int]:
     root = root.resolve()
     site = root / "build" / "site"
     if not site.is_dir():
@@ -299,7 +352,16 @@ def verify(root: Path) -> tuple[int, int]:
     slugs = [build_static_site.slug_for_lesson(lesson) for lesson in lessons]
     expected_learner = [site / "lessons" / f"{slug}.html" for slug in slugs]
     expected_teacher = [site / "teacher" / f"{slug}.html" for slug in slugs]
-    expected_html = {site / "index.html", site / "book.html", *expected_learner, *expected_teacher}
+    expected_self_study = [site / "self-study" / "lessons" / f"{slug}.html" for slug in slugs]
+    expected_html = {
+        site / "index.html",
+        site / "book.html",
+        site / "self-study" / "index.html",
+        site / "self-study" / "book.html",
+        *expected_learner,
+        *expected_teacher,
+        *expected_self_study,
+    }
     actual_html = {path.resolve() for path in site.rglob("*.html") if path.is_file()}
     expected_html = {path.resolve() for path in expected_html}
     if actual_html != expected_html:
@@ -342,13 +404,44 @@ def verify(root: Path) -> tuple[int, int]:
 
     learner_parsers: dict[Path, PageParser] = {}
     allowed_sources: dict[Path, str] = {}
+    self_study_parsers: dict[Path, PageParser] = {}
+    self_study_allowed_sources: dict[Path, str] = {}
+    self_study_index_path = (site / "self-study" / "index.html").resolve()
+    self_study_index_parser = pages[self_study_index_path]
+    require_structure(
+        self_study_index_parser,
+        "self-study/index.html",
+        [
+            ("body", None, "self-study-page"),
+            ("main", "main", None),
+            ("div", None, "curriculum-units"),
+        ],
+    )
+    if self_study_index_parser.count("section", css_class="curriculum-unit") != len(included_units):
+        raise SiteVerificationError("self-study/index.html: curriculum unit count does not match source data")
+    self_study_parsers[self_study_index_path] = self_study_index_parser
+    self_study_allowed_sources[self_study_index_path] = "\n".join(
+        str(value)
+        for lesson in lessons
+        for value in (
+            lesson.get("title", ""),
+            lesson.get("unit", ""),
+            curriculum[str(lesson["id"])].order,
+        )
+    )
     all_allowed_sources: list[str] = []
+    all_self_study_allowed_sources: list[str] = []
     problems = by_type.get("problem", [])
+    answer_count = 0
+    rendered_answer_refs: list[str] = []
+    lesson_answer_reveals: list[str] = []
     for index, (lesson, slug) in enumerate(zip(lessons, slugs, strict=True)):
         learner_path = (site / "lessons" / f"{slug}.html").resolve()
         teacher_path = (site / "teacher" / f"{slug}.html").resolve()
+        self_study_path = (site / "self-study" / "lessons" / f"{slug}.html").resolve()
         learner_parser = pages[learner_path]
         teacher_parser = pages[teacher_path]
+        self_study_parser = pages[self_study_path]
         require_structure(
             learner_parser,
             learner_path.relative_to(site).as_posix(),
@@ -382,16 +475,72 @@ def verify(root: Path) -> tuple[int, int]:
         if f"../lessons/{slug}.html" not in teacher_parser.links():
             raise SiteVerificationError(f"{teacher_path.name}: missing learner-page link")
 
+        require_structure(
+            self_study_parser,
+            self_study_path.relative_to(site).as_posix(),
+            [
+                ("body", None, "self-study-page"),
+                ("main", "lesson-content", None),
+                ("article", None, "lesson-article"),
+                ("section", None, "practice-section"),
+                ("nav", None, "lesson-navigation"),
+            ],
+        )
+        if index > 0 and self_study_parser.links(rel="prev") != [f"{slugs[index - 1]}.html"]:
+            raise SiteVerificationError(f"{self_study_path.name}: missing or incorrect previous link")
+        if index == 0 and self_study_parser.links(rel="prev"):
+            raise SiteVerificationError(f"{self_study_path.name}: unexpected previous link")
+        if index + 1 < len(slugs) and self_study_parser.links(rel="next") != [f"{slugs[index + 1]}.html"]:
+            raise SiteVerificationError(f"{self_study_path.name}: missing or incorrect next link")
+        if index + 1 == len(slugs) and self_study_parser.links(rel="next"):
+            raise SiteVerificationError(f"{self_study_path.name}: unexpected next link")
+
         linked_questions = [
             str(problem.get("question", ""))
             for problem in problems
             if str(lesson["id"]) in (problem.get("lesson_refs", []) or [])
         ]
+        linked_problems = [
+            problem
+            for problem in problems
+            if str(lesson["id"]) in (problem.get("lesson_refs", []) or [])
+        ]
+        linked_answers = [
+            build_static_site.require_reference(by_id, answer_ref, "answer", "answer_refs")
+            for problem in linked_problems
+            for answer_ref in problem.get("answer_refs", []) or []
+        ]
+        if self_study_parser.count("details", css_class="answer-reveal") != len(linked_answers):
+            raise SiteVerificationError(f"{self_study_path.name}: answer reveal count is incomplete")
+        if self_study_parser.count("summary") != len(linked_answers):
+            raise SiteVerificationError(f"{self_study_path.name}: each answer reveal requires a summary")
+        answer_count += len(linked_answers)
+        rendered_answer_refs.extend(str(answer["id"]) for answer in linked_answers)
+        lesson_answer_reveals.extend(answer_reveal_texts(self_study_path))
         body_path = build_static_site.repository_path(root, lesson["body_ref"], "body_ref")
         allowed = body_path.read_text(encoding="utf-8") + "\n" + "\n".join(linked_questions)
+        feedback = "\n".join(
+            value
+            for answer in linked_answers
+            for value in flatten_strings(
+                {
+                    "canonical_answer": answer.get("canonical_answer"),
+                    "acceptable_answers": answer.get("acceptable_answers", []),
+                    "explanation": answer.get("explanation"),
+                }
+            )
+        )
+        mistakes = "\n".join(
+            str(item)
+            for problem in linked_problems
+            for item in problem.get("common_mistakes", []) or []
+        )
         learner_parsers[learner_path] = learner_parser
         allowed_sources[learner_path] = allowed
         all_allowed_sources.append(allowed)
+        self_study_parsers[self_study_path] = self_study_parser
+        self_study_allowed_sources[self_study_path] = "\n".join((allowed, feedback, mistakes))
+        all_self_study_allowed_sources.append("\n".join((allowed, feedback, mistakes)))
 
     book_parser = pages[book_path]
     require_structure(
@@ -420,10 +569,59 @@ def verify(root: Path) -> tuple[int, int]:
     )
     allowed_sources[book_path] = "\n".join([*all_allowed_sources, bibliography_metadata])
 
+    self_study_book_path = (site / "self-study" / "book.html").resolve()
+    self_study_book_parser = pages[self_study_book_path]
+    require_structure(
+        self_study_book_parser,
+        "self-study/book.html",
+        [
+            ("body", None, "self-study-book"),
+            ("main", "book-content", None),
+            ("nav", None, "book-toc"),
+            ("div", None, "book-units"),
+        ],
+    )
+    if self_study_book_parser.count("article", css_class="book-lesson") != len(lessons):
+        raise SiteVerificationError("self-study/book.html: lesson count does not match source data")
+    if self_study_book_parser.count("details", css_class="answer-reveal") != answer_count:
+        raise SiteVerificationError("self-study/book.html: answer reveal count is incomplete")
+    if self_study_book_parser.count("summary") != answer_count:
+        raise SiteVerificationError("self-study/book.html: each answer reveal requires a summary")
+    expected_answer_refs = sorted(str(answer["id"]) for answer in by_type.get("answer", []))
+    if sorted(rendered_answer_refs) != expected_answer_refs:
+        raise SiteVerificationError(
+            "self-study edition must render every answer record exactly once across lesson pages"
+        )
+    if answer_reveal_texts(self_study_book_path) != lesson_answer_reveals:
+        raise SiteVerificationError(
+            "self-study book answer feedback does not match the lesson-page feedback"
+        )
+    self_study_parsers[self_study_book_path] = self_study_book_parser
+    self_study_allowed_sources[self_study_book_path] = "\n".join(all_self_study_allowed_sources)
+
+    curriculum_document = build_static_site.load_curriculum_document(root)
+    verify_report(
+        site / "reports" / "semantic-coverage-audit.json",
+        build_static_site.build_semantic_coverage_report(curriculum_document, by_type),
+    )
+    verify_report(
+        site / "reports" / "unit-balance-report.json",
+        build_static_site.build_unit_balance_report(curriculum_document),
+    )
+
     verify_references(site.resolve(), pages)
     verify_css(site.resolve(), pages)
-    verify_learner_separation(learner_parsers, allowed_sources, sensitive_values(by_type))
-    return len(expected_learner), len(expected_teacher)
+    verify_learner_separation(
+        learner_parsers,
+        allowed_sources,
+        forbidden_values(by_type, include_answer_feedback=True),
+    )
+    verify_learner_separation(
+        self_study_parsers,
+        self_study_allowed_sources,
+        forbidden_values(by_type, include_answer_feedback=False),
+    )
+    return len(expected_learner), len(expected_teacher), len(expected_self_study), answer_count
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -440,13 +638,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     try:
-        learner_count, teacher_count = verify(args.root)
+        learner_count, teacher_count, self_study_count, answer_count = verify(args.root)
     except (OSError, build_static_site.SiteBuildError, SiteVerificationError) as exc:
         print(f"Static site verification failed: {exc}", file=sys.stderr)
         return 1
     print(
         f"Verified static textbook site at {(args.root.resolve() / 'build' / 'site')}: "
-        f"{learner_count} learner page(s), {teacher_count} teacher page(s), 1 book."
+        f"{learner_count} classroom page(s), {self_study_count} self-study page(s), "
+        f"{teacher_count} teacher page(s), {answer_count} answer reveal(s), 2 books."
     )
     return 0
 

@@ -114,11 +114,13 @@ order, examples, and explanation structure must not be imitated.
 - `python scripts/build_static_site.py`
 - `python scripts/verify_static_site.py`
 - `python scripts/check_examples.py`
-- `python scripts/build_pdf.py`
+- `python scripts/build_pdf.py --edition classroom`
+- `python scripts/build_pdf.py --edition self-study`
 - `python -m pytest`
 - Relevant `python scripts/check_prose_warnings.py ...`
 - Execution checks for changed runnable examples
-- Generated link, offline asset, and learner answer-leakage checks
+- Generated link, offline asset, classroom answer-leakage, and self-study
+  teacher-data leakage checks
 - `git diff --check`
 - Desktop, mobile, accessibility-oriented DOM, keyboard, and print visual QA when
   rendering changes or generated pages are in scope

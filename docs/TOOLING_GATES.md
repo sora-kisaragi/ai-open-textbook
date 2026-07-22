@@ -60,14 +60,18 @@ normalization policy; that separate decision remains tracked in Issue #46.
 
 ## Generated Delivery
 
-- `scripts/build_static_site.py` creates curriculum-ordered learner,
-  teacher/reviewer, and learner-only print pages under `build/site/`.
+- `scripts/build_static_site.py` creates curriculum-ordered answer-free
+  classroom, answer-feedback self-study, teacher/reviewer, and print pages
+  under `build/site/`. It also emits deterministic semantic-coverage and
+  unit-balance reports under `build/site/reports/`.
 - `scripts/verify_static_site.py` checks actual generated links, fragments,
-  local assets, expected page counts, structure, and learner/reviewer separation.
-  CSS escapes are rejected so runtime references cannot bypass offline checks.
-- `scripts/build_pdf.py` prints learner-only `book.html` with the locked Chromium
-  toolchain and verifies A4 page structure, implemented lesson headings, and
-  review-only token exclusion.
+  local assets, expected page and answer-reveal counts, native
+  `details`/`summary` controls, report consistency, and learner/reviewer
+  separation. CSS escapes are rejected so runtime references cannot bypass
+  offline checks.
+- `scripts/build_pdf.py` prints either classroom or self-study `book.html` with
+  the locked Chromium toolchain and verifies A4 page structure, implemented
+  lesson headings, and edition-specific review-only token exclusion.
 
 The PDF workflow is repeatable with the pinned toolchain. Cross-platform
 byte-identical output is not claimed. Rendered-page visual inspection remains a
@@ -82,7 +86,8 @@ uv run python scripts/build_sqlite_index.py
 uv run python scripts/check_examples.py
 uv run python scripts/build_static_site.py
 uv run python scripts/verify_static_site.py
-uv run python scripts/build_pdf.py
+uv run python scripts/build_pdf.py --edition classroom
+uv run python scripts/build_pdf.py --edition self-study
 uv run python -m pytest
 uv run python scripts/check_prose_warnings.py
 ```

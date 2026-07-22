@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build and verify the learner-only Information I textbook PDF."""
+"""Build and verify classroom or self-study Information I textbook PDFs."""
 from __future__ import annotations
 
 import argparse
@@ -25,6 +25,11 @@ except ModuleNotFoundError:  # Direct script execution places scripts/ on sys.pa
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_FILENAME = "information-i-textbook.pdf"
+SELF_STUDY_FILENAME = "information-i-self-study.pdf"
+EDITIONS = {
+    "classroom": (Path("book.html"), DEFAULT_FILENAME),
+    "self-study": (Path("self-study/book.html"), SELF_STUDY_FILENAME),
+}
 A4_WIDTH_POINTS = 595.28
 A4_HEIGHT_POINTS = 841.89
 PAGE_TOLERANCE_POINTS = 2.0
@@ -131,19 +136,28 @@ def implemented_titles(root: Path) -> list[str]:
     return titles
 
 
-def forbidden_review_tokens(root: Path) -> set[str]:
+def forbidden_review_tokens(root: Path, edition: str) -> set[str]:
     tokens: set[str] = set()
     collections = root / "data" / "collections"
-    for filename in ("answers.ndjson", "rubrics.ndjson"):
+    for filename in ("problems.ndjson", "answers.ndjson", "rubrics.ndjson"):
         for line in (collections / filename).read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
             record = json.loads(line)
             tokens.add(str(record["id"]))
             if record.get("type") == "answer":
-                explanation = record.get("explanation")
-                if isinstance(explanation, str) and len(explanation) >= 12:
-                    tokens.add(explanation)
+                if edition == "classroom":
+                    for field in ("canonical_answer", "acceptable_answers", "explanation"):
+                        value = record.get(field)
+                        values = value if isinstance(value, list) else [value]
+                        for item in values:
+                            if isinstance(item, str) and len(item) >= 12:
+                                tokens.add(item)
+                for evidence in record.get("verification_evidence", []) or []:
+                    if isinstance(evidence, dict):
+                        for item in evidence.values():
+                            if isinstance(item, str) and len(item) >= 12:
+                                tokens.add(item)
             if record.get("type") == "rubric":
                 for criterion in record.get("criteria", []):
                     description = criterion.get("description")
@@ -152,14 +166,62 @@ def forbidden_review_tokens(root: Path) -> set[str]:
     return tokens
 
 
-def normalize_pdf(source: Path, destination: Path) -> None:
+def allowed_learner_source_text(root: Path, edition: str) -> str:
+    by_id, by_type = build_static_site.load_records(root)
+    values: list[str] = []
+    for lesson in by_type.get("lesson", []):
+        body = build_static_site.repository_path(root, lesson.get("body_ref"), "body_ref")
+        values.append(body.read_text(encoding="utf-8"))
+    for problem in by_type.get("problem", []):
+        values.append(str(problem.get("question", "")))
+        if edition == "self-study":
+            values.extend(str(item) for item in problem.get("common_mistakes", []) or [])
+            for answer_ref in problem.get("answer_refs", []) or []:
+                answer = build_static_site.require_reference(by_id, answer_ref, "answer", "answer_refs")
+                values.append(str(answer.get("canonical_answer", "")))
+                values.extend(str(item) for item in answer.get("acceptable_answers", []) or [])
+                values.append(str(answer.get("explanation", "")))
+    for source in by_type.get("source", []):
+        if source.get("status") in {"deprecated", "superseded"}:
+            continue
+        values.extend(
+            str(source.get(field, ""))
+            for field in ("title", "issuer", "publication_date", "accessed_at", "url")
+        )
+    return "\n".join(values)
+
+
+def required_self_study_feedback(root: Path) -> list[tuple[str, list[str]]]:
+    _, by_type = build_static_site.load_records(root)
+    answers = [
+        (str(answer.get("id", "answer")), compact_extracted_text(answer.get("explanation", "")))
+        for answer in by_type.get("answer", [])
+        if str(answer.get("explanation", "")).strip()
+    ]
+    required = []
+    for answer_id, explanation in answers:
+        candidates = {
+            explanation[index:index + 12]
+            for index in range(max(1, len(explanation) - 11))
+            if len(explanation[index:index + 12]) == 12
+        }
+        unique_markers = sorted(
+            marker
+            for marker in candidates
+            if not any(marker in other for other_id, other in answers if other_id != answer_id)
+        )
+        required.append((answer_id, unique_markers or [explanation]))
+    return required
+
+
+def normalize_pdf(source: Path, destination: Path, edition: str) -> None:
     reader = PdfReader(source)
     writer = PdfWriter()
     writer.clone_document_from_reader(reader)
     writer.metadata = None
     writer.add_metadata(
         {
-            "/Title": "情報I Open Textbook Review Candidate",
+            "/Title": f"Information I Open Textbook {edition.title()} Review Candidate",
             "/Author": "AI Open Textbook contributors",
             "/Subject": "Learner review candidate; not approved or published",
             "/Creator": "ai-open-textbook scripts/build_pdf.py",
@@ -170,7 +232,9 @@ def normalize_pdf(source: Path, destination: Path) -> None:
         writer.write(stream)
 
 
-def verify_pdf(root: Path, pdf_path: Path) -> int:
+def verify_pdf(root: Path, pdf_path: Path, edition: str = "classroom") -> int:
+    if edition not in EDITIONS:
+        raise PdfBuildError(f"unknown edition: {edition}")
     if not pdf_path.is_file() or pdf_path.stat().st_size < 100:
         raise PdfBuildError(f"PDF is missing or unexpectedly small: {pdf_path}")
     try:
@@ -187,23 +251,35 @@ def verify_pdf(root: Path, pdf_path: Path) -> int:
     text = compact_extracted_text(
         "\n".join(page.extract_text() or "" for page in reader.pages)
     )
+    allowed_text = compact_extracted_text(allowed_learner_source_text(root, edition))
     for title in implemented_titles(root):
         if compact_extracted_text(title) not in text:
             raise PdfBuildError(f"generated PDF is missing implemented lesson title: {title}")
-    for token in forbidden_review_tokens(root):
-        if compact_extracted_text(token) in text:
+    for token in forbidden_review_tokens(root, edition):
+        normalized_token = compact_extracted_text(token)
+        if normalized_token in allowed_text:
+            continue
+        if normalized_token in text:
             raise PdfBuildError(f"learner PDF contains review-only token: {token}")
+    if edition == "self-study":
+        for answer_id, markers in required_self_study_feedback(root):
+            if not any(marker in text for marker in markers):
+                raise PdfBuildError(
+                    f"self-study PDF is missing answer explanation for {answer_id}"
+                )
     return len(reader.pages)
 
 
-def build(root: Path, output: Path) -> dict:
+def build(root: Path, output: Path, edition: str = "classroom") -> dict:
+    if edition not in EDITIONS:
+        raise PdfBuildError(f"unknown edition: {edition}")
     root = root.resolve()
     output = output.resolve()
     site = build_static_site.build(root)
-    book = site / "book.html"
+    book = site / EDITIONS[edition][0]
     stylesheet = site / "assets" / "styles.css"
     if not book.is_file():
-        raise PdfBuildError("static site did not generate learner book.html")
+        raise PdfBuildError(f"static site did not generate {edition} book.html")
     output.parent.mkdir(parents=True, exist_ok=True)
     browser_pdf_fd, browser_pdf_name = tempfile.mkstemp(prefix="book-browser-", suffix=".pdf", dir=output.parent)
     os.close(browser_pdf_fd)
@@ -234,6 +310,10 @@ def build(root: Path, output: Path) -> dict:
             page.route("**/*", block_remote_request)
             page.goto(book.as_uri(), wait_until="load")
             page.emulate_media(media="print")
+            if edition == "self-study":
+                page.locator("details.answer-reveal").evaluate_all(
+                    "elements => elements.forEach(element => element.open = true)"
+                )
             page.evaluate("document.fonts.ready")
             page.pdf(
                 path=str(browser_pdf),
@@ -247,11 +327,15 @@ def build(root: Path, output: Path) -> dict:
             browser.close()
         if blocked_requests:
             raise PdfBuildError(f"print document attempted remote requests: {blocked_requests}")
-        normalize_pdf(browser_pdf, normalized_pdf)
+        normalize_pdf(browser_pdf, normalized_pdf, edition)
         os.replace(normalized_pdf, output)
-        page_count = verify_pdf(root, output)
+        page_count = verify_pdf(root, output, edition)
+        answer_feedback_count = book.read_text(encoding="utf-8").count(
+            '<details class="answer-reveal">'
+        )
         manifest = {
             "schema_version": "1.0",
+            "edition": edition,
             "input_sha256": {
                 "book.html": sha256(book),
                 "assets/styles.css": sha256(stylesheet),
@@ -262,6 +346,7 @@ def build(root: Path, output: Path) -> dict:
             "page_count": page_count,
             "implemented_lesson_count": len(implemented_titles(root)),
             "planned_lesson_count": len(curriculum_lessons(root)),
+            "answer_feedback_count": answer_feedback_count,
             "playwright_version": version("playwright"),
             "chromium_version": browser_version,
             "pypdf_version": version("pypdf"),
@@ -280,7 +365,13 @@ def build(root: Path, output: Path) -> dict:
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=DEFAULT_ROOT, help="Repository root.")
-    parser.add_argument("--output", type=Path, help="PDF path. Defaults to ROOT/build/information-i-textbook.pdf.")
+    parser.add_argument(
+        "--edition",
+        choices=sorted(EDITIONS),
+        default="classroom",
+        help="Learner edition to build or verify.",
+    )
+    parser.add_argument("--output", type=Path, help="PDF path. Defaults to the edition-specific build path.")
     parser.add_argument("--verify-only", action="store_true", help="Verify an existing PDF without rebuilding it.")
     return parser.parse_args(argv)
 
@@ -288,13 +379,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     root = args.root.resolve()
-    output = (args.output or root / "build" / DEFAULT_FILENAME).resolve()
+    output = (args.output or root / "build" / EDITIONS[args.edition][1]).resolve()
     try:
         if args.verify_only:
-            pages = verify_pdf(root, output)
+            pages = verify_pdf(root, output, args.edition)
             print(f"PDF verification passed: {output} ({pages} A4 pages).")
         else:
-            manifest = build(root, output)
+            manifest = build(root, output, args.edition)
             print(
                 f"Built and verified {output} with {manifest['page_count']} A4 pages; "
                 f"manifest={output.with_suffix('.manifest.json')}."

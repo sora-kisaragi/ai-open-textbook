@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import html
 import json
 import os
@@ -101,14 +102,7 @@ def load_records(root: Path) -> tuple[dict[str, dict], dict[str, list[dict]]]:
 
 
 def load_curriculum(root: Path) -> dict[str, CurriculumPosition]:
-    path = root / CURRICULUM_FILE
-    if not path.is_file():
-        raise SiteBuildError(f"missing curriculum: {CURRICULUM_FILE.as_posix()}")
-    try:
-        curriculum = json.loads(path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as exc:
-        raise SiteBuildError(f"{CURRICULUM_FILE.as_posix()}: invalid JSON: {exc}") from exc
-
+    curriculum = load_curriculum_document(root)
     units = curriculum.get("units")
     if not isinstance(units, list) or not units:
         raise SiteBuildError("curriculum must contain a non-empty units list")
@@ -161,6 +155,20 @@ def load_curriculum(root: Path) -> dict[str, CurriculumPosition]:
             )
 
     return positions
+
+
+def load_curriculum_document(root: Path) -> dict:
+    path = root / CURRICULUM_FILE
+    if not path.is_file():
+        raise SiteBuildError(f"missing curriculum: {CURRICULUM_FILE.as_posix()}")
+    try:
+        curriculum = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise SiteBuildError(f"{CURRICULUM_FILE.as_posix()}: invalid JSON: {exc}") from exc
+
+    if not isinstance(curriculum, dict):
+        raise SiteBuildError("curriculum root must be an object")
+    return curriculum
 
 
 def repository_path(root: Path, relative: object, field: str) -> Path:
@@ -353,6 +361,234 @@ def render_practices(md: MarkdownIt, problems: list[dict], id_prefix: str = "pra
     return "".join(blocks)
 
 
+def render_self_study_practices(
+    md: MarkdownIt,
+    problems: list[dict],
+    by_id: dict[str, dict],
+    id_prefix: str = "self-study-practice",
+) -> str:
+    blocks = []
+    for number, problem in enumerate(problems, start=1):
+        question = md.render(str(problem.get("question", "")))
+        section_id = f"{id_prefix}-{number}"
+        answer_reveals = []
+        for answer in (
+            require_reference(by_id, ref, "answer", "answer_refs")
+            for ref in problem.get("answer_refs", []) or []
+        ):
+            acceptable = answer.get("acceptable_answers", []) or []
+            acceptable_html = ""
+            if acceptable:
+                acceptable_html = (
+                    "<h4>別の解答例</h4>"
+                    + render_list(acceptable, css_class="acceptable-answer-list")
+                )
+            explanation = md.render(str(answer.get("explanation", "")))
+            mistakes = problem.get("common_mistakes", []) or []
+            mistakes_html = ""
+            if mistakes:
+                mistakes_html = (
+                    "<h4>確認したい点</h4>"
+                    + render_list(mistakes, css_class="common-mistake-list")
+                )
+            answer_reveals.append(
+                '<details class="answer-reveal">'
+                "<summary>解答例と解説を確認</summary>"
+                '<div class="answer-feedback">'
+                "<h4>解答例</h4>"
+                f'<pre><code>{escape(answer.get("canonical_answer", ""))}</code></pre>'
+                f"{acceptable_html}"
+                "<h4>解説</h4>"
+                f'<div class="answer-explanation">{explanation}</div>'
+                f"{mistakes_html}"
+                "</div></details>"
+            )
+        blocks.append(
+            '<section class="practice-item self-study-practice" aria-labelledby="{}">'
+            '<p class="section-kicker">練習 {}</p>'
+            '<h3 id="{}">自分で考えてみよう</h3>{}{}'
+            "</section>".format(
+                section_id,
+                number,
+                section_id,
+                question,
+                "".join(answer_reveals),
+            )
+        )
+    return "".join(blocks)
+
+
+def instructional_range(lesson: dict, field: str) -> tuple[int, int]:
+    value = lesson.get("instructional_time", {}).get(field, [0, 0])
+    if (
+        not isinstance(value, list)
+        or len(value) != 2
+        or any(not isinstance(item, int) or isinstance(item, bool) or item < 0 for item in value)
+    ):
+        return 0, 0
+    return value[0], value[1]
+
+
+def build_semantic_coverage_report(
+    curriculum_document: dict,
+    by_type: dict[str, list[dict]],
+) -> dict:
+    problems = by_type.get("problem", [])
+    rubrics = by_type.get("rubric", [])
+    problems_by_objective: dict[str, set[str]] = {}
+    for problem in problems:
+        for objective_ref in problem.get("objective_refs", []) or []:
+            problems_by_objective.setdefault(str(objective_ref), set()).add(str(problem["id"]))
+
+    rubric_criteria: dict[str, tuple[str, set[str]]] = {}
+    for rubric in rubrics:
+        problem_id = str(rubric.get("problem_id", ""))
+        rubric_criteria[str(rubric.get("id", ""))] = (
+            problem_id,
+            {
+                str(criterion["id"])
+                for criterion in rubric.get("criteria", []) or []
+                if isinstance(criterion, dict) and criterion.get("id")
+            },
+        )
+
+    rows = []
+    for unit in curriculum_document.get("units", []):
+        for lesson in unit.get("lessons", []):
+            coverage_by_objective = {
+                str(item.get("objective_ref")): item
+                for item in lesson.get("assessment_coverage", []) or []
+                if isinstance(item, dict)
+            }
+            for objective in lesson.get("learning_objectives", []) or []:
+                objective_id = str(objective.get("id", ""))
+                coverage = coverage_by_objective.get(objective_id, {})
+                linked_problem_refs = sorted(problems_by_objective.get(objective_id, set()))
+                declared_problem_refs = sorted(
+                    str(ref) for ref in coverage.get("assessment_item_refs", []) or []
+                )
+                valid_problem_refs = sorted(set(declared_problem_refs) & set(linked_problem_refs))
+                declared_criterion_refs = sorted(
+                    (
+                        {
+                            "rubric_ref": str(ref.get("rubric_ref", "")),
+                            "criterion_id": str(ref.get("criterion_id", "")),
+                        }
+                        for ref in coverage.get("performance_criterion_refs", []) or []
+                        if isinstance(ref, dict)
+                    ),
+                    key=lambda ref: (ref["rubric_ref"], ref["criterion_id"]),
+                )
+                valid_criterion_refs = [
+                    ref
+                    for ref in declared_criterion_refs
+                    if ref["rubric_ref"] in rubric_criteria
+                    and rubric_criteria[ref["rubric_ref"]][0] in linked_problem_refs
+                    and ref["criterion_id"] in rubric_criteria[ref["rubric_ref"]][1]
+                ]
+                if len(valid_problem_refs) >= 2 or (
+                    valid_problem_refs and valid_criterion_refs
+                ):
+                    support_level = "supported"
+                elif valid_problem_refs or valid_criterion_refs:
+                    support_level = "partial"
+                else:
+                    support_level = "unsupported"
+                rows.append(
+                    {
+                        "objective_ref": objective_id,
+                        "objective_label": objective.get("label"),
+                        "objective_statement": objective.get("statement"),
+                        "unit_ref": unit.get("id"),
+                        "lesson_ref": lesson.get("lesson_id"),
+                        "lesson_order": lesson.get("order"),
+                        "declared_status": coverage.get("status", "missing"),
+                        "requirement": coverage.get("requirement", "missing"),
+                        "declared_assessment_item_refs": declared_problem_refs,
+                        "linked_assessment_item_refs": linked_problem_refs,
+                        "valid_declared_assessment_item_refs": valid_problem_refs,
+                        "declared_performance_criterion_refs": declared_criterion_refs,
+                        "valid_performance_criterion_refs": valid_criterion_refs,
+                        "support_level": support_level,
+                        "semantic_review_state": "needs_human_review",
+                    }
+                )
+
+    counts = Counter(str(row["support_level"]) for row in rows)
+    return {
+        "schema_version": "1.0",
+        "artifact": "semantic_coverage_audit",
+        "source": CURRICULUM_FILE.as_posix(),
+        "review_status": "needs_human_review",
+        "method": (
+            "Deterministic cross-record support audit. It checks declared objective-to-problem "
+            "and performance-criterion links; human review is still required for semantic quality."
+        ),
+        "row_count": len(rows),
+        "support_counts": {
+            level: counts.get(level, 0) for level in ("supported", "partial", "unsupported")
+        },
+        "partial_objective_refs": [
+            row["objective_ref"] for row in rows if row["support_level"] == "partial"
+        ],
+        "unsupported_objective_refs": [
+            row["objective_ref"] for row in rows if row["support_level"] == "unsupported"
+        ],
+        "rows": rows,
+    }
+
+
+def build_unit_balance_report(curriculum_document: dict) -> dict:
+    units = []
+    for unit in curriculum_document.get("units", []):
+        lessons = unit.get("lessons", []) or []
+        class_ranges = [instructional_range(lesson, "class_periods_50_min") for lesson in lessons]
+        study_ranges = [instructional_range(lesson, "self_study_minutes") for lesson in lessons]
+        units.append(
+            {
+                "unit_ref": unit.get("id"),
+                "title": unit.get("title"),
+                "lesson_count": len(lessons),
+                "mandatory_class_periods": sum(value[0] for value in class_ranges),
+                "maximum_planned_class_periods": sum(value[1] for value in class_ranges),
+                "self_study_minutes_min": sum(value[0] for value in study_ranges),
+                "self_study_minutes_max": sum(value[1] for value in study_ranges),
+            }
+        )
+    route = curriculum_document.get("classroom_route", {}) or {}
+    return {
+        "schema_version": "1.0",
+        "artifact": "unit_balance_and_period_allocation",
+        "source": CURRICULUM_FILE.as_posix(),
+        "review_status": "needs_human_review",
+        "period_minutes": route.get("period_minutes"),
+        "mandatory_periods": route.get("mandatory_periods"),
+        "recommended_extension_periods": route.get("recommended_extension_periods"),
+        "recommended_total_periods": route.get("recommended_total_periods"),
+        "calculated_mandatory_periods": sum(unit["mandatory_class_periods"] for unit in units),
+        "calculated_maximum_planned_periods": sum(
+            unit["maximum_planned_class_periods"] for unit in units
+        ),
+        "extension_allocations": route.get("extension_allocations", []),
+        "units": units,
+    }
+
+
+def write_reports(destination: Path, curriculum_document: dict, by_type: dict[str, list[dict]]) -> None:
+    reports = destination / "reports"
+    reports.mkdir(parents=True)
+    artifacts = {
+        "semantic-coverage-audit.json": build_semantic_coverage_report(curriculum_document, by_type),
+        "unit-balance-report.json": build_unit_balance_report(curriculum_document),
+    }
+    for filename, payload in artifacts.items():
+        (reports / filename).write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+            newline="\n",
+        )
+
+
 def problem_instructional_order(problem: dict) -> tuple[int, str]:
     return (
         DIFFICULTY_ORDER.get(str(problem.get("difficulty", "")), len(DIFFICULTY_ORDER)),
@@ -458,9 +694,12 @@ def write_site(
     assets = destination / "assets"
     lesson_dir = destination / "lessons"
     teacher_dir = destination / "teacher"
+    self_study_dir = destination / "self-study"
+    self_study_lesson_dir = self_study_dir / "lessons"
     assets.mkdir(parents=True)
     lesson_dir.mkdir(parents=True)
     teacher_dir.mkdir(parents=True)
+    self_study_lesson_dir.mkdir(parents=True)
 
     stylesheet = root / "site" / "assets" / "styles.css"
     if not stylesheet.is_file():
@@ -494,6 +733,7 @@ def write_site(
         body_source = body_path.read_text(encoding="utf-8")
         lesson_html = render_without_practice_ids(md, body_source)
         practice_html = render_practices(md, linked_problems)
+        self_study_practice_html = render_self_study_practices(md, linked_problems, by_id)
         slug = slug_for_lesson(lesson)
         if slug in output_slugs:
             raise SiteBuildError(f"duplicate lesson output slug: {slug}")
@@ -508,6 +748,7 @@ def write_site(
                 "page_title": page_title,
                 "lesson_html": lesson_html,
                 "practice_html": practice_html,
+                "self_study_practice_html": self_study_practice_html,
             }
         )
 
@@ -551,6 +792,26 @@ def write_site(
         )
         (lesson_dir / f"{slug}.html").write_text(learner_page, encoding="utf-8", newline="\n")
 
+        self_study_page = render_template(
+            root,
+            "self-study-lesson.html",
+            {
+                "page_title": escape(page_title),
+                "subject": escape(lesson.get("subject", "")),
+                "unit": escape(lesson.get("unit", "")),
+                "curriculum_order": escape(position.order),
+                "lesson_html": str(view["lesson_html"]),
+                "practice_html": str(view["self_study_practice_html"]),
+                "previous_link": navigation_link(index - 1, "prev"),
+                "next_link": navigation_link(index + 1, "next"),
+            },
+        )
+        (self_study_lesson_dir / f"{slug}.html").write_text(
+            self_study_page,
+            encoding="utf-8",
+            newline="\n",
+        )
+
         lesson_id = str(lesson["id"])
         body_ref = Path(str(lesson["body_ref"]))
         teacher_ref = Path("teacher_guides", *body_ref.parts[1:])
@@ -591,9 +852,12 @@ def write_site(
         unit_groups[-1].append(view)
 
     index_units = []
+    self_study_index_units = []
     teacher_units = []
     book_toc_units = []
+    self_study_book_toc_units = []
     book_units = []
+    self_study_book_units = []
     for group in unit_groups:
         first = group[0]
         first_lesson = first["lesson"]
@@ -606,9 +870,11 @@ def write_site(
         unit_anchor = f"unit-{unit_label.lower()}"
 
         contents_items = []
+        self_study_contents_items = []
         teacher_items = []
         book_toc_items = []
         book_articles = []
+        self_study_book_articles = []
         for view in group:
             lesson = view["lesson"]
             position = view["position"]
@@ -617,6 +883,14 @@ def write_site(
             slug = str(view["slug"])
             page_title = str(view["page_title"])
             contents_items.append(
+                '<li class="contents-item">'
+                f'<a href="lessons/{escape(slug)}.html">'
+                f'<span class="lesson-number">{escape(position.order)}</span>'
+                f'<strong>{escape(page_title)}</strong>'
+                f'<span>{escape(lesson.get("unit", ""))}</span>'
+                "</a></li>"
+            )
+            self_study_contents_items.append(
                 '<li class="contents-item">'
                 f'<a href="lessons/{escape(slug)}.html">'
                 f'<span class="lesson-number">{escape(position.order)}</span>'
@@ -648,12 +922,33 @@ def write_site(
                 '<section class="practice-section" aria-label="練習">'
                 f"{book_practices}</section></article>"
             )
+            self_study_book_practices = render_self_study_practices(
+                md,
+                view["problems"],
+                by_id,
+                id_prefix=f"self-study-book-{slug}-practice",
+            )
+            self_study_book_articles.append(
+                f'<article class="book-lesson" id="lesson-{escape(slug)}">'
+                '<header class="book-lesson-meta">'
+                f'<p>{escape(position.order)} / {escape(display_unit)}</p>'
+                "</header>"
+                f'<div class="lesson-article">{view["lesson_html"]}</div>'
+                '<section class="practice-section" aria-label="練習">'
+                f"{self_study_book_practices}</section></article>"
+            )
 
         index_units.append(
             f'<section class="curriculum-unit" id="{escape(unit_anchor)}">'
             f'<p class="section-kicker">ユニット {escape(unit_label)}</p>'
             f'<h2>{escape(display_unit)}</h2><ol class="contents-list">'
             f'{"".join(contents_items)}</ol></section>'
+        )
+        self_study_index_units.append(
+            f'<section class="curriculum-unit" id="{escape(unit_anchor)}-self-study">'
+            f'<p class="section-kicker">ユニット {escape(unit_label)}</p>'
+            f'<h2>{escape(display_unit)}</h2><ol class="contents-list">'
+            f'{"".join(self_study_contents_items)}</ol></section>'
         )
         teacher_units.append(
             '<section class="teacher-index-unit">'
@@ -670,6 +965,17 @@ def write_site(
             f'<header class="book-unit-heading"><p>ユニット {escape(unit_label)}</p>'
             f'<h2>{escape(display_unit)}</h2></header>{"".join(book_articles)}</section>'
         )
+        self_study_book_toc_units.append(
+            f'<li><a href="#{escape(unit_anchor)}-self-study-book">'
+            f'{escape(unit_label)} {escape(display_unit)}</a><ol>'
+            f'{"".join(book_toc_items)}</ol></li>'
+        )
+        self_study_book_units.append(
+            f'<section class="book-unit" id="{escape(unit_anchor)}-self-study-book">'
+            f'<header class="book-unit-heading"><p>ユニット {escape(unit_label)}</p>'
+            f'<h2>{escape(display_unit)}</h2></header>'
+            f'{"".join(self_study_book_articles)}</section>'
+        )
 
     index_page = render_template(
         root,
@@ -681,6 +987,17 @@ def write_site(
     )
     (destination / "index.html").write_text(index_page, encoding="utf-8", newline="\n")
 
+    self_study_index_page = render_template(
+        root,
+        "self-study-index.html",
+        {"curriculum_units": "".join(self_study_index_units)},
+    )
+    (self_study_dir / "index.html").write_text(
+        self_study_index_page,
+        encoding="utf-8",
+        newline="\n",
+    )
+
     book_page = render_template(
         root,
         "book.html",
@@ -691,6 +1008,22 @@ def write_site(
         },
     )
     (destination / "book.html").write_text(book_page, encoding="utf-8", newline="\n")
+
+    self_study_book_page = render_template(
+        root,
+        "self-study-book.html",
+        {
+            "book_toc": "".join(self_study_book_toc_units),
+            "book_units": "".join(self_study_book_units),
+        },
+    )
+    (self_study_dir / "book.html").write_text(
+        self_study_book_page,
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    write_reports(destination, load_curriculum_document(root), by_type)
 
 
 def replace_with_retry(source: Path, destination: Path, attempts: int = 5) -> None:

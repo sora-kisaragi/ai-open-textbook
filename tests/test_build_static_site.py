@@ -172,6 +172,8 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     learner = first_snapshot["lessons/programming-variables.html"].decode("utf-8")
     teacher = first_snapshot["teacher/programming-variables.html"].decode("utf-8")
     book = first_snapshot["book.html"].decode("utf-8")
+    self_study = first_snapshot["self-study/lessons/programming-variables.html"].decode("utf-8")
+    self_study_book = first_snapshot["self-study/book.html"].decode("utf-8")
     index = first_snapshot["index.html"].decode("utf-8")
 
     assert "SECRET_ANSWER_TOKEN" not in learner
@@ -195,10 +197,29 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert "<table>" in book
     assert '<div class="table-wrap"><table>' in book
     assert 'href="book.html"' in index
+    assert 'href="self-study/index.html"' in index
+    assert "SECRET_ANSWER_TOKEN" in self_study
+    assert "SECRET_ACCEPTABLE_TOKEN" in self_study
+    assert "SECRET_RUBRIC_TOKEN" not in self_study
+    assert "prob.info1.variables.001.v1" not in self_study
+    assert "ans.prob.info1.variables.001.v1" not in self_study
+    assert '<details class="answer-reveal">' in self_study
+    assert "<summary>解答例と解説を確認</summary>" in self_study
+    assert "SECRET_ANSWER_TOKEN" in self_study_book
+    assert "SECRET_RUBRIC_TOKEN" not in self_study_book
     assert "Creative Commons Attribution 4.0 International" in book
     assert "Python Software Foundationから独立" in book
     assert 'id="book-imprint"' in book
     assert "LICENSE-CONTENT-CC-BY-4.0.txt" in first_snapshot
+    coverage_report = json.loads(first_snapshot["reports/semantic-coverage-audit.json"])
+    balance_report = json.loads(first_snapshot["reports/unit-balance-report.json"])
+    assert coverage_report["row_count"] == 1
+    assert coverage_report["support_counts"] == {
+        "supported": 0,
+        "partial": 0,
+        "unsupported": 1,
+    }
+    assert balance_report["units"][0]["lesson_count"] == 1
     assert "ユニット C" in index
     assert "C2" in learner
     assert teacher.count("<h1") == 1
@@ -290,6 +311,23 @@ def test_problem_instructional_order_prioritizes_difficulty_then_id() -> None:
     ]
 
 
+def test_repository_audit_reports_cover_all_objectives_and_route_periods() -> None:
+    _, by_type = build_static_site.load_records(ROOT)
+    curriculum = build_static_site.load_curriculum_document(ROOT)
+
+    coverage = build_static_site.build_semantic_coverage_report(curriculum, by_type)
+    balance = build_static_site.build_unit_balance_report(curriculum)
+
+    assert coverage["row_count"] == 96
+    assert sum(coverage["support_counts"].values()) == 96
+    assert coverage["support_counts"]["partial"] == 0
+    assert coverage["support_counts"]["unsupported"] == 0
+    assert [unit["mandatory_class_periods"] for unit in balance["units"]] == [9, 12, 21, 23]
+    assert balance["mandatory_periods"] == 65
+    assert balance["recommended_extension_periods"] == 5
+    assert balance["recommended_total_periods"] == 70
+
+
 def test_missing_body_ref_fails_clearly(sample_root: Path) -> None:
     lessons = sample_root / "data" / "collections" / "lessons.ndjson"
     record = json.loads(lessons.read_text(encoding="utf-8"))
@@ -379,6 +417,38 @@ def test_curriculum_order_units_and_navigation_ignore_body_filenames(sample_root
     assert 'rel="next" href="networks-protocols.html"' in variables_page
     assert 'rel="prev" href="programming-variables.html"' in protocols_page
     assert not (site / "lessons/00-first-by-filename.html").exists()
+
+
+def test_self_study_book_toc_preserves_lesson_slug_ending_in_book(sample_root: Path) -> None:
+    old_lesson_id = "lesson.info1.programming.variables.v1"
+    new_lesson_id = "lesson.info1.data.book.v1"
+    lessons_path = sample_root / "data/collections/lessons.ndjson"
+    lesson = json.loads(lessons_path.read_text(encoding="utf-8"))
+    lesson["id"] = new_lesson_id
+    write_ndjson(lessons_path, [lesson])
+
+    problems_path = sample_root / "data/collections/problems.ndjson"
+    problem = json.loads(problems_path.read_text(encoding="utf-8"))
+    problem["lesson_refs"] = [new_lesson_id]
+    write_ndjson(problems_path, [problem])
+
+    revisions_path = sample_root / "data/collections/revisions.ndjson"
+    revision = json.loads(revisions_path.read_text(encoding="utf-8"))
+    revision["entity_id"] = new_lesson_id
+    write_ndjson(revisions_path, [revision])
+
+    curriculum_path = sample_root / "curriculum/highschool_information_i.curriculum.json"
+    curriculum = json.loads(curriculum_path.read_text(encoding="utf-8"))
+    curriculum["units"][0]["lessons"][0]["lesson_id"] = new_lesson_id
+    curriculum_path.write_text(json.dumps(curriculum), encoding="utf-8")
+
+    assert old_lesson_id not in lessons_path.read_text(encoding="utf-8")
+    result = run_builder(sample_root)
+    assert result.returncode == 0, result.stdout + result.stderr
+    book = (sample_root / "build/site/self-study/book.html").read_text(encoding="utf-8")
+
+    assert 'href="#lesson-data-book"' in book
+    assert 'id="lesson-data-book"' in book
 
 
 def test_problem_objective_must_belong_to_referenced_curriculum_lesson(sample_root: Path) -> None:

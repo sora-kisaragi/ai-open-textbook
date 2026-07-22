@@ -141,7 +141,135 @@ def test_verifier_accepts_complete_offline_site_and_external_citation(built_site
     result = run_verifier(built_site_root)
 
     assert result.returncode == 0, result.stdout + result.stderr
-    assert "1 learner page(s), 1 teacher page(s), 1 book" in result.stdout
+    assert (
+        "1 classroom page(s), 1 self-study page(s), 1 teacher page(s), "
+        "1 answer reveal(s), 2 books"
+    ) in result.stdout
+
+
+@pytest.mark.parametrize(
+    "secret",
+    [
+        "SECRET_VERIFICATION_METHOD",
+        "SECRET_RUBRIC_TEXT",
+        "prob.info1.variables.001.v1",
+        "ans.prob.info1.variables.001.v1",
+        "rubric.prob.info1.variables.001.v1",
+    ],
+)
+def test_verifier_rejects_teacher_only_data_in_self_study_book(
+    built_site_root: Path,
+    secret: str,
+) -> None:
+    book = built_site_root / "build/site/self-study/book.html"
+    book.write_text(
+        book.read_text(encoding="utf-8").replace("</main>", f"<p>{secret}</p></main>", 1),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "leaked into book.html" in result.stderr
+
+
+def test_verifier_rejects_inaccessible_self_study_reveal(built_site_root: Path) -> None:
+    lesson = built_site_root / "build/site/self-study/lessons/programming-variables.html"
+    lesson.write_text(
+        lesson.read_text(encoding="utf-8").replace("<summary>", "<p>", 1).replace(
+            "</summary>", "</p>", 1
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "each answer reveal requires a summary" in result.stderr
+
+
+def test_verifier_rejects_inaccessible_self_study_book_reveal(built_site_root: Path) -> None:
+    book = built_site_root / "build/site/self-study/book.html"
+    book.write_text(
+        book.read_text(encoding="utf-8").replace("<summary>", "<p>", 1).replace(
+            "</summary>", "</p>", 1
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "each answer reveal requires a summary" in result.stderr
+
+
+def test_verifier_rejects_teacher_only_data_in_self_study_lesson(built_site_root: Path) -> None:
+    lesson = built_site_root / "build/site/self-study/lessons/programming-variables.html"
+    lesson.write_text(
+        lesson.read_text(encoding="utf-8").replace(
+            "</main>", "<p>SECRET_VERIFICATION_METHOD</p></main>", 1
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "leaked into programming-variables.html" in result.stderr
+
+
+def test_verifier_rejects_teacher_only_data_in_self_study_index(built_site_root: Path) -> None:
+    index = built_site_root / "build/site/self-study/index.html"
+    index.write_text(
+        index.read_text(encoding="utf-8").replace(
+            "</main>", "<p>SECRET_VERIFICATION_METHOD</p></main>", 1
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "leaked into index.html" in result.stderr
+
+
+def test_verifier_rejects_stale_coverage_report(built_site_root: Path) -> None:
+    report = built_site_root / "build/site/reports/semantic-coverage-audit.json"
+    payload = json.loads(report.read_text(encoding="utf-8"))
+    payload["row_count"] = 999
+    report.write_text(json.dumps(payload), encoding="utf-8")
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "generated report is stale or inconsistent" in result.stderr
+
+
+def test_verifier_rejects_orphan_answer_from_self_study_delivery(built_site_root: Path) -> None:
+    answers = built_site_root / "data/collections/answers.ndjson"
+    records = [json.loads(line) for line in answers.read_text(encoding="utf-8").splitlines()]
+    orphan = {**records[0], "id": "ans.prob.info1.variables.orphan.v1"}
+    write_ndjson(answers, [*records, orphan])
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "render every answer record exactly once" in result.stderr
+
+
+def test_verifier_rejects_book_feedback_that_differs_from_lessons(built_site_root: Path) -> None:
+    book = built_site_root / "build/site/self-study/book.html"
+    book.write_text(
+        book.read_text(encoding="utf-8").replace(
+            "SECRET_CANONICAL_ANSWER", "DIFFERENT_SELF_STUDY_ANSWER", 1
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "answer feedback does not match" in result.stderr
 
 
 def test_verifier_rejects_broken_local_fragment(built_site_root: Path) -> None:
