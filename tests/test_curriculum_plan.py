@@ -828,6 +828,103 @@ def test_unit_d_network_security_contracts() -> None:
     assert "実システムを許可なく調査" in learner_text
 
 
+def test_unit_d_data_foundation_and_investigation_contracts() -> None:
+    curriculum = load_curriculum()
+    unit_d = next(
+        unit for unit in curriculum["units"]
+        if unit["id"] == "unit.info1.networks.data.v1"
+    )
+    planned = {lesson["order"]: lesson for lesson in unit_d["lessons"]}
+    problems = {
+        record["id"]: record for record in load_collection("problems.ndjson")
+    }
+    answers = {
+        record["id"]: record for record in load_collection("answers.ndjson")
+    }
+    rubrics = {
+        record["id"]: record for record in load_collection("rubrics.ndjson")
+    }
+
+    d4_evidence = " ".join([
+        *[objective["statement"] for objective in planned["D4"]["learning_objectives"]],
+        *planned["D4"]["key_concepts"],
+        problems["prob.info1.data.lifecycle.002.v1"]["question"],
+        answers["ans.prob.info1.data.lifecycle.002.v1"]["canonical_answer"],
+    ]).lower()
+    for term in (
+        "qualitative", "quantitative", "nominal", "ordinal", "interval", "ratio",
+        "名義", "順序", "間隔", "比例",
+    ):
+        assert term in d4_evidence
+    assert "観測idの平均" in d4_evidence
+    assert "2倍暖かい" in d4_evidence
+    d4_o1_coverage = next(
+        coverage for coverage in planned["D4"]["assessment_coverage"]
+        if coverage["objective_ref"] == "obj.info1.data.lifecycle.001.v1"
+    )
+    assert "prob.info1.data.lifecycle.002.v1" in d4_o1_coverage[
+        "assessment_item_refs"
+    ]
+
+    d5_path = (
+        ROOT / "lessons" / "highschool_information_i" / "networks_data"
+        / "04_tabular_cleaning.md"
+    )
+    d6_path = (
+        ROOT / "lessons" / "highschool_information_i" / "networks_data"
+        / "05_descriptive_analysis.md"
+    )
+    d5_text = d5_path.read_text(encoding="utf-8")
+    d6_text = d6_path.read_text(encoding="utf-8")
+    for marker in ("分かち書き済み", "読み取り専用", "除外語一覧", "文脈"):
+        assert marker in d5_text
+    assert "実在する生徒のコメントを入力・共有させません" in d5_text
+    assert "| 図書室 | 1 | 0 | 1 | 0 | 2 |" in d6_text
+    assert "頻度は重要度と同じではありません" in d6_text
+    assert "Pythonを使わず" in d6_text
+
+    d9_problem = problems["prob.info1.data.investigation.project.004.v1"]
+    d9_answer = answers["ans.prob.info1.data.investigation.project.004.v1"]
+    d9_rubric = rubrics["rubric.prob.info1.data.investigation.project.004.v1"]
+    d9_evidence = " ".join([
+        d9_problem["question"],
+        d9_answer["canonical_answer"],
+        *[criterion["description"] for criterion in d9_rubric["criteria"]],
+    ])
+    for term in (
+        "出所", "データ辞書", "読み取り専用", "変換履歴", "再実行", "照合",
+        "本文要約", "結論", "感度分析", "実結果", "限界", "残余リスク",
+        "改善案", "発表", "改訂履歴",
+    ):
+        assert term in d9_evidence
+    assert "2件から3件" in d9_answer["canonical_answer"]
+    assert {criterion["id"] for criterion in d9_rubric["criteria"]} == {
+        "c1_question_ethics",
+        "c2_reproducible_workflow",
+        "c3_accessible_evidence",
+        "c4_bounded_conclusion",
+        "c5_limits_improvement",
+        "c6_provenance_dictionary",
+        "c7_transformation_log",
+        "c8_independent_check",
+        "c9_sensitivity_results",
+        "c10_presentation_revision",
+    }
+    assert sum(criterion["points"] for criterion in d9_rubric["criteria"]) == 10
+
+    changed_answer_ids = {
+        "ans.prob.info1.data.lifecycle.002.v1",
+        "ans.prob.info1.data.cleaning.004.v1",
+        "ans.prob.info1.data.descriptive.analysis.004.v1",
+        "ans.prob.info1.data.investigation.project.004.v1",
+    }
+    for answer_id in changed_answer_ids:
+        answer = answers[answer_id]
+        assert answer["revision"] == 2
+        assert answer["status"] == "draft"
+        assert answer["review_status"] == "needs_human_review"
+
+
 def test_curriculum_sources_and_existing_lessons_resolve() -> None:
     curriculum = load_curriculum()
     source_ids = load_collection_ids("sources.ndjson")

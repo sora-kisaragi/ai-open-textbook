@@ -2529,13 +2529,13 @@
           "learning_objectives": [
             {
               "id": "obj.info1.data.lifecycle.001.v1",
-              "statement": "Describe how a question becomes measured, collected, stored, used, and deleted data.",
+              "statement": "Describe how a question becomes data and classify qualitative, quantitative, nominal, ordinal, interval, and ratio data.",
               "expected_evidence": "explanation",
               "label": "D4.O1"
             },
             {
               "id": "obj.info1.data.lifecycle.002.v1",
-              "statement": "Identify sampling, measurement, missing-data, and representation bias.",
+              "statement": "Reject operations invalid for a data scale and identify sampling, measurement, missing-data, and representation bias.",
               "expected_evidence": "identification",
               "label": "D4.O2"
             },
@@ -2553,11 +2553,13 @@
           "key_concepts": [
             "data lifecycle",
             "measurement",
+            "qualitative and quantitative data",
+            "nominal, ordinal, interval, and ratio scales",
             "sampling",
             "bias",
             "data minimization"
           ],
-          "assessment_intent": "Critique a synthetic collection plan and revise it to reduce avoidable bias and risk.",
+          "assessment_intent": "Classify data scales, reject invalid operations with reasons, and revise a synthetic collection plan to reduce avoidable bias and risk.",
           "depends_on": [
             "lesson.info1.society.source.evaluation.v1",
             "lesson.info1.society.problem.definition.v1"
@@ -2584,6 +2586,7 @@
               "status": "complete",
               "assessment_item_refs": [
                 "prob.info1.data.lifecycle.001.v1",
+                "prob.info1.data.lifecycle.002.v1",
                 "prob.info1.data.lifecycle.004.v1"
               ],
               "performance_criterion_refs": []
@@ -2618,7 +2621,7 @@
           "learning_objectives": [
             {
               "id": "obj.info1.data.cleaning.001.v1",
-              "statement": "Identify observations, variables, values, types, and missing data in a table.",
+              "statement": "Identify observations, variables, values, types, and missing data in tables and pre-segmented text.",
               "expected_evidence": "identification",
               "label": "D5.O1"
             },
@@ -2643,9 +2646,12 @@
             "variable",
             "data type",
             "missing value",
-            "transformation log"
+            "transformation log",
+            "pre-segmented text",
+            "preprocessing choice",
+            "context loss"
           ],
-          "assessment_intent": "Clean a small synthetic dataset and justify each transformation.",
+          "assessment_intent": "Clean small synthetic tabular and pre-segmented text datasets, justify each transformation, and report context loss.",
           "depends_on": [
             "lesson.info1.data.lifecycle.v1"
           ],
@@ -2659,8 +2665,8 @@
               2
             ],
             "self_study_minutes": [
-              70,
-              110
+              90,
+              120
             ],
             "is_multi_session_project": false
           },
@@ -2705,19 +2711,19 @@
           "learning_objectives": [
             {
               "id": "obj.info1.data.descriptive.analysis.001.v1",
-              "statement": "Choose summaries appropriate to data type and analytical question.",
+              "statement": "Choose summaries appropriate to numerical or text data and the analytical question.",
               "expected_evidence": "application",
               "label": "D6.O1"
             },
             {
               "id": "obj.info1.data.descriptive.analysis.002.v1",
-              "statement": "Calculate and interpret counts, proportions, center, and spread for small datasets.",
+              "statement": "Calculate and interpret counts, proportions, center, spread, and token frequencies for small datasets.",
               "expected_evidence": "calculation",
               "label": "D6.O2"
             },
             {
               "id": "obj.info1.data.descriptive.analysis.003.v1",
-              "statement": "Explain how distributions or outliers can make one summary misleading.",
+              "statement": "Explain how distributions, outliers, preprocessing, or context loss can make one summary misleading.",
               "expected_evidence": "explanation",
               "label": "D6.O3"
             }
@@ -2730,9 +2736,12 @@
             "count",
             "proportion",
             "center",
-            "spread"
+            "spread",
+            "token frequency",
+            "frequency versus importance",
+            "context loss"
           ],
-          "assessment_intent": "Select and interpret summaries while stating what they do not establish.",
+          "assessment_intent": "Select and interpret numerical and token-frequency summaries while reporting preprocessing, context loss, and what the summaries do not establish.",
           "depends_on": [
             "lesson.info1.data.cleaning.v1"
           ],
@@ -2746,8 +2755,8 @@
               2
             ],
             "self_study_minutes": [
-              70,
-              110
+              90,
+              120
             ],
             "is_multi_session_project": false
           },
@@ -2984,7 +2993,7 @@
             },
             {
               "id": "obj.info1.data.investigation.project.003.v1",
-              "statement": "Communicate a conclusion with uncertainty, limitations, and improvement proposals.",
+              "statement": "Present and revise a conclusion with uncertainty, sensitivity results, limitations, residual risk, and improvement proposals.",
               "expected_evidence": "explanation",
               "label": "D9.O3"
             }
@@ -3001,9 +3010,12 @@
             "reproducibility",
             "analysis",
             "uncertainty",
-            "communication"
+            "communication",
+            "sensitivity analysis",
+            "accessible text equivalent",
+            "revision history"
           ],
-          "assessment_intent": "Performance task with question, provenance, transformations, analysis, communication, and reflection criteria.",
+          "assessment_intent": "Performance task with bounded question, provenance, immutable raw data, transformations, reproducible analysis, accessible communication, actual sensitivity results, limitations, improvement, presentation, and revision criteria.",
           "depends_on": [
             "lesson.info1.society.solution.evaluation.v1",
             "lesson.info1.design.prototype.usability.v1",

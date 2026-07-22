@@ -19,7 +19,7 @@ def test_sqlite_projects_curriculum_and_coverage(tmp_path: Path) -> None:
     output = tmp_path / "index.sqlite"
     counts = build_sqlite_index.build(ROOT, output)
 
-    assert counts[:5] == (1333, 32, 96, 96, 2501)
+    assert counts[:5] == (1350, 32, 96, 96, 2520)
     with sqlite3.connect(output) as connection:
         assert connection.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
         assert connection.execute("PRAGMA foreign_key_check").fetchall() == []
@@ -33,7 +33,7 @@ def test_sqlite_projects_curriculum_and_coverage(tmp_path: Path) -> None:
         ).fetchone()[0] == "A1"
         assert connection.execute(
             "SELECT COUNT(*) FROM edges WHERE edge_type = 'objective_refs'"
-        ).fetchone()[0] == 209
+        ).fetchone()[0] == 210
 
 
 def test_invalid_source_does_not_replace_existing_index(tmp_path: Path) -> None:
