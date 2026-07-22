@@ -40,7 +40,7 @@ def validation_errors(root: Path) -> list[str]:
 def test_validate_current_repository() -> None:
     errors, count = validate_ndjson.validate_repository(ROOT)
     assert errors == []
-    assert count == 1187
+    assert count == 1188
 
 
 def test_invalid_calendar_date_is_rejected(validation_root: Path) -> None:
@@ -175,6 +175,77 @@ def test_duplicate_objective_coverage_is_rejected(validation_root: Path) -> None
         "coverage contains duplicate objective_ref values" in error
         for error in validation_errors(validation_root)
     )
+
+
+def test_inconsistent_classroom_route_total_is_rejected(validation_root: Path) -> None:
+    curriculum_path = validation_root / "curriculum" / "highschool_information_i.curriculum.json"
+    curriculum = json.loads(curriculum_path.read_text(encoding="utf-8"))
+    curriculum["classroom_route"]["recommended_total_periods"] = 71
+    curriculum_path.write_text(
+        json.dumps(curriculum, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    assert any(
+        "recommended classroom total must equal mandatory periods plus extensions"
+        in error
+        for error in validation_errors(validation_root)
+    )
+
+
+def test_mismatched_lesson_extension_is_rejected(validation_root: Path) -> None:
+    curriculum_path = validation_root / "curriculum" / "highschool_information_i.curriculum.json"
+    curriculum = json.loads(curriculum_path.read_text(encoding="utf-8"))
+    allocation = curriculum["classroom_route"]["extension_allocations"][0]
+    allocation["lesson_ref"] = "lesson.info1.society.information.media.v1"
+    curriculum_path.write_text(
+        json.dumps(curriculum, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    assert any(
+        "lesson extension allocations do not match instructional time ranges"
+        in error
+        for error in validation_errors(validation_root)
+    )
+
+
+def test_curriculum_identity_and_route_positions_are_stable(validation_root: Path) -> None:
+    curriculum_path = validation_root / "curriculum" / "highschool_information_i.curriculum.json"
+    curriculum = json.loads(curriculum_path.read_text(encoding="utf-8"))
+    first_lesson = curriculum["units"][0]["lessons"][0]
+    first_lesson["lesson_id"] = "lesson.info1.society.information.changed.v1"
+    first_lesson["order"] = "A8"
+    first_lesson["learning_objectives"][0]["id"] = (
+        "obj.info1.society.information.changed.001.v1"
+    )
+    curriculum_path.write_text(
+        json.dumps(curriculum, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    errors = validation_errors(validation_root)
+    assert any("explicit A1-D9 route position" in error for error in errors)
+    assert any("stable 32-lesson baseline" in error for error in errors)
+    assert any("stable 96-objective baseline" in error for error in errors)
+
+
+def test_malformed_instructional_range_reports_errors_without_crashing(
+    validation_root: Path,
+) -> None:
+    curriculum_path = validation_root / "curriculum" / "highschool_information_i.curriculum.json"
+    curriculum = json.loads(curriculum_path.read_text(encoding="utf-8"))
+    curriculum["units"][0]["lessons"][0]["instructional_time"][
+        "class_periods_50_min"
+    ] = [1]
+    curriculum_path.write_text(
+        json.dumps(curriculum, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    errors = validation_errors(validation_root)
+    assert any("class_periods_50_min" in error and "is too short" in error for error in errors)
+    assert any("mandatory classroom total must match lesson minima" in error for error in errors)
 
 
 def test_performance_criterion_requires_performance_task_problem(validation_root: Path) -> None:

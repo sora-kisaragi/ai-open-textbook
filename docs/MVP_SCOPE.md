@@ -1,9 +1,9 @@
-# Information I Review Candidate Scope (v0.2)
+# Information I Review Candidate Scope (v0.3)
 
 Status: `draft`
 Review status: `needs_human_review`
-Last updated: 2026-07-15
-Tracking issue: #59
+Last updated: 2026-07-22
+Tracking issues: #59, #74
 
 This document is the current planning baseline for a complete Japanese
 Information I open educational material. It replaces the programming-only v0.1
@@ -64,9 +64,10 @@ objective IDs and their assessment history must remain stable.
 The curriculum assumes everyday experience with digital information, basic
 arithmetic, and basic chart reading. Required mathematical ideas are refreshed
 where they are used, and no prior programming is assumed. The current time model
-is 71-77 classroom periods of 50 minutes, with separate self-study estimates and
-four multi-session performance tasks. These are planning bands for human review,
-not official allocations.
+defines a 65-period mandatory route and five recommended extension periods: one
+for each of A7, B7, C9, and D9, plus one cumulative diagnostic and targeted
+reteaching period. Self-study estimates remain separate. These are project
+planning routes for human review, not official allocations.
 
 ## 4. Required Vertical Slice Per Lesson
 
@@ -136,10 +137,11 @@ from unintended network, file-system, secret, or personal-data dependencies.
 
 ## 8. Workflow and Human Gate
 
-Issues #60 through #66 implement this scope as an ordered stack of small Draft
-PRs. Existing Issues #46 and #56 are reused. Autonomous work may draft, validate,
-and review the complete stack, but it must not merge the stack, close Issue #59,
-or mark any record approved or published.
+Issues #60 through #66 established the initial full-scope candidate. Issues #74
+through #81 implement the current remediation route as an ordered stack of small
+Draft PRs. Existing Issues #46 and #56 are reused. Autonomous work may draft,
+validate, and review the complete stack, but it must not close Issue #59 or mark
+any record approved or published.
 
 The single final human gate covers:
 

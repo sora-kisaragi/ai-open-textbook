@@ -19,6 +19,7 @@
     "updated_at",
     "global_prerequisites",
     "numbering_convention",
+    "classroom_route",
     "units"
   ],
   "properties": {
@@ -38,6 +39,7 @@
     "updated_at": {"$ref": "#/$defs/date"},
     "global_prerequisites": {"$ref": "#/$defs/nonEmptyStringList"},
     "numbering_convention": {"type": "string", "minLength": 1},
+    "classroom_route": {"$ref": "#/$defs/classroomRoute"},
     "units": {
       "type": "array",
       "minItems": 4,
@@ -140,6 +142,54 @@
       "minItems": 2,
       "maxItems": 2,
       "items": {"type": "integer", "minimum": 1}
+    },
+    "classroomRoute": {
+      "type": "object",
+      "required": [
+        "period_minutes",
+        "mandatory_periods",
+        "recommended_extension_periods",
+        "recommended_total_periods",
+        "extension_allocations"
+      ],
+      "properties": {
+        "period_minutes": {"const": 50},
+        "mandatory_periods": {"const": 65},
+        "recommended_extension_periods": {"const": 5},
+        "recommended_total_periods": {"const": 70},
+        "extension_allocations": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {"$ref": "#/$defs/extensionAllocation"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "extensionAllocation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind", "lesson_ref", "periods", "purpose"],
+          "properties": {
+            "kind": {"const": "lesson"},
+            "lesson_ref": {"type": "string", "pattern": "^lesson\\.[a-z0-9]+(?:\\.[a-z0-9]+)*\\.v[1-9][0-9]*$"},
+            "periods": {"const": 1},
+            "purpose": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "periods", "purpose"],
+          "properties": {
+            "kind": {"const": "cumulative"},
+            "periods": {"const": 1},
+            "purpose": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": false
+        }
+      ]
     },
     "lesson": {
       "type": "object",

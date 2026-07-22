@@ -2,9 +2,9 @@
 
 Status: `draft`
 Review status: `needs_human_review`
-Tracking: #59, #60
+Tracking: #59, #74
 Baseline date: 2026-07-14
-Evidence updated: 2026-07-15
+Evidence updated: 2026-07-22
 
 ## Purpose
 
@@ -79,16 +79,20 @@ is age-appropriate.
 
 | Measure | Planning total |
 | --- | ---: |
-| Classroom periods (50 minutes) | 71-77 |
+| Mandatory classroom periods (50 minutes) | 65 |
+| Recommended extension periods | 5 |
+| Recommended classroom route | 70 |
 | Self-study time | 2,665-4,200 minutes |
 | Multi-session performance tasks | 4 |
 
-The four performance tasks are A7, B7, C9, and D9. Time bands are design inputs
-for teacher review and learner trials, not official allocations or evidence that
-the planned workload is age-appropriate. The 71-period route is the core plan;
-the six-period upper-range allowance supports extension, reteaching, and longer
-project feedback. Ordinary lesson assessment is included, while school events
-and local examinations require separate scheduling buffer.
+The mandatory unit allocations are 9 periods for Unit A, 12 for Unit B, 21 for
+Unit C, and 23 for Unit D. The four performance tasks are A7, B7, C9, and D9;
+each has one recommended extension period for feedback and revision. The fifth
+extension period supports cumulative diagnosis and targeted reteaching. These
+routes are design inputs for teacher review and learner trials, not official
+allocations or evidence that the planned workload is age-appropriate. Ordinary
+lesson assessment is included, while school events and local examinations
+require separate scheduling buffer.
 
 ## Source Traceability
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from collections import defaultdict
 from copy import deepcopy
+import hashlib
 import json
 import re
 import sys
@@ -27,10 +28,46 @@ CURRICULUM_PATH = Path("curriculum/highschool_information_i.curriculum.json")
 CURRICULUM_SCHEMA = "curriculum.schema.json"
 VERSION_RE = re.compile(r"^(?P<family>.+)\.v(?P<version>[1-9][0-9]*)$")
 REVISION_DATE_RE = re.compile(r"^rev\.(?P<date>[0-9]{8})\.[0-9]{4}$")
+LESSON_ID_DIGEST = "3e70077afec6375a2fd09ac48ac74ababf69a1bde2cdae916a9145daff5805f5"
+OBJECTIVE_ID_DIGEST = "c516448693d76e035d8720de968f5dd5eff10a4711cf5d1703539b9479589c47"
+EXPECTED_UNIT_PERIODS = {
+    "mext.info1.1": 9,
+    "mext.info1.2": 12,
+    "mext.info1.3": 21,
+    "mext.info1.4": 23,
+}
+EXPECTED_UNIT_ORDERS = {
+    "mext.info1.1": [f"A{index}" for index in range(1, 8)],
+    "mext.info1.2": [f"B{index}" for index in range(1, 8)],
+    "mext.info1.3": [f"C{index}" for index in range(1, 10)],
+    "mext.info1.4": [f"D{index}" for index in range(1, 10)],
+}
+EXPECTED_EXTENSION_LESSONS = {
+    "lesson.info1.society.inquiry.project.v1",
+    "lesson.info1.design.project.v1",
+    "lesson.info1.programming.project.v1",
+    "lesson.info1.data.investigation.project.v1",
+}
 
 
 class ValidationFailure(RuntimeError):
     """Raised when repository data cannot be loaded for validation."""
+
+
+def id_digest(ids: Iterable[str]) -> str:
+    return hashlib.sha256("\n".join(sorted(ids)).encode()).hexdigest()
+
+
+def instructional_range(lesson: dict, field: str) -> tuple[int, int] | None:
+    time = lesson.get("instructional_time", {})
+    values = time.get(field) if isinstance(time, dict) else None
+    if (
+        not isinstance(values, list)
+        or len(values) != 2
+        or any(type(value) is not int for value in values)
+    ):
+        return None
+    return values[0], values[1]
 
 
 def read_json(path: Path) -> dict:
@@ -323,6 +360,16 @@ def check_curriculum(
             objective_records.append(objective_record)
     if len(orders) != len(set(orders)):
         add_error(errors, curriculum, "curriculum lesson order labels must be unique")
+    unit_orders = {
+        unit.get("area"): [lesson.get("order") for lesson in unit.get("lessons", [])]
+        for unit in curriculum.get("units", [])
+    }
+    if unit_orders != EXPECTED_UNIT_ORDERS:
+        add_error(errors, curriculum, "every curriculum lesson must retain its explicit A1-D9 route position")
+    if id_digest(lesson_by_id) != LESSON_ID_DIGEST:
+        add_error(errors, curriculum, "curriculum lesson IDs differ from the stable 32-lesson baseline")
+    if len(objective_by_id) != 96 or id_digest(objective_by_id) != OBJECTIVE_ID_DIGEST:
+        add_error(errors, curriculum, "curriculum objective IDs differ from the stable 96-objective baseline")
 
     by_id.update({record["id"]: record for record in objective_records})
     for source_ref in curriculum.get("source_refs", []):
@@ -366,10 +413,9 @@ def check_curriculum(
             if not body_path.is_file():
                 add_error(errors, curriculum, f"missing existing_body_ref: {body_ref}")
 
-        time = lesson.get("instructional_time", {})
         for field in ("class_periods_50_min", "self_study_minutes"):
-            values = time.get(field, []) if isinstance(time, dict) else []
-            if isinstance(values, list) and len(values) == 2 and values[0] > values[1]:
+            values = instructional_range(lesson, field)
+            if values is not None and values[0] > values[1]:
                 add_error(errors, curriculum, f"{lesson.get('order')} {field} minimum exceeds maximum")
 
     visiting: set[str] = set()
@@ -391,12 +437,83 @@ def check_curriculum(
     for lesson_id in graph:
         visit(lesson_id)
 
-    period_totals = tuple(
-        sum(lesson.get("instructional_time", {}).get("class_periods_50_min", [0, 0])[index] for lesson in lessons)
-        for index in (0, 1)
+    lesson_period_ranges = [
+        (lesson.get("lesson_id"), instructional_range(lesson, "class_periods_50_min") or (0, 0))
+        for lesson in lessons
+    ]
+    period_totals = tuple(sum(values[index] for _, values in lesson_period_ranges) for index in (0, 1))
+    unit_periods = {
+        unit.get("area"): sum(
+            (instructional_range(lesson, "class_periods_50_min") or (0, 0))[0]
+            for lesson in unit.get("lessons", [])
+        )
+        for unit in curriculum.get("units", [])
+    }
+    if unit_periods != EXPECTED_UNIT_PERIODS:
+        add_error(errors, curriculum, f"mandatory classroom unit periods must be {EXPECTED_UNIT_PERIODS}, got {unit_periods}")
+
+    route = curriculum.get("classroom_route", {})
+    route = route if isinstance(route, dict) else {}
+    mandatory_periods = route.get("mandatory_periods")
+    extension_periods = route.get("recommended_extension_periods")
+    recommended_periods = route.get("recommended_total_periods")
+    if mandatory_periods != period_totals[0]:
+        add_error(
+            errors,
+            curriculum,
+            f"mandatory classroom total must match lesson minima, got {mandatory_periods} and {period_totals[0]}",
+        )
+    if all(isinstance(value, int) for value in (mandatory_periods, extension_periods, recommended_periods)):
+        if mandatory_periods + extension_periods != recommended_periods:
+            add_error(errors, curriculum, "recommended classroom total must equal mandatory periods plus extensions")
+
+    allocations = route.get("extension_allocations", [])
+    allocations = allocations if isinstance(allocations, list) else []
+    allocation_total = sum(
+        allocation.get("periods", 0)
+        for allocation in allocations
+        if isinstance(allocation, dict) and isinstance(allocation.get("periods", 0), int)
     )
-    if period_totals != (71, 77):
-        add_error(errors, curriculum, f"classroom period totals must be 71-77, got {period_totals[0]}-{period_totals[1]}")
+    if allocation_total != extension_periods:
+        add_error(errors, curriculum, "extension allocation total must match recommended extension periods")
+
+    lesson_allocation_refs = [
+        allocation.get("lesson_ref")
+        for allocation in allocations
+        if isinstance(allocation, dict) and allocation.get("kind") == "lesson"
+    ]
+    lesson_allocations = {
+        allocation.get("lesson_ref"): allocation.get("periods")
+        for allocation in allocations
+        if isinstance(allocation, dict)
+        and allocation.get("kind") == "lesson"
+        and isinstance(allocation.get("lesson_ref"), str)
+        and isinstance(allocation.get("periods"), int)
+    }
+    if len(lesson_allocation_refs) != len(set(lesson_allocation_refs)):
+        add_error(errors, curriculum, "lesson extension allocations must not contain duplicate lesson refs")
+    if set(lesson_allocations) != EXPECTED_EXTENSION_LESSONS:
+        add_error(errors, curriculum, "lesson extensions must target A7, B7, C9, and D9")
+
+    lesson_range_extensions = {
+        lesson_id: values[1] - values[0]
+        for lesson_id, values in lesson_period_ranges
+        if isinstance(lesson_id, str) and values[1] > values[0]
+    }
+    if lesson_allocations != lesson_range_extensions:
+        add_error(errors, curriculum, "lesson extension allocations do not match instructional time ranges")
+
+    cumulative_periods = sum(
+        allocation.get("periods", 0)
+        for allocation in allocations
+        if isinstance(allocation, dict)
+        and allocation.get("kind") == "cumulative"
+        and isinstance(allocation.get("periods", 0), int)
+    )
+    if cumulative_periods != 1:
+        add_error(errors, curriculum, "the classroom route must include one cumulative diagnostic period")
+    if isinstance(recommended_periods, int) and period_totals[1] + cumulative_periods != recommended_periods:
+        add_error(errors, curriculum, "recommended classroom total must include lesson and cumulative extensions")
 
     for problem in (record for record in records if record.get("type") == "problem"):
         for objective_ref in problem.get("objective_refs", []) or []:

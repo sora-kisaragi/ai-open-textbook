@@ -8,7 +8,7 @@ review, and versioned educational data.
 
 ## Scope
 
-The current v0.2 review-candidate plan targets:
+The current v0.3 review-candidate plan targets:
 
 - Stage: High school
 - Subject: Information I

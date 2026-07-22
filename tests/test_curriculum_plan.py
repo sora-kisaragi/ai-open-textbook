@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -14,6 +15,8 @@ CONSERVATIVE_STATUSES = {"draft", "machine_checked", "human_review_requested"}
 COVERAGE_STATUSES = {"not_started", "partial", "complete"}
 COVERAGE_REQUIREMENT = "two_items_or_one_item_plus_performance_criterion"
 OBJECTIVE_ID_PATTERN = re.compile(r"^obj\.[a-z0-9]+(?:\.[a-z0-9]+)*\.v[1-9][0-9]*$")
+LESSON_ID_DIGEST = "3e70077afec6375a2fd09ac48ac74ababf69a1bde2cdae916a9145daff5805f5"
+OBJECTIVE_ID_DIGEST = "c516448693d76e035d8720de968f5dd5eff10a4711cf5d1703539b9479589c47"
 
 
 def load_curriculum() -> dict:
@@ -31,6 +34,10 @@ def load_collection(filename: str) -> list[dict]:
 
 def load_collection_ids(filename: str) -> set[str]:
     return {record["id"] for record in load_collection(filename)}
+
+
+def id_digest(ids: list[str]) -> str:
+    return hashlib.sha256("\n".join(sorted(ids)).encode()).hexdigest()
 
 
 def learner_facing_text() -> str:
@@ -58,8 +65,19 @@ def test_full_scope_curriculum_contract() -> None:
 
     assert curriculum["status"] in CONSERVATIVE_STATUSES
     assert curriculum["review_status"] == "needs_human_review"
+    assert curriculum["scope_version"] == "0.3"
+    assert curriculum["tracking_issue"] == 59
     assert len(units) == 4
     assert len(lessons) == 32
+    assert {
+        unit["area"]: [lesson["order"] for lesson in unit["lessons"]]
+        for unit in units
+    } == {
+        "mext.info1.1": [f"A{index}" for index in range(1, 8)],
+        "mext.info1.2": [f"B{index}" for index in range(1, 8)],
+        "mext.info1.3": [f"C{index}" for index in range(1, 10)],
+        "mext.info1.4": [f"D{index}" for index in range(1, 10)],
+    }
     assert curriculum["global_prerequisites"]
     assert curriculum["numbering_convention"]
     prerequisites_text = " ".join(curriculum["global_prerequisites"]).lower()
@@ -69,6 +87,7 @@ def test_full_scope_curriculum_contract() -> None:
 
     lesson_ids = [lesson["lesson_id"] for lesson in lessons]
     assert len(lesson_ids) == len(set(lesson_ids))
+    assert id_digest(lesson_ids) == LESSON_ID_DIGEST
 
     required_fields = {
         "order",
@@ -119,6 +138,8 @@ def test_full_scope_curriculum_contract() -> None:
         assert isinstance(time["is_multi_session_project"], bool)
 
     assert len(objective_ids) == len(set(objective_ids))
+    assert len(objective_ids) == 96
+    assert id_digest(objective_ids) == OBJECTIVE_ID_DIGEST
 
 
 def test_time_and_assessment_baselines() -> None:
@@ -140,7 +161,61 @@ def test_time_and_assessment_baselines() -> None:
         for lesson in lessons
         if lesson["instructional_time"]["is_multi_session_project"]
     }
-    assert (period_minimum, period_maximum) == (71, 77)
+    route = curriculum["classroom_route"]
+    assert route["period_minutes"] == 50
+    assert route["mandatory_periods"] == 65
+    assert route["recommended_extension_periods"] == 5
+    assert route["recommended_total_periods"] == 70
+    assert period_minimum == route["mandatory_periods"]
+
+    unit_periods = {
+        unit["area"]: sum(
+            lesson["instructional_time"]["class_periods_50_min"][0]
+            for lesson in unit["lessons"]
+        )
+        for unit in curriculum["units"]
+    }
+    assert unit_periods == {
+        "mext.info1.1": 9,
+        "mext.info1.2": 12,
+        "mext.info1.3": 21,
+        "mext.info1.4": 23,
+    }
+
+    allocations = route["extension_allocations"]
+    assert sum(allocation["periods"] for allocation in allocations) == 5
+    lesson_allocations = {
+        allocation["lesson_ref"]: allocation["periods"]
+        for allocation in allocations
+        if allocation["kind"] == "lesson"
+    }
+    assert lesson_allocations == {
+        "lesson.info1.society.inquiry.project.v1": 1,
+        "lesson.info1.design.project.v1": 1,
+        "lesson.info1.programming.project.v1": 1,
+        "lesson.info1.data.investigation.project.v1": 1,
+    }
+    assert [
+        allocation for allocation in allocations
+        if allocation["kind"] == "cumulative"
+    ] == [{
+        "kind": "cumulative",
+        "periods": 1,
+        "purpose": "Cumulative diagnostic and targeted reteaching across all four units.",
+    }]
+    assert period_maximum == period_minimum + sum(lesson_allocations.values())
+    assert route["recommended_total_periods"] == (
+        period_maximum
+        + sum(
+            allocation["periods"]
+            for allocation in allocations
+            if allocation["kind"] == "cumulative"
+        )
+    )
+    for lesson in lessons:
+        minimum, maximum = lesson["instructional_time"]["class_periods_50_min"]
+        assert maximum - minimum == lesson_allocations.get(lesson["lesson_id"], 0)
+
     assert project_orders == {"A7", "B7", "C9", "D9"}
     c9 = next(lesson for lesson in lessons if lesson["order"] == "C9")
     assert c9["instructional_time"]["class_periods_50_min"] == [5, 6]
