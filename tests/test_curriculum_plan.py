@@ -471,23 +471,62 @@ def test_unit_c_review_contracts() -> None:
         "No prior programming is assumed; required arithmetic expressions and ordered execution are introduced and checked inside this lesson."
     ]
 
+    unit_c_lesson_ids = {
+        lesson["lesson_id"] for lesson in unit_c["lessons"]
+    }
+    unit_c_problems = [
+        problem for problem in problems.values()
+        if unit_c_lesson_ids.intersection(problem["lesson_refs"])
+    ]
+    assert len(unit_c_problems) == 48
+
+    c1_text = " ".join([
+        *[objective["statement"] for objective in planned["C1"]["learning_objectives"]],
+        problems["prob.info1.programming.computer.systems.001.v1"]["question"],
+        problems["prob.info1.programming.computer.systems.003.v1"]["question"],
+    ])
+    for term in ("operating system", "OS", "処理装置", "丸め誤差", "資源"):
+        assert term in c1_text
+    c1_integrated = " ".join([
+        problems["prob.info1.programming.computer.systems.004.v1"]["question"],
+        answers["ans.prob.info1.programming.computer.systems.004.v1"]["canonical_answer"],
+    ])
+    for term in ("OS", "255", "23.5", "+0.03", "16 MB", "1020 MB"):
+        assert term in c1_integrated
+
+    c3 = planned["C3"]
+    assert all(term in " ".join(c3["key_concepts"]) for term in ("and", "or", "not"))
+    c3_transfer = problems["prob.info1.conditionals.001.v1"]["question"]
+    assert "Pythonを使わず" in c3_transfer
+    assert all(term in c3_transfer for term in ("and", "or", "not"))
+
     c7 = planned["C7"]
-    assert "diagram" not in c7["learning_objectives"][0]["statement"].lower()
-    assert "shortest-job-first" not in c7["assessment_intent"].lower()
+    assert "linear search" in c7["learning_objectives"][0]["statement"].lower()
+    assert "sorting" in c7["learning_objectives"][0]["statement"].lower()
+    c7_text = []
     for number in range(1, 5):
         suffix = f"{number:03d}.v1"
         problem = problems[f"prob.info1.programming.algorithms.{suffix}"]
         answer = answers[f"ans.prob.info1.programming.algorithms.{suffix}"]
         rubric = rubrics[f"rubric.prob.info1.programming.algorithms.{suffix}"]
-        canonical_text = " ".join([
+        c7_text.append(" ".join([
             problem["question"],
             answer["canonical_answer"],
             answer["explanation"],
             *[criterion["description"] for criterion in rubric["criteria"]],
-        ])
-        assert "受付順" in canonical_text or "FIFO" in canonical_text
-        assert "短い印刷優先" not in canonical_text
-        assert "公平" not in canonical_text
+        ]))
+    combined_c7 = " ".join(c7_text)
+    assert "線形探索" in combined_c7
+    assert "選択ソート" in combined_c7
+    assert "28回" in combined_c7
+    assert "FIFO" not in combined_c7
+    assert "Pythonなし" in problems["prob.info1.programming.algorithms.004.v1"]["question"]
+
+    c8 = planned["C8"]
+    assert "deterministic" in c8["learning_objectives"][1]["statement"].lower()
+    assert "two deterministic assumption sets" in c8["learning_objectives"][2]["statement"].lower()
+    c8_comparison = problems["prob.info1.programming.modeling.simulation.003.v1"]["question"]
+    assert all(term in c8_comparison for term in ("モデルA", "モデルB", "0.75", "2.25"))
 
     c9_problem = problems["prob.info1.programming.project.004.v1"]["question"]
     for signature in (
@@ -500,6 +539,9 @@ def test_unit_c_review_contracts() -> None:
         assert signature in c9_problem
     c9_answer = answers["ans.prob.info1.programming.project.004.v1"]
     c9_rubric = rubrics["rubric.prob.info1.programming.project.004.v1"]
+    assert c9_answer["verification_evidence"][-1]["expected"].startswith(
+        "all 14 show_check calls"
+    )
     assert "assert" not in c9_answer["canonical_answer"]
     assert "assert" not in " ".join(
         criterion["description"] for criterion in c9_rubric["criteria"]
@@ -509,6 +551,8 @@ def test_unit_c_review_contracts() -> None:
     assert "依頼数は10件以下" in c9_answer["canonical_answer"]
     assert "期待値:" in c9_answer["canonical_answer"]
     assert "実際値:" in c9_answer["canonical_answer"]
+    for term in ("非減少順", "同時到着", "降順", "待ち時間非負"):
+        assert term in c9_answer["canonical_answer"]
     for schema in (
         "[id, arrival, sheets]",
         "[id, reason]",
@@ -519,6 +563,66 @@ def test_unit_c_review_contracts() -> None:
         assert schema in " ".join(
             criterion["description"] for criterion in c9_rubric["criteria"]
         )
+
+    namespace: dict[str, object] = {}
+    exec(c9_answer["canonical_answer"], namespace)
+    keep_valid_jobs = namespace["keep_valid_jobs"]
+    fifo_order = namespace["fifo_order"]
+    simulate_fifo = namespace["simulate_fifo"]
+    assert callable(keep_valid_jobs)
+    assert callable(fifo_order)
+    assert callable(simulate_fifo)
+
+    ordered = [["N1", 0, 8], ["N2", 1, 4]]
+    ordered_split = keep_valid_jobs(ordered)
+    ordered_results = simulate_fifo(fifo_order(ordered_split[0]), 4)
+    assert ordered_results == [["N1", 0, 2, 0], ["N2", 2, 3, 1]]
+
+    tied = [["T2", 2, 8], ["T1", 2, 4]]
+    tied_split = keep_valid_jobs(tied)
+    tied_results = simulate_fifo(fifo_order(tied_split[0]), 4)
+    assert tied_results == [["T2", 2, 4, 0], ["T1", 4, 5, 2]]
+
+    descending = [["D2", 2, 8], ["D1", 1, 4]]
+    assert keep_valid_jobs(descending) == [
+        [],
+        [["D2", "到着時刻は非減少順"], ["D1", "到着時刻は非減少順"]],
+    ]
+    assert keep_valid_jobs([]) == [[], []]
+    assert keep_valid_jobs([["I0", 0, 0]]) == [
+        [], [["I0", "枚数は1〜40"]]
+    ]
+    assert all(row[3] >= 0 for row in ordered_results + tied_results)
+
+    total_points = sum(criterion["points"] for criterion in c9_rubric["criteria"])
+    assert max(criterion["points"] for criterion in c9_rubric["criteria"]) / total_points <= 0.35
+    python_points = sum(
+        criterion["points"] for criterion in c9_rubric["criteria"]
+        if "Python実装" in criterion["description"]
+    )
+    assert python_points / total_points <= 0.25
+
+    for number in range(2, 5):
+        suffix = f"{number:03d}.v1"
+        problem = problems[f"prob.info1.programming.project.{suffix}"]
+        answer = answers[f"ans.prob.info1.programming.project.{suffix}"]
+        rubric = rubrics[f"rubric.prob.info1.programming.project.{suffix}"]
+        evidence_text = " ".join([
+            problem["question"],
+            answer["canonical_answer"],
+            *[criterion["description"] for criterion in rubric["criteria"]],
+        ])
+        for term in ("期待値", "実際値", "一致"):
+            assert term in evidence_text
+        assert answer["verification_status"] == "machine_checked"
+        assert answer["verification_evidence"][-1]["result"] == "passed"
+    for suffix in ("003", "004"):
+        improvement_text = " ".join([
+            problems[f"prob.info1.programming.project.{suffix}.v1"]["question"],
+            answers[f"ans.prob.info1.programming.project.{suffix}.v1"]["canonical_answer"],
+        ])
+        assert "改善" in improvement_text
+        assert "再テスト" in improvement_text
 
     c8_answer = answers["ans.prob.info1.programming.modeling.simulation.004.v1"]
     c8_tree = ast.parse(c8_answer["canonical_answer"])
@@ -532,6 +636,7 @@ def test_unit_c_review_contracts() -> None:
         for node in ast.walk(c8_tree)
     )
     assert "simulate_and_display" in c8_answer["canonical_answer"]
+    assert "setup" in c8_answer["canonical_answer"]
 
     c6_problem = problems["prob.info1.programming.functions.004.v1"]
     c6_answer = answers["ans.prob.info1.programming.functions.004.v1"]

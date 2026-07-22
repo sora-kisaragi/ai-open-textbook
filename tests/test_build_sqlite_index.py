@@ -19,7 +19,7 @@ def test_sqlite_projects_curriculum_and_coverage(tmp_path: Path) -> None:
     output = tmp_path / "index.sqlite"
     counts = build_sqlite_index.build(ROOT, output)
 
-    assert counts[:5] == (1223, 32, 96, 96, 2346)
+    assert counts[:5] == (1271, 32, 96, 96, 2394)
     with sqlite3.connect(output) as connection:
         assert connection.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
         assert connection.execute("PRAGMA foreign_key_check").fetchall() == []
