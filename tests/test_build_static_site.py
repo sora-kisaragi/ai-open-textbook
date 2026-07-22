@@ -211,6 +211,9 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert "Python Software Foundationから独立" in book
     assert 'id="book-imprint"' in book
     assert "LICENSE-CONTENT-CC-BY-4.0.txt" in first_snapshot
+    assert "activities/b7_keyboard_start.html" in first_snapshot
+    assert "activities/b7_keyboard_confirm.html" in first_snapshot
+    assert "activities/b7_keyboard_complete.html" in first_snapshot
     coverage_report = json.loads(first_snapshot["reports/semantic-coverage-audit.json"])
     balance_report = json.loads(first_snapshot["reports/unit-balance-report.json"])
     assert coverage_report["row_count"] == 1
