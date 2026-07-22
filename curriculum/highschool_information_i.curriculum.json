@@ -243,18 +243,18 @@
         {
           "order": "A3",
           "lesson_id": "lesson.info1.society.rights.responsibility.v1",
-          "title": "Rights, Responsibility, Privacy, and Risk",
+          "title": "Rights, Responsibility, Privacy, Copyright, and Risk",
           "status": "draft",
           "learning_objectives": [
             {
               "id": "obj.info1.society.rights.responsibility.001.v1",
-              "statement": "Identify stakeholders, information flows, and potential harms in a scenario.",
+              "statement": "Identify stakeholders, information flows, potential harms, and privacy concerns.",
               "expected_evidence": "identification",
               "label": "A3.O1"
             },
             {
               "id": "obj.info1.society.rights.responsibility.002.v1",
-              "statement": "Distinguish personal responsibility, social norms, and source-backed legal constraints.",
+              "statement": "Distinguish privacy concerns from copyright concerns and make a source-backed reuse decision that separates quotation, copying, permission, license conditions, attribution, modification, and sharing.",
               "expected_evidence": "analysis",
               "label": "A3.O2"
             },
@@ -271,20 +271,33 @@
           ],
           "key_concepts": [
             "privacy",
+            "copyright",
+            "intellectual property",
+            "creator",
+            "rightsholder",
+            "user",
+            "quotation",
+            "attribution",
+            "permission",
+            "license",
+            "reuse",
             "responsibility",
             "information ethics",
             "information security",
             "risk",
             "stakeholder"
           ],
-          "assessment_intent": "Analyze a fictional scenario, explain the importance of information security, and avoid unsupported legal claims.",
+          "assessment_intent": "Analyze fictional privacy and copyright scenarios, make source-backed reuse and attribution decisions, explain information-security trade-offs, and avoid unsupported legal claims.",
           "depends_on": [
             "lesson.info1.society.information.media.v1",
             "lesson.info1.society.source.evaluation.v1"
           ],
           "source_refs": [
             "src.mext.highschool.curriculum2018.v1",
-            "src.mext.information.commentary2018.v1"
+            "src.mext.information.commentary2018.v1",
+            "src.ppc.personalinfo.guideline.general.v1",
+            "src.bunka.copyright.text.2025.v1",
+            "src.creativecommons.by4.deed.ja.v1"
           ],
           "instructional_time": {
             "class_periods_50_min": [
