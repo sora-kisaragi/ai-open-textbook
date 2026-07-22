@@ -19,7 +19,7 @@ def test_sqlite_projects_curriculum_and_coverage(tmp_path: Path) -> None:
     output = tmp_path / "index.sqlite"
     counts = build_sqlite_index.build(ROOT, output)
 
-    assert counts[:5] == (1350, 32, 96, 96, 2520)
+    assert counts[:5] == (1383, 32, 96, 96, 2551)
     with sqlite3.connect(output) as connection:
         assert connection.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
         assert connection.execute("PRAGMA foreign_key_check").fetchall() == []
@@ -27,7 +27,7 @@ def test_sqlite_projects_curriculum_and_coverage(tmp_path: Path) -> None:
         assert connection.execute("SELECT COUNT(*) FROM objectives").fetchone()[0] == 96
         assert connection.execute(
             "SELECT coverage_status, COUNT(*) FROM coverage GROUP BY coverage_status ORDER BY coverage_status"
-        ).fetchall() == [("complete", 96)]
+        ).fetchall() == [("complete", 94), ("partial", 2)]
         assert connection.execute(
             "SELECT order_label FROM curriculum_lessons ORDER BY order_label LIMIT 1"
         ).fetchone()[0] == "A1"

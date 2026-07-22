@@ -654,8 +654,8 @@
           ],
           "instructional_time": {
             "class_periods_50_min": [
-              3,
-              4
+              4,
+              5
             ],
             "self_study_minutes": [
               150,
@@ -1338,7 +1338,7 @@
               "performance_criterion_refs": [
                 {
                   "rubric_ref": "rubric.prob.info1.design.project.004.v1",
-                  "criterion_id": "c2"
+                  "criterion_id": "c6"
                 }
               ]
             },
@@ -1352,7 +1352,7 @@
               "performance_criterion_refs": [
                 {
                   "rubric_ref": "rubric.prob.info1.design.project.004.v1",
-                  "criterion_id": "c3"
+                  "criterion_id": "c8"
                 }
               ]
             }
@@ -2178,6 +2178,14 @@
               "performance_criterion_refs": [
                 {
                   "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                  "criterion_id": "c1_validation"
+                },
+                {
+                  "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                  "criterion_id": "c2_fifo_ordering"
+                },
+                {
+                  "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
                   "criterion_id": "c5_executable_evidence"
                 }
               ]
@@ -2207,6 +2215,10 @@
                 {
                   "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
                   "criterion_id": "c7_requirement_evaluation"
+                },
+                {
+                  "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                  "criterion_id": "c8_limitations_retest"
                 }
               ]
             }
@@ -2393,10 +2405,9 @@
             {
               "objective_ref": "obj.info1.networks.internet.web.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "complete",
+              "status": "partial",
               "assessment_item_refs": [
-                "prob.info1.networks.internet.web.001.v1",
-                "prob.info1.networks.internet.web.004.v1"
+                "prob.info1.networks.internet.web.001.v1"
               ],
               "performance_criterion_refs": []
             },
@@ -2774,10 +2785,9 @@
             {
               "objective_ref": "obj.info1.data.descriptive.analysis.002.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "complete",
+              "status": "partial",
               "assessment_item_refs": [
-                "prob.info1.data.descriptive.analysis.002.v1",
-                "prob.info1.data.descriptive.analysis.004.v1"
+                "prob.info1.data.descriptive.analysis.002.v1"
               ],
               "performance_criterion_refs": []
             },
@@ -2931,8 +2941,8 @@
           ],
           "instructional_time": {
             "class_periods_50_min": [
-              3,
-              3
+              2,
+              2
             ],
             "self_study_minutes": [
               100,
@@ -3064,6 +3074,22 @@
                 {
                   "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
                   "criterion_id": "c2_reproducible_workflow"
+                },
+                {
+                  "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                  "criterion_id": "c3_accessible_evidence"
+                },
+                {
+                  "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                  "criterion_id": "c6_provenance_dictionary"
+                },
+                {
+                  "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                  "criterion_id": "c7_transformation_log"
+                },
+                {
+                  "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                  "criterion_id": "c8_independent_check"
                 }
               ]
             },
@@ -3078,6 +3104,18 @@
                 {
                   "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
                   "criterion_id": "c4_bounded_conclusion"
+                },
+                {
+                  "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                  "criterion_id": "c5_limits_improvement"
+                },
+                {
+                  "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                  "criterion_id": "c9_sensitivity_results"
+                },
+                {
+                  "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                  "criterion_id": "c10_presentation_revision"
                 }
               ]
             }

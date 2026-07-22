@@ -176,11 +176,15 @@ def test_time_and_assessment_baselines() -> None:
         for unit in curriculum["units"]
     }
     assert unit_periods == {
-        "mext.info1.1": 9,
+        "mext.info1.1": 10,
         "mext.info1.2": 12,
         "mext.info1.3": 21,
-        "mext.info1.4": 23,
+        "mext.info1.4": 22,
     }
+
+    for periods in unit_periods.values():
+        share = periods / route["mandatory_periods"]
+        assert 0.15 <= share <= 0.35
 
     allocations = route["extension_allocations"]
     assert sum(allocation["periods"] for allocation in allocations) == 5
@@ -324,10 +328,20 @@ def test_time_and_assessment_baselines() -> None:
     } == {
         "obj.info1.programming.project.001.v1": (
             ["prob.info1.programming.project.001.v1"],
-            [{
-                "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
-                "criterion_id": "c5_executable_evidence",
-            }],
+            [
+                {
+                    "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                    "criterion_id": "c1_validation",
+                },
+                {
+                    "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                    "criterion_id": "c2_fifo_ordering",
+                },
+                {
+                    "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                    "criterion_id": "c5_executable_evidence",
+                },
+            ],
         ),
         "obj.info1.programming.project.002.v1": (
             ["prob.info1.programming.project.002.v1"],
@@ -338,10 +352,16 @@ def test_time_and_assessment_baselines() -> None:
         ),
         "obj.info1.programming.project.003.v1": (
             ["prob.info1.programming.project.003.v1"],
-            [{
-                "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
-                "criterion_id": "c7_requirement_evaluation",
-            }],
+            [
+                {
+                    "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                    "criterion_id": "c7_requirement_evaluation",
+                },
+                {
+                    "rubric_ref": "rubric.prob.info1.programming.project.004.v1",
+                    "criterion_id": "c8_limitations_retest",
+                },
+            ],
         ),
     }
 
@@ -370,11 +390,19 @@ def test_time_and_assessment_baselines() -> None:
         "lesson.info1.data.investigation.project.v1": 4,
     }
     assert sum(unit_d_problem_counts.values()) == 36
-    assert all(
-        entry["status"] == "complete"
+    unit_d_statuses = {
+        entry["objective_ref"]: entry["status"]
         for lesson in unit_d_lessons
         for entry in lesson["assessment_coverage"]
-    )
+    }
+    assert sum(status == "complete" for status in unit_d_statuses.values()) == 25
+    assert {
+        objective_id for objective_id, status in unit_d_statuses.items()
+        if status == "partial"
+    } == {
+        "obj.info1.networks.internet.web.001.v1",
+        "obj.info1.data.descriptive.analysis.002.v1",
+    }
 
     d9 = next(lesson for lesson in unit_d_lessons if lesson["order"] == "D9")
     assert {
@@ -393,17 +421,49 @@ def test_time_and_assessment_baselines() -> None:
         ),
         "obj.info1.data.investigation.project.002.v1": (
             ["prob.info1.data.investigation.project.002.v1"],
-            [{
-                "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
-                "criterion_id": "c2_reproducible_workflow",
-            }],
+            [
+                {
+                    "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                    "criterion_id": "c2_reproducible_workflow",
+                },
+                {
+                    "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                    "criterion_id": "c3_accessible_evidence",
+                },
+                {
+                    "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                    "criterion_id": "c6_provenance_dictionary",
+                },
+                {
+                    "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                    "criterion_id": "c7_transformation_log",
+                },
+                {
+                    "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                    "criterion_id": "c8_independent_check",
+                },
+            ],
         ),
         "obj.info1.data.investigation.project.003.v1": (
             ["prob.info1.data.investigation.project.003.v1"],
-            [{
-                "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
-                "criterion_id": "c4_bounded_conclusion",
-            }],
+            [
+                {
+                    "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                    "criterion_id": "c4_bounded_conclusion",
+                },
+                {
+                    "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                    "criterion_id": "c5_limits_improvement",
+                },
+                {
+                    "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                    "criterion_id": "c9_sensitivity_results",
+                },
+                {
+                    "rubric_ref": "rubric.prob.info1.data.investigation.project.004.v1",
+                    "criterion_id": "c10_presentation_revision",
+                },
+            ],
         ),
     }
 

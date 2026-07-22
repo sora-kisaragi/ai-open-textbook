@@ -910,6 +910,12 @@ th {
   .lesson-article h2,
   .teacher-copy h2 {
     border-bottom-color: #000;
+    break-after: avoid;
+  }
+
+  .lesson-article h2 + *,
+  .teacher-copy h2 + * {
+    break-before: avoid;
   }
 
   .practice-item,
