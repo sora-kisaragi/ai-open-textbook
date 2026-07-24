@@ -40,7 +40,7 @@ def validation_errors(root: Path) -> list[str]:
 def test_validate_current_repository() -> None:
     errors, count = validate_ndjson.validate_repository(ROOT)
     assert errors == []
-    assert count == 1557
+    assert count == 1611
 
 
 def test_invalid_calendar_date_is_rejected(validation_root: Path) -> None:

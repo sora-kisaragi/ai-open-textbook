@@ -50,6 +50,28 @@ B2.O1は2進数の位取りと符号化規則、B2.O2は標本化・量子化の
 実際の形式や圧縮率について外部資料を追加する場合は、現行の一次仕様または信頼できる技術資料を確認し、確認日を記録してください。
 特定形式の利用許諾や法的適合をこの教材から推定しません。
 
+## 教材・準備物
+
+- 位取りカード、4×4画素表、標本化・量子化・符号化カード、単位確認票。
+- 視覚作図が難しい場合の数表と読み上げ順。
+
+## 期待される応答とフィードバック
+
+| 応答 | フィードバック |
+| --- | --- |
+| 要素数とビット数から容量を単位付きで求める | 最後に8で割る理由を説明させる |
+| 高品質だけを選ぶ | 必要な細部、機器、容量、失われる情報を比べる |
+
+## 補充と任意発展
+
+補充では4ビットの位取りと4×4画素だけを扱います。任意発展では同じ素材の二つの符号化案を比較します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.design.digital.representation.v1` > `考え方のモデル` | Information I addresses sampling, quantization, encoding, binary representation, and changes in file size and fidelity. | standard | `src.mext.information.commentary2018.v1`; PDF pp. 36-37 / printed pp. 28-29, Information I (2) A(a). | 2026-07-24; AI source review; `supported` | Calculations, tables, examples, thresholds, and timing are project-authored and require human review. |
+
 ## 練習問題
 
 - `prob.info1.design.digital.representation.001.v1`: B2.O1
@@ -63,6 +85,8 @@ B2.O1は2進数の位取りと符号化規則、B2.O2は標本化・量子化の
 | --- | --- | --- | --- |
 | 第1時 | 2進数の位取りをたどり、ビット・バイト・区切り・符号化規則が意味を決めることを説明する。 | 手作業の符号化と復号を一例ずつ完了したところで止める。 | 同じビット列でも区切りや規則がなければ意味が決まらないと説明できる。 |
 | 第2時 | 解像度・標本化・量子化・符号化の選択を、忠実さ・データ量・情報損失の兼ね合いとして評価する。 | 二つの表現案を数表またはマス目で比較し、目的に合う案を選んで止める。 | データ量だけでなく、失われる情報と元に戻せない限界を根拠に含められる。 |
+
+本文末の独立転移20分と確認5分は、この2時限に含めません。授業後の自学課題または別時限で25分を確保します。
 
 ## レビュー上の注意
 
