@@ -24,6 +24,8 @@
 - 制約と成功基準: 10分
 - 問題文の書き換えと相互確認: 15分
 
+本文末の独立転移20分と確認5分は、この50分に含めません。授業後の自学課題として続けるか、別時限で25分を確保します。
+
 ## 想定される誤解
 
 - 解決策がない状態を、そのまま問題と呼ぶ。
@@ -55,6 +57,30 @@
 | 時限 | 学習者の到達点 | 50分の区切り | 続行条件 |
 | --- | --- | --- | --- |
 | 第1時 | 現在と望ましい状態を分け、関係者・制約・成功基準を含む検証可能な問題文を作る。 | 解決策の形をした依頼を問題文へ書き換え、相互点検したところで止める。 | 特定の製品や手段を前提にせず、成功を観察または測定できる。 |
+
+## 教材・準備物
+
+- 解決策を先に指定した依頼カードと、観察記録カード。
+- 「現在｜望ましい状態｜関係者｜制約｜成功基準｜未確認の仮定」問題定義票。
+- 数値を読みにくい学習者向けの、対象・量・期間を言葉で分けた補助カード。
+
+## 期待される応答とフィードバック
+
+| 学習場面 | 期待される学習者応答 | フィードバック |
+| --- | --- | --- |
+| 準備チェック | 解決策不足と観察した状態を区別する | 製品名を隠しても差が残るか問う |
+| 例題 | 返却棚以外の候補も比較できる問題文を作る | 現在と望ましい状態の指標をそろえさせる |
+| 独立転移 | 対象・量・期間を含む成功基準を示す | 原因の仮定を事実欄から分離させる |
+
+## 補充と任意発展
+
+補充では現在と望ましい状態だけを同じ指標で書きます。任意発展では、一つの問題定義から三つの異なる解決案を作り、問題文が手段を固定していないことを検査します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.society.problem.definition.v1` > `考え方のモデル` | Information I includes discovering and clarifying problems, anticipating a problem-solving goal, and considering multiple solutions on scientific grounds. | standard | `src.mext.highschool.curriculum2018.v1`; Information section, PDF pp. 191-193. `src.mext.information.commentary2018.v1`; PDF pp. 31-32 / printed pp. 23-24, Information I (1) content handling and B(a), on discovering and clarifying problems, anticipating a goal, and creating and selecting multiple solutions on scientific grounds. | 2026-07-24; AI source review; `supported` | The six-column definition form, stakeholder and constraint fields, fictional records, thresholds, and timing are project-authored and require human curriculum review. |
 
 ## レビュー上の注意
 

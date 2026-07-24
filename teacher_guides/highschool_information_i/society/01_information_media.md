@@ -24,6 +24,8 @@
 - 問題発見と自己確認: 13分
 - 練習と振り返り: 10分
 
+本文末の独立転移20分と確認5分は、この50分に含めません。授業後の自学課題として続けるか、別時限で25分を確保します。
+
 ## 想定される誤解
 
 - データは数値だけだと考える。
@@ -55,6 +57,30 @@
 | 時限 | 学習者の到達点 | 50分の区切り | 続行条件 |
 | --- | --- | --- | --- |
 | 第1時 | 具体例でデータ・情報・メディアを区別し、メディアによる伝わり方の違いから問題を一つ見つける。 | 自己確認後、転移課題の三つのメディアを比較したところで止める。 | 三者を同じものとして扱わず、観察した事実を根拠に違いを説明できる。 |
+
+## 教材・準備物
+
+- A4判の「データ｜情報｜メディア｜受け手の行動｜次の記録」ワークシート。
+- 同じ変更を示す紙掲示、放送原稿、短いメッセージの架空カード。
+- 読み上げ用のカード本文と、色や位置を使わず識別できる番号。
+
+## 期待される応答とフィードバック
+
+| 学習場面 | 期待される学習者応答 | フィードバック |
+| --- | --- | --- |
+| 準備チェック | 観察記録、意味づけ、伝達手段を理由付きで分ける | 「誰が何を決めるか」を先に問う |
+| 例題 | 案内板と放送で届く相手・残り方が違うと述べる | メディア名だけなら受け手の行動を追加させる |
+| 独立転移 | 5欄の流れと届かない可能性を示す | 評価語を観察可能な時刻・場所・量へ直させる |
+
+## 補充と任意発展
+
+補充では一つの出来事と一人の受け手に限定し、記録→情報→手段の三段階だけを作ります。任意発展では、同じ情報を音声、図、短い文章で表し、失われる情報と追加すべき代替を比較します。発展は50分の到達判定には含めません。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.society.information.media.v1` > `考え方のモデル` | Information I includes examining the characteristics of information and media and using information technology to identify and solve problems. | standard | `src.mext.highschool.curriculum2018.v1`; Information section, PDF pp. 191-193. `src.mext.information.commentary2018.v1`; Information I content area begins on PDF p. 30. | 2026-07-24; AI source review; `supported` | The five-column flow, fictional event, wording, timing, and assessment are project-authored. This does not claim final curriculum alignment. |
 
 ## レビュー上の注意
 

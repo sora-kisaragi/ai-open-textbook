@@ -22,6 +22,8 @@
 - 第1時: 事例確認10分、問いと作業への分解25分、要件との照合15分
 - 第2時: モデル作成25分、入力・出力の追跡10分、除外事項と相互評価15分
 
+本文末の独立転移20分と確認5分は、この2時限に含めません。授業後の自学課題として続けるか、別時限で25分を確保します。
+
 ## 想定される誤解
 
 - 分解した項目を独立した一覧にし、関係を示さない。
@@ -53,6 +55,30 @@
 | 時限 | 学習者の到達点 | 50分の区切り | 続行条件 |
 | --- | --- | --- | --- |
 | 第1時 | 問題を問いと作業へ分け、実体・関係・入力・出力をモデル化して除外事項を示す。 | 一つのモデルを説明し、含めなかったものを書いたところで止める。 | 分解した要素が元の問題へつながり、モデルの範囲を言葉で限定できる。 |
+
+## 教材・準備物
+
+- 分解表、実体・関係カード、入力・処理・出力カード。
+- A4判の「要件｜小問と用途｜モデル｜除外と限界」ワークシート。
+- 矢印を追いにくい場合に使う番号付き一覧と読み上げ用説明。
+
+## 期待される応答とフィードバック
+
+| 学習場面 | 期待される学習者応答 | フィードバック |
+| --- | --- | --- |
+| 準備チェック | 問題の差と関係者を示す | 手段だけならA4の現在・望ましい状態へ戻す |
+| 例題 | 各小問を5分以内の受取要件へ結ぶ | 結べない小問は削除か用途修正を促す |
+| 独立転移 | 入力から出力と除外事項を説明する | 除外をモデルの限界として書かせる |
+
+## 補充と任意発展
+
+補充では一つの要件を二つの小問へ分け、用途を矢印で戻します。任意発展では、同じ問題について待ち時間モデルと安全確認モデルを別に作り、目的によって含む実体が変わることを比較します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.society.decomposition.modeling.v1` > `考え方のモデル` | Information I frames phenomena as information and their connections and develops reasoning that organizes and deepens thinking during problem solving. | standard | `src.mext.highschool.curriculum2018.v1`; Information section, PDF pp. 191-193. `src.mext.information.commentary2018.v1`; PDF p. 30 / printed p. 22, Information I goal (2), on viewing phenomena as information and connections; PDF p. 32 / printed p. 24, B(a), on organizing and deepening thinking. | 2026-07-24; AI source review; `supported` | The decomposition table, model notation, lost-property and equipment examples, and model boundary format are project-authored. |
 
 ## レビュー上の注意
 
