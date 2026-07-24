@@ -69,6 +69,36 @@ A5の「モデルは現実の一部を目的に合わせて選ぶ表現」であ
 - **二つの決定論的モデルを比較する**（`prob.info1.programming.modeling.simulation.003.v1`、C8.O3）
 - **結果の使える範囲と改善案を評価する**（`prob.info1.programming.modeling.simulation.004.v1`、C8.O1〜O3）
 
+## 教材・準備物
+
+- 目的、変数、関係、仮定、範囲、除外を分けるモデル表。
+- 手作業シミュレーション表と仮定差分票。
+
+同じ入力を固定した二案について、開始、終了、待ち時間を一行ずつ残せる表を用意します。固定項目と変更項目を別欄にし、結果差をどの仮定へ結び付けたか記録できるようにします。
+
+## 期待される応答とフィードバック
+
+| 応答 | フィードバック |
+| --- | --- |
+| 同じ入力で一仮定だけを変え、結果差を比較する | 固定項目と変更項目を別欄にする |
+| 結果を現実の予測として断定する | 抽象化、除外、適用範囲へ戻す |
+
+## アクセシビリティと代替手段
+
+図や矢印だけでモデルを示さず、変数、規則、更新順、結果を表と文章でも示します。細かな表記が難しい場合は一件ずつ読み上げて共同記録します。
+
+## 補充と任意発展
+
+補充では一件・一仮定の状態更新だけを扱います。任意発展では二つ目の仮定を独立に変え、差の帰属が可能か検討します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.programming.modeling.simulation.v1` > `考え方のモデル` | Information I addresses representing real phenomena as models, changing conditions in simulations, evaluating and improving models, and considering abstraction limits. | standard | `src.mext.information.commentary2018.v1`; PDF pp. 39, 41-43 / printed pp. 31, 33-35, Information I (3) A(c), B(c), and commentary. | 2026-07-24; AI source review; `supported` | The deterministic queue model, values, comparisons, Python adapter, and timing are project-authored and require human review. |
+
+本文末の独立転移20分と確認5分は、2時限に含めません。授業後の自学課題または別時限で25分を確保します。
+
 ## 50分授業の到達点と判断
 
 | 時限 | 学習者の到達点 | 50分の区切り | 続行条件 |

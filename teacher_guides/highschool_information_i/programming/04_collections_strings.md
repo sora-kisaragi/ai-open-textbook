@@ -77,6 +77,38 @@ C5.O1は、複数の値がなぜ関係するかを説明し、一つのリスト
 - **文字列と数値の列を処理する**（`prob.info1.programming.collections.strings.003.v1`）: C5.O2
 - **テキスト・列・表から適切な表現を選ぶ**（`prob.info1.programming.collections.strings.004.v1`）: C5.O1〜O3の統合
 
+## 教材・準備物
+
+- 値カード、0始まりの位置番号、行・項目を分ける表、範囲確認票。
+- 配置を見にくい場合の「位置番号、値」を一行ずつ読む代替表。
+
+## 期待される応答とフィードバック
+
+| 応答 | フィードバック |
+| --- | --- |
+| 要素数から最終添字を求め、全要素を順に処理する | 先頭0と最終`要素数-1`を対にする |
+| 一件の複数項目も一列に混ぜる | 値の関係と一件のまとまりを表へ戻す |
+
+## アクセシビリティと代替手段
+
+カードの左右位置や色だけで添字を示さず、位置番号と値を読み上げ可能な二列でも示します。細かなカード操作が難しい場合は表へ直接記入します。
+
+## 補充と任意発展
+
+補充では三要素と先頭・末尾だけを扱います。任意発展では文字列、同種の並び、複数項目の表を同じ目的に照らして比較します。
+
+## Unit C中間チェックポイント
+
+正式な2時限の外で25分を確保します。固定入力は貸出カード `[[L1,2],[L2,1],[L3,3]]`、規則は「残数6から受付順に冊数を引き、残数が0未満になる依頼は受け付けない」です。20分で、C1の各時点の状態、C2の残数更新、C3の受付分岐、C4の三件で止まる繰り返し、C5の行と添字を一枚の手作業トレースへ統合します。期待する残数は4、3、0で、三件すべて受付です。続く5分で各概念と期待結果を照合して一箇所を修正します。C6へ進むには、各行の項目を読み、全要素を順に処理し、範囲外を説明できることを必須とします。未達の場合はC5のカード列へ戻って再試行します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.programming.collections.strings.v1` > `考え方のモデル` | Information I includes data and data structures, program structures, and algorithm expression as part of programming study. | standard | `src.mext.information.commentary2018.v1`; PDF pp. 39-41 / printed pp. 31-33, Information I (3) A(b), B(b), and commentary. | 2026-07-24; AI source review; `supported` | The sequence model, index examples, fictional records, Python adapter, checkpoint, and timing are project-authored and require human review. |
+
+本文末の独立転移20分と確認5分、および中間チェック20分と確認5分は、2時限に含めません。
+
 ## 50分授業の到達点と判断
 
 | 時限 | 学習者の到達点 | 50分の区切り | 続行条件 |

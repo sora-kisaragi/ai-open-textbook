@@ -67,6 +67,34 @@
 - **誤った探索を通常・なし・空で直す**（`prob.info1.programming.algorithms.003.v1`、C7.O3）
 - **別文脈へ探索と整列を移して照合する**（`prob.info1.programming.algorithms.004.v1`、C7.O1〜O3）
 
+## 教材・準備物
+
+- 番号カード、探索・整列トレース表、比較回数票、通常・境界・空テスト票。
+- 手の動きに頼らない番号付きの途中状態表。
+
+## 期待される応答とフィードバック
+
+| 応答 | フィードバック |
+| --- | --- |
+| 入力、有限手順、終了、出力を再現可能に記述する | 別の人が同じ結果を得るか交換確認する |
+| コード行数だけで効率を比べる | 入力数と比較・交換回数を記録させる |
+
+## アクセシビリティと代替手段
+
+カードの位置や動作だけに頼らず、各比較、途中状態、終了理由を一行ずつ記録します。カード操作が難しい場合は同じ値を持つ表で追跡します。
+
+## 補充と任意発展
+
+補充では三枚の線形探索と空入力だけを扱います。任意発展では入力数を倍にして探索と選択ソートの仕事量を比較します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.programming.algorithms.v1` > `考え方のモデル` | Information I calls for choosing and accurately expressing algorithms, considering efficiency, and checking and improving programs; typical search and sorting activities are examples. | standard | `src.mext.information.commentary2018.v1`; PDF pp. 39-41 / printed pp. 31-33, Information I (3) A(b), B(b), and commentary. | 2026-07-24; AI source review; `supported` | The finite-contract definition, chosen algorithms, data, counts, tests, Python adapter, and timing are project-authored and require human review. |
+
+本文末の独立転移20分と確認5分は、2時限に含めません。授業後の自学課題または別時限で25分を確保します。
+
 ## 50分授業の到達点と判断
 
 | 時限 | 学習者の到達点 | 50分の区切り | 続行条件 |

@@ -33,11 +33,39 @@
 - `x = x + 2` による値の更新: 5〜10分程度
 - 自己確認と練習問題: 10〜20分程度
 
+## 教材・準備物
+
+- 名前カード、値カード、操作カード、各操作後の状態表。
+- Pythonを使わず同じ更新を追える紙面と読み上げ用の順序文。
+
+## 期待される応答とフィードバック
+
+| 応答 | フィードバック |
+| --- | --- |
+| 右辺の現在値を先に計算して保存値を更新する | 各操作後の値を状態表へ残させる |
+| 表示で値も変わると考える | 保存と読取りを別の操作カードへ戻す |
+
+## アクセシビリティと代替手段
+
+色やカード位置だけに頼らず、名前、操作、操作前後の値を順序付き文章でも示します。カード操作が難しい場合は同じ列を持つ表へ直接記入します。
+
+## 補充と任意発展
+
+補充では一変数・一更新だけを扱います。任意発展では二変数の更新順を入れ替え、結果が変わる理由を状態表で比較します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.programming.variables.v1` > `考え方のモデル` | Information I treats algorithms, data and data structures, program structure, and programming as ways to use computers, while language-specific knowledge is not the learning goal. | standard | `src.mext.information.commentary2018.v1`; PDF pp. 39-41 / printed pp. 31-33, Information I (3) A(b), B(b), and commentary. | 2026-07-24; AI source review; `supported` | The named-value model, Python examples, contexts, thresholds, and timing are project-authored and require human review. |
+
+本文末の独立転移20分と確認5分は、示した授業時間に含めません。授業後の自学課題または別時限で25分を確保します。
+
 ## 50分授業の到達点と判断
 
 | 時限 | 学習者の到達点 | 50分の区切り | 続行条件 |
 | --- | --- | --- | --- |
-| 第1時 | 代入を状態の保存・更新として理解し、各行の後の変数値と表示結果を予測する。 | カードによる転移課題と基礎練習を終え、保存と表示の違いを説明して止める。 | 上から順に値を更新でき、`=` を等式の主張ではなく代入として読める。 |
+| 第1時 | 代入を状態の保存・更新として理解し、各行の後の変数値と表示結果を予測する。 | 本文のガイド付きカード活動と基礎練習を終え、保存と表示の違いを説明して止める。授業外の独立転移は含めない。 | 上から順に値を更新でき、`=` を等式の主張ではなく代入として読める。 |
 
 ## 想定される誤解
 

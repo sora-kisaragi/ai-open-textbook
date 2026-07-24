@@ -89,6 +89,32 @@ C4.O1は、繰り返しにまとめる前後を比べ、共通手順と変化す
 
 - **処理・更新・境界を統合して点検する**（`prob.info1.loops.008.v1`）: C4.O1〜O3の統合
 
+## 教材・準備物
+
+- 開始、条件、本体、更新、停止を分けるカードと状態表。
+- 循環矢印を使わない順序付き文章版。
+
+各回の開始値、条件の真偽、処理、更新後の値を同じ行に残せる記録票を用意します。0回、1回、境界の三ケースを同じ形式で比較できるようにします。
+
+## 期待される応答とフィードバック
+
+| 応答 | フィードバック |
+| --- | --- |
+| 各回の前後と停止時の偽を記録する | 0回、1回、境界の三ケースへ広げる |
+| 本体だけを繰り返し、更新を忘れる | 条件に使う値の列を独立させる |
+
+## 補充と任意発展
+
+補充では固定3回の状態表だけを扱います。任意発展では同じ処理を固定回数と条件制御で表し、終了条件を比較します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.programming.loops.v1` > `考え方のモデル` | Information I addresses accurate algorithm expression, program structures, and checking and correcting program behavior. | standard | `src.mext.information.commentary2018.v1`; PDF pp. 39-41 / printed pp. 31-33, Information I (3) A(b), B(b), and commentary. | 2026-07-24; AI source review; `supported` | The loop-state model, examples, test values, Python realization, and timing are project-authored and require human review. |
+
+本文末の独立転移20分と確認5分は、2時限に含めません。授業後の自学課題または別時限で25分を確保します。
+
 ## 50分授業の到達点と判断
 
 | 時限 | 学習者の到達点 | 50分の区切り | 続行条件 |
