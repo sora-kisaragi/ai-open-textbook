@@ -21,8 +21,8 @@
   ],
   "classroom_route": {
     "period_minutes": 50,
-    "mandatory_periods": 65,
-    "recommended_extension_periods": 5,
+    "mandatory_periods": 66,
+    "recommended_extension_periods": 4,
     "recommended_total_periods": 70,
     "extension_allocations": [
       {
@@ -48,11 +48,6 @@
         "lesson_ref": "lesson.info1.data.investigation.project.v1",
         "periods": 1,
         "purpose": "Additional feedback and revision time for the D9 performance task."
-      },
-      {
-        "kind": "cumulative",
-        "periods": 1,
-        "purpose": "Cumulative diagnostic and targeted reteaching across all four units."
       }
     ]
   },
@@ -296,17 +291,18 @@
             "src.mext.highschool.curriculum2018.v1",
             "src.mext.information.commentary2018.v1",
             "src.ppc.personalinfo.guideline.general.v1",
-            "src.bunka.copyright.text.2025.v1",
-            "src.creativecommons.by4.deed.ja.v1"
+            "src.bunka.copyright.text.2026.v1",
+            "src.creativecommons.by4.deed.ja.v1",
+            "src.nist.csf2.v1"
           ],
           "instructional_time": {
             "class_periods_50_min": [
-              1,
-              1
+              2,
+              2
             ],
             "self_study_minutes": [
-              70,
-              110
+              100,
+              150
             ],
             "is_multi_session_project": false
           },
@@ -1121,7 +1117,8 @@
           ],
           "source_refs": [
             "src.mext.highschool.curriculum2018.v1",
-            "src.mext.information.commentary2018.v1"
+            "src.mext.information.commentary2018.v1",
+            "src.w3c.wcag22.v1"
           ],
           "instructional_time": {
             "class_periods_50_min": [
@@ -1282,6 +1279,7 @@
             }
           ],
           "prerequisites": [
+            "B5: Data Visualization and Misleading Presentation.",
             "B6: Prototyping and Usability Evaluation."
           ],
           "key_concepts": [
@@ -1295,6 +1293,7 @@
           ],
           "assessment_intent": "Performance task with requirements, an artifact, bounded evaluation evidence including an interactive keyboard test, and a revision rationale.",
           "depends_on": [
+            "lesson.info1.design.data.visualization.v1",
             "lesson.info1.design.prototype.usability.v1"
           ],
           "source_refs": [
@@ -1385,7 +1384,7 @@
             },
             {
               "id": "obj.info1.programming.computer.systems.002.v1",
-              "statement": "Trace a simple instruction and data flow through operating-system mediation.",
+              "statement": "Trace application data and state from input through memory, processing, and output, then identify operating-system resource mediation separately.",
               "expected_evidence": "trace",
               "label": "C1.O2"
             },
@@ -1409,13 +1408,16 @@
             "finite numeric range",
             "rounding error"
           ],
-          "assessment_intent": "Trace operating-system mediation and distinguish numeric range, rounding, and resource limitations.",
+          "assessment_intent": "Trace application state changes, distinguish them from operating-system resource mediation, and distinguish numeric range, rounding, and resource limitations.",
           "depends_on": [
             "lesson.info1.design.digital.representation.v1"
           ],
           "source_refs": [
             "src.mext.highschool.curriculum2018.v1",
-            "src.mext.information.commentary2018.v1"
+            "src.mext.information.commentary2018.v1",
+            "src.nist.csrc.storage.glossary.v1",
+            "src.nist.csrc.operating.system.glossary.v1",
+            "src.nist.csrc.volatile.memory.glossary.v1"
           ],
           "instructional_time": {
             "class_periods_50_min": [
@@ -1855,7 +1857,8 @@
           "prerequisites": [
             "C2: Variables and Assignment.",
             "C3: Comparisons and Conditionals.",
-            "C4: Repetition."
+            "C4: Repetition.",
+            "C5: Collections and Strings."
           ],
           "key_concepts": [
             "function",
@@ -1868,7 +1871,8 @@
           "depends_on": [
             "lesson.info1.programming.variables.v1",
             "lesson.info1.programming.conditionals.v1",
-            "lesson.info1.programming.loops.v1"
+            "lesson.info1.programming.loops.v1",
+            "lesson.info1.programming.collections.strings.v1"
           ],
           "source_refs": [
             "src.mext.highschool.curriculum2018.v1",
@@ -2405,9 +2409,10 @@
             {
               "objective_ref": "obj.info1.networks.internet.web.001.v1",
               "requirement": "two_items_or_one_item_plus_performance_criterion",
-              "status": "partial",
+              "status": "complete",
               "assessment_item_refs": [
-                "prob.info1.networks.internet.web.001.v1"
+                "prob.info1.networks.internet.web.001.v1",
+                "prob.info1.networks.internet.web.004.v1"
               ],
               "performance_criterion_refs": []
             },
@@ -3125,7 +3130,7 @@
     }
   ],
   "created_at": "2026-07-14",
-  "updated_at": "2026-07-22",
+  "updated_at": "2026-07-23",
   "global_prerequisites": [
     "Everyday experience using digital information and communication tools.",
     "Basic arithmetic including whole numbers, decimals, and simple proportions; required ideas are refreshed before use.",

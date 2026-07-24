@@ -13,6 +13,19 @@ from pathlib import Path
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]
 CURRICULUM_PATH = Path("curriculum/highschool_information_i.curriculum.json")
 AUDIT_PATH = Path("docs/review/INFORMATION_I_COVERAGE_AUDIT.md")
+AUDIT_HEADING = "## Verdicts"
+AUDIT_COLUMNS = [
+    "Lesson",
+    "Objective ID",
+    "Verdict",
+    "Assessment items",
+    "Performance criteria",
+]
+STATUS_VERDICTS = {
+    "complete": "Supported",
+    "partial": "Partial",
+    "not_started": "Not started",
+}
 TRANSFER_HEADING = "## 別の場面への転移"
 SCHEDULE_HEADING = "## 50分授業の到達点と判断"
 SCHEDULE_COLUMNS = ["時限", "学習者の到達点", "50分の区切り", "続行条件"]
@@ -56,6 +69,28 @@ def table_rows(markdown_section: str) -> tuple[list[str], list[list[str]]]:
         return [], []
     cells = [[cell.strip() for cell in line.strip("|").split("|")] for line in lines]
     return cells[0], cells[2:]
+
+
+def format_audit_refs(refs: list[str]) -> str:
+    return "<br>".join(f"`{ref}`" for ref in refs) or "None"
+
+
+def coverage_audit_rows(lesson_plans: list[dict]) -> list[list[str]]:
+    rows: list[list[str]] = []
+    for plan in lesson_plans:
+        for coverage in plan["assessment_coverage"]:
+            criterion_refs = [
+                f"{item['rubric_ref']}#{item['criterion_id']}"
+                for item in coverage["performance_criterion_refs"]
+            ]
+            rows.append([
+                plan["order"],
+                f"`{coverage['objective_ref']}`",
+                STATUS_VERDICTS[coverage["status"]],
+                format_audit_refs(coverage["assessment_item_refs"]),
+                format_audit_refs(criterion_refs),
+            ])
+    return rows
 
 
 def check_repository(root: Path = DEFAULT_ROOT) -> tuple[list[str], IntegrationStats]:
@@ -146,14 +181,27 @@ def check_repository(root: Path = DEFAULT_ROOT) -> tuple[list[str], IntegrationS
         failures.append(f"expected 96 coverage rows, found {coverage_rows}")
 
     audit_text = (root / AUDIT_PATH).read_text(encoding="utf-8")
-    audit_verdicts = len(re.findall(r"\| (?:Supported|Partial|Not started) (?=\|)", audit_text))
-    if audit_verdicts != coverage_rows:
-        failures.append(
-            f"coverage audit records {audit_verdicts} objective verdicts, expected {coverage_rows}"
-        )
-    for plan in lesson_plans:
-        if f"| {plan['order']} " not in audit_text:
-            failures.append(f"coverage audit is missing lesson {plan['order']}")
+    audit_section = section(audit_text, AUDIT_HEADING)
+    if audit_section is None:
+        failures.append("coverage audit must contain exactly one Verdicts section")
+    else:
+        audit_headers, audit_rows = table_rows(audit_section)
+        expected_rows = coverage_audit_rows(lesson_plans)
+        if audit_headers != AUDIT_COLUMNS:
+            failures.append("coverage audit headers do not match the integration contract")
+        if len(audit_rows) != len(expected_rows):
+            failures.append(
+                f"coverage audit records {len(audit_rows)} objective rows, "
+                f"expected {len(expected_rows)}"
+            )
+        for index, (actual, expected) in enumerate(
+            zip(audit_rows, expected_rows, strict=False), 1
+        ):
+            if actual != expected:
+                failures.append(
+                    f"coverage audit row {index} does not match canonical coverage: "
+                    f"expected {expected!r}, found {actual!r}"
+                )
     if scheduled_periods != mandatory_total:
         failures.append(
             f"teacher schedules cover {scheduled_periods} periods, expected {mandatory_total}"

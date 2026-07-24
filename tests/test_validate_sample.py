@@ -40,7 +40,7 @@ def validation_errors(root: Path) -> list[str]:
 def test_validate_current_repository() -> None:
     errors, count = validate_ndjson.validate_repository(ROOT)
     assert errors == []
-    assert count == 1383
+    assert count == 1503
 
 
 def test_invalid_calendar_date_is_rejected(validation_root: Path) -> None:
@@ -61,6 +61,73 @@ def test_wrong_reference_type_is_rejected(validation_root: Path) -> None:
     errors = validation_errors(validation_root)
     assert any("lesson_refs" in error and "answer" in error for error in errors)
 
+
+def test_optional_answer_hints_require_two_non_empty_strings(validation_root: Path) -> None:
+    path = validation_root / "data/collections/answers.ndjson"
+    answers = read_ndjson(path)
+    baseline_errors = validation_errors(validation_root)
+    answers[0]["hints"] = ["まず入力と出力を確認する。", "次に一行ずつ値を追う。"]
+    write_ndjson(path, answers)
+
+    assert validation_errors(validation_root) == baseline_errors
+
+    answers[0]["hints"] = ["一つだけ"]
+    write_ndjson(path, answers)
+    assert any(
+        "hints must contain exactly two strings" in error
+        for error in validation_errors(validation_root)
+    )
+
+    answers[0]["hints"] = ["有効", "   "]
+    write_ndjson(path, answers)
+    assert any(
+        "hints[1] must be a non-empty string" in error
+        for error in validation_errors(validation_root)
+    )
+
+    answers[0]["hints"] = ["同じヒント", "同じヒント"]
+    write_ndjson(path, answers)
+    assert any(
+        "hints must contain two distinct strings" in error
+        or "has non-unique elements" in error
+        for error in validation_errors(validation_root)
+    )
+
+
+def test_question_mark_run_from_encoding_loss_is_rejected(validation_root: Path) -> None:
+    path = validation_root / "data/collections/problems.ndjson"
+    problems = read_ndjson(path)
+    problems[0]["question"] = "???????? learner-facing text was lost"
+    write_ndjson(path, problems)
+
+    assert any(
+        "contains eight or more consecutive question marks" in error
+        for error in validation_errors(validation_root)
+    )
+
+
+def test_four_question_mark_literal_is_allowed(validation_root: Path) -> None:
+    path = validation_root / "data/collections/problems.ndjson"
+    problems = read_ndjson(path)
+    baseline_errors = validation_errors(validation_root)
+    problems[0]["question"] = '文字列 "????" をそのまま表示しなさい。'
+    write_ndjson(path, problems)
+
+    assert validation_errors(validation_root) == baseline_errors
+
+
+def test_replacement_character_and_markdown_loss_are_rejected(validation_root: Path) -> None:
+    path = validation_root / "data/collections/problems.ndjson"
+    problems = read_ndjson(path)
+    problems[0]["question"] = "learner text contains \ufffd replacement"
+    write_ndjson(path, problems)
+
+    lesson = next((validation_root / "lessons").rglob("*.md"))
+    lesson.write_text(lesson.read_text(encoding="utf-8") + "\n???????? markdown loss\n", encoding="utf-8")
+    errors = validation_errors(validation_root)
+
+    assert any("Unicode replacement character" in error for error in errors)
+    assert any(str(lesson) in error and "eight or more" in error for error in errors)
 
 def test_missing_revision_target_and_answer_counter_are_rejected(validation_root: Path) -> None:
     revision_path = validation_root / "data" / "collections" / "revisions.ndjson"
@@ -180,7 +247,7 @@ def test_duplicate_objective_coverage_is_rejected(validation_root: Path) -> None
 def test_inconsistent_classroom_route_total_is_rejected(validation_root: Path) -> None:
     curriculum_path = validation_root / "curriculum" / "highschool_information_i.curriculum.json"
     curriculum = json.loads(curriculum_path.read_text(encoding="utf-8"))
-    curriculum["classroom_route"]["recommended_total_periods"] = 71
+    curriculum["classroom_route"]["recommended_total_periods"] = 72
     curriculum_path.write_text(
         json.dumps(curriculum, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

@@ -64,9 +64,9 @@ objective IDs and their assessment history must remain stable.
 The curriculum assumes everyday experience with digital information, basic
 arithmetic, and basic chart reading. Required mathematical ideas are refreshed
 where they are used, and no prior programming is assumed. The current time model
-defines a 65-period mandatory route and five recommended extension periods: one
-for each of A7, B7, C9, and D9, plus one cumulative diagnostic and targeted
-reteaching period. Self-study estimates remain separate. These are project
+defines a 66-period mandatory route and four recommended extension periods: one
+for each of A7, B7, C9, and D9. Diagnosis and targeted reteaching are embedded
+in lesson stopping and recovery rules. Self-study estimates remain separate. These are project
 planning routes for human review, not official allocations.
 
 ## 4. Required Vertical Slice Per Lesson

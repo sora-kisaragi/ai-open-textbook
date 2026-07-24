@@ -2,7 +2,7 @@
 
 Status: `draft`
 Review status: `needs_human_review`
-Tracking issues: #59, #74
+Tracking issues: #59, #74, #91
 
 This map is an original project decomposition of the four Information I content
 areas identified in current MEXT primary sources. It is a planning artifact, not
@@ -31,7 +31,7 @@ an official sequence or final alignment decision.
 | C3 | `lesson.info1.programming.conditionals.v1` | Comparisons and Conditionals | C2 |
 | C4 | `lesson.info1.programming.loops.v1` | Repetition | C3 |
 | C5 | `lesson.info1.programming.collections.strings.v1` | Collections and Strings | C2, C4 |
-| C6 | `lesson.info1.programming.functions.v1` | Functions and Decomposition | C2, C3, C4 |
+| C6 | `lesson.info1.programming.functions.v1` | Functions and Decomposition | C2, C3, C4, C5 |
 | C7 | `lesson.info1.programming.algorithms.v1` | Algorithms and Efficiency | C4, C5, C6 |
 | C8 | `lesson.info1.programming.modeling.simulation.v1` | Modeling and Simulation | A5, C3, C4, C6 |
 | C9 | `lesson.info1.programming.project.v1` | Tested Programming Project | A6, B6, C7, C8 |
@@ -59,7 +59,7 @@ B5 + B6 -> B7
 
 C2 -> C3 -> C4
 C2 + C4 -> C5
-C2 + C3 + C4 -> C6
+C2 + C3 + C4 + C5 -> C6
 C4 + C5 + C6 -> C7
 A5 + C3 + C4 + C6 -> C8
 A6 + B6 + C7 + C8 -> C9
@@ -107,14 +107,12 @@ A6 + B6 + D3 + D7 + D8 -> D9
 
 - One classroom period is 50 minutes.
 - The curriculum JSON is authoritative for lesson timing and prerequisite edges.
-- The mandatory route totals 65 periods: Unit A uses 9, Unit B uses 12, Unit C
-  uses 21, and Unit D uses 23.
-- The recommended route adds exactly five periods. A7, B7, C9, and D9 each have
-  one additional feedback-and-revision period, and one cumulative period is used
-  for diagnostic assessment and targeted reteaching across all four units.
-- Lesson time-range upper bounds include the four lesson-specific extensions and
-  therefore total 69 periods. The separate cumulative period brings the
-  recommended route to 70 periods.
+- The mandatory route totals 66 periods: Unit A uses 11, Unit B uses 12, Unit C
+  uses 21, and Unit D uses 22.
+- The recommended route adds exactly four periods. A7, B7, C9, and D9 each have
+  one additional feedback-and-revision period, bringing the route to 70 periods.
+- Diagnosis and targeted reteaching are embedded in lesson stopping rules and
+  recovery routes rather than assigned a separate extension period.
 - These routes are project planning decisions, not mandatory allocations or an
   official timetable. Ordinary lesson assessment is included, while school
   events and local examinations require separate scheduling buffer.

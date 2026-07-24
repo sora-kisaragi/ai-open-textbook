@@ -21,6 +21,13 @@
     "answer_refs": {"$ref": "#/$defs/answerRefs"},
     "rubric_refs": {"$ref": "#/$defs/rubricRefs"},
     "source_refs": {"$ref": "#/$defs/sourceRefs"},
+    "learner_checks": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
     "common_mistakes": {"$ref": "#/$defs/strings"},
     "stage": {"type": "string", "minLength": 1},
     "subject": {"type": "string", "minLength": 1},

@@ -154,13 +154,13 @@
       ],
       "properties": {
         "period_minutes": {"const": 50},
-        "mandatory_periods": {"const": 65},
-        "recommended_extension_periods": {"const": 5},
+        "mandatory_periods": {"const": 66},
+        "recommended_extension_periods": {"const": 4},
         "recommended_total_periods": {"const": 70},
         "extension_allocations": {
           "type": "array",
-          "minItems": 5,
-          "maxItems": 5,
+          "minItems": 4,
+          "maxItems": 4,
           "items": {"$ref": "#/$defs/extensionAllocation"}
         }
       },

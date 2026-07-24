@@ -70,8 +70,9 @@ def built_site_root(tmp_path: Path) -> Path:
             "type": "answer",
             "problem_id": problem_id,
             "canonical_answer": "SECRET_CANONICAL_ANSWER",
-            "acceptable_answers": ["SECRET_ACCEPTABLE_ANSWER", "5"],
+            "acceptable_answers": ["SECRET_ACCEPTABLE_ANSWER", "5", "OK"],
             "explanation": "SECRET_ANSWER_EXPLANATION",
+            "hints": ["SECRET_HINT_ONE", "SECRET_HINT_TWO"],
             "verification_evidence": [{
                 "method": "SECRET_VERIFICATION_METHOD",
                 "expected": "SECRET_VERIFICATION_EXPECTED",
@@ -147,6 +148,35 @@ def test_verifier_accepts_complete_offline_site_and_external_citation(built_site
     ) in result.stdout
 
 
+def test_verifier_rejects_unrendered_markdown_emphasis(built_site_root: Path) -> None:
+    page = built_site_root / "build/site/lessons/programming-variables.html"
+    page.write_text(
+        page.read_text(encoding="utf-8").replace(
+            "</main>", "<p>**unrendered emphasis**</p></main>", 1
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "unrendered Markdown emphasis delimiter" in result.stderr
+
+
+def test_verifier_allows_exponent_operator_in_code(built_site_root: Path) -> None:
+    page = built_site_root / "build/site/lessons/programming-variables.html"
+    page.write_text(
+        page.read_text(encoding="utf-8").replace(
+            "</main>", "<p><code>2 ** 3</code></p></main>", 1
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
 @pytest.mark.parametrize(
     "secret",
     [
@@ -185,7 +215,7 @@ def test_verifier_rejects_inaccessible_self_study_reveal(built_site_root: Path) 
     result = run_verifier(built_site_root)
 
     assert result.returncode == 1
-    assert "each answer reveal requires a summary" in result.stderr
+    assert "each hint and answer reveal requires a summary" in result.stderr
 
 
 def test_verifier_rejects_inaccessible_self_study_book_reveal(built_site_root: Path) -> None:
@@ -200,7 +230,7 @@ def test_verifier_rejects_inaccessible_self_study_book_reveal(built_site_root: P
     result = run_verifier(built_site_root)
 
     assert result.returncode == 1
-    assert "each answer reveal requires a summary" in result.stderr
+    assert "each hint and answer reveal requires a summary" in result.stderr
 
 
 def test_verifier_rejects_teacher_only_data_in_self_study_lesson(built_site_root: Path) -> None:
@@ -287,6 +317,60 @@ def test_verifier_rejects_broken_local_fragment(built_site_root: Path) -> None:
 
     assert result.returncode == 1
     assert "broken fragment" in result.stderr
+
+
+def test_verifier_rejects_broken_local_image(built_site_root: Path) -> None:
+    lesson = built_site_root / "build/site/lessons/programming-variables.html"
+    lesson.write_text(
+        lesson.read_text(encoding="utf-8").replace(
+            "</article>",
+            '<img src="../assets/figures/missing.svg" alt="変数へ値を保存する流れ"></article>',
+            1,
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "broken local reference" in result.stderr
+
+
+def test_verifier_rejects_active_content_in_generated_svg(built_site_root: Path) -> None:
+    asset = built_site_root / "build/site/assets/figures/unsafe.svg"
+    asset.write_text(
+        '<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>',
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "active SVG element" in result.stderr
+
+
+@pytest.mark.parametrize("alt", ("", "図", "assignment-flow.svg"))
+def test_verifier_rejects_low_information_image_alt(
+    built_site_root: Path,
+    alt: str,
+) -> None:
+    asset = built_site_root / "build/site/assets/figures/assignment-flow.svg"
+    asset.parent.mkdir(parents=True, exist_ok=True)
+    asset.write_text('<svg xmlns="http://www.w3.org/2000/svg"/>', encoding="utf-8")
+    lesson = built_site_root / "build/site/lessons/programming-variables.html"
+    lesson.write_text(
+        lesson.read_text(encoding="utf-8").replace(
+            "</article>",
+            f'<img src="../assets/figures/assignment-flow.svg" alt="{alt}"></article>',
+            1,
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "meaningful image alt text required" in result.stderr
 
 
 def test_verifier_rejects_external_runtime_asset(built_site_root: Path) -> None:
@@ -376,7 +460,7 @@ def test_verifier_rejects_teacher_only_data_in_learner_book(
     assert "leaked into book.html" in result.stderr
 
 
-def test_verifier_allows_standalone_numeric_answer_in_unrelated_learner_text(
+def test_verifier_rejects_excess_standalone_numeric_answer_in_learner_text(
     built_site_root: Path,
 ) -> None:
     book = built_site_root / "build/site/book.html"
@@ -387,7 +471,88 @@ def test_verifier_allows_standalone_numeric_answer_in_unrelated_learner_text(
 
     result = run_verifier(built_site_root)
 
-    assert result.returncode == 0, result.stdout + result.stderr
+    assert result.returncode == 1
+    assert "teacher-only value" in result.stderr
+
+
+def test_verifier_rejects_standalone_alphabetic_answer_in_learner_text(
+    built_site_root: Path,
+) -> None:
+    answers = built_site_root / "data/collections/answers.ndjson"
+    records = [json.loads(line) for line in answers.read_text(encoding="utf-8").splitlines()]
+    records[0]["acceptable_answers"].append("B")
+    write_ndjson(answers, records)
+    subprocess.run(
+        [sys.executable, str(BUILDER), "--root", str(built_site_root)],
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+    book = built_site_root / "build/site/book.html"
+    book.write_text(
+        book.read_text(encoding="utf-8").replace("</main>", "<p>B</p></main>", 1),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "teacher-only value" in result.stderr
+
+
+@pytest.mark.parametrize(
+    "payload",
+    (
+        '<details><summary>5</summary></details>',
+        '<section class="success-criteria"><p>5</p></section>',
+        '<div class="hint-reveal"><p>5</p></div>',
+        '<div class="answer-reveal"><p>5</p></div>',
+    ),
+)
+def test_verifier_structurally_rejects_classroom_support_ui(
+    built_site_root: Path,
+    payload: str,
+) -> None:
+    book = built_site_root / "build/site/book.html"
+    book.write_text(
+        book.read_text(encoding="utf-8").replace("</main>", f"{payload}</main>", 1),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "answer/hint/success-criteria structure leaked into book.html" in result.stderr
+
+
+@pytest.mark.parametrize(
+    "attribute",
+    (
+        'data-answer="5"',
+        'data-answer-id="ans.prob.info1.variables.001.v1"',
+        'title="SECRET_HINT_ONE"',
+        'aria-label="answer 5"',
+        'title="result=OK"',
+        'data-criterion-id="c1"',
+        'data-points="1"',
+    ),
+)
+def test_verifier_rejects_classroom_leakage_in_attributes(
+    built_site_root: Path,
+    attribute: str,
+) -> None:
+    book = built_site_root / "build/site/book.html"
+    book.write_text(
+        book.read_text(encoding="utf-8").replace(
+            "</main>", f"<div {attribute}></div></main>", 1
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "leaked into book.html" in result.stderr
 
 
 def test_verifier_rejects_numeric_answer_in_review_only_structure(
@@ -405,6 +570,25 @@ def test_verifier_rejects_numeric_answer_in_review_only_structure(
 
     assert result.returncode == 1
     assert "review-only structure leaked into book.html" in result.stderr
+
+
+@pytest.mark.parametrize("token", ("5", "1"))
+def test_verifier_rejects_inline_short_review_value(
+    built_site_root: Path,
+    token: str,
+) -> None:
+    page = built_site_root / "build/site/lessons/programming-variables.html"
+    page.write_text(
+        page.read_text(encoding="utf-8").replace(
+            "</main>", f"<p>Inline {token} leak</p></main>", 1
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_verifier(built_site_root)
+
+    assert result.returncode == 1
+    assert "teacher-only value" in result.stderr
 
 
 def test_verifier_rejects_wrong_page_count_and_missing_structure(built_site_root: Path) -> None:
