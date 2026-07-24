@@ -77,6 +77,28 @@ static siteでは`activities/b7_keyboard_start.html`として同梱され、[対
 教材内のキーボード手順は、WCAG 2.2の2.1.1 Keyboard、2.4.3 Focus Order、2.4.7 Focus Visibleを読むための教材独自の点検です。一つの環境での自己点検は、WCAGその他の基準、法令、安全要件、組織規程への適合を証明しません。
 外部資料を加える場合は、出典、利用許諾、個人情報、現行性を確認し、根拠なしに法的結論を述べません。
 
+## 教材・準備物
+
+- 提供P1、E1〜E4、要件表、P2カード、キーボード確認票、改訂履歴票。
+- 対話型P2を用意できない場合の論理順序カードと教師提供の操作結果。
+
+## 期待される応答とフィードバック
+
+| 応答 | フィードバック |
+| --- | --- |
+| 変更を要件と証拠番号へ対応させる | 「見やすくした」を具体的変更へ直す |
+| P2を同じ作業で再確認する | 未確認の受け手・環境へ一般化させない |
+
+## 補充と任意発展
+
+補充では二要件と二証拠だけでP2を作ります。任意発展では別の受け手へ移す際の再確認範囲を設計します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.design.project.v1` > `考え方のモデル` | Information I includes selecting media and undertaking a sequence of content design, production, execution, evaluation, and improvement. | standard | `src.mext.information.commentary2018.v1`; PDF p. 38 / printed p. 30, Information I (2) overall activity and A(c)/B(c). | 2026-07-24; AI source review; `supported` | P1, P2, evidence logs, milestones, checks, and timing are project-authored and require human review. |
+
 ## 練習問題
 
 - `prob.info1.design.project.001.v1`: B7.O1
@@ -93,6 +115,8 @@ static siteでは`activities/b7_keyboard_start.html`として同梱され、[対
 | 第3時 | 証拠に基づいて成果物を改訂し、要件への適合と残る限界を説明する。 | 改訂前後、確認結果、残る限界をそろえて提出できる状態で止める。 | 見た目の好みだけでなく、要件と観察証拠から改訂理由を説明できる。 |
 
 任意の追加1時限は、利用点検後の追加改訂と再確認に使います。
+
+本文末の独立転移20分と確認5分は、この必須3時限に含めません。授業後の自学課題または別時限で25分を確保します。
 
 ## レビュー上の注意
 
