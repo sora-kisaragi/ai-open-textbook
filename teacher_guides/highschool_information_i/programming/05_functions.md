@@ -70,6 +70,34 @@
 - **重複した処理を責務ごとの関数へ分ける**（`prob.info1.programming.functions.003.v1`、C6.O3）
 - **印刷依頼処理を複数の関数で構成する**（`prob.info1.programming.functions.004.v1`、C6.O1〜O3）
 
+## 教材・準備物
+
+- 関数名、入力、処理、戻り値または作用を分ける契約カード。
+- C5のリスト行カードと呼出しトレース表。
+
+## 期待される応答とフィードバック
+
+| 応答 | フィードバック |
+| --- | --- |
+| 責務ごとに入力と結果を定義し接続する | 一関数一責務と重複の有無を確認する |
+| `print` と `return` を同じ結果とする | 呼出し後に使える値と画面への作用を分ける |
+
+## アクセシビリティと代替手段
+
+箱と矢印だけでなく、操作名、入力、処理、結果を表でも示します。カード操作が難しい場合は番号付きの呼出し表を使います。
+
+## 補充と任意発展
+
+補充では一入力一出力の一関数だけを追います。任意発展では副作用を持つ操作と値を返す操作の契約を比較します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.programming.functions.v1` > `考え方のモデル` | Information I commentary includes using functions to divide a program into related parts and make their relationships explicit, while avoiding language-specific knowledge as the goal. | standard | `src.mext.information.commentary2018.v1`; PDF p. 41 / printed p. 33, Information I (3) A(b), B(b) commentary. | 2026-07-24; AI source review; `supported` | The operation-box model, function contracts, Python examples, C5 gate, and timing are project-authored and require human review. |
+
+本文末の独立転移20分と確認5分は、2時限に含めません。C5中間チェックに未達なら、関数構文へ進めず並びと添字の補充を行います。
+
 ## 50分授業の到達点と判断
 
 | 時限 | 学習者の到達点 | 50分の区切り | 続行条件 |

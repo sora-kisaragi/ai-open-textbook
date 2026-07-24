@@ -21,14 +21,14 @@ C2の変数、代入、更新、上から順に実行される処理を確認し
 
 ## 時間配分の目安
 
-全体で70〜110分程度を想定した柔軟な目安です。学習者のプログラミング経験に応じ、構文説明よりも規則の言語化、追跡、境界テストへ時間を移します。
+必修2時限、合計100分の配分です。学習者のプログラミング経験に応じ、構文説明よりも規則の言語化、追跡、境界テストへ時間を移す場合も、各時限50分に収めます。
 
-- 規則を三要素へ分ける導入: 10〜15分
-- 比較、ブール値、`and` / `or` / `not`: 20〜30分
-- `=` と `==` の区別: 10〜15分
-- 分岐の追跡と字下げ: 15〜25分
-- Pythonでの実装と境界テスト: 20〜30分
-- 自己確認と練習への接続: 10〜15分
+- 規則を三要素へ分ける導入: 10分
+- 比較、ブール値、`and` / `or` / `not`: 20分
+- `=` と `==` の区別: 10分
+- 分岐の追跡と字下げ: 15分
+- Pythonでの実装と境界テスト: 30分
+- 自己確認と練習への接続: 15分
 
 2時限に分ける場合は、第1時を比較と追跡、第2時を実装とテストにします。時間帯は固定せず、追跡表で誤解が残る場合は実装開始を後ろへずらします。
 
@@ -94,6 +94,30 @@ C3.O3は、自然言語の規則を二分岐へ変換し、境界の前・境界
 ### 統合
 
 - **受付規則を実装してテストする**（`prob.info1.conditionals.008.v1`）: C3.O1〜O3の統合
+
+## 教材・準備物
+
+- 真偽カード、境界値カード、条件・真の枝・偽の枝を分ける表。
+- 分岐図を使わない場合の順序付き文章と真偽表。
+
+## 期待される応答とフィードバック
+
+| 応答 | フィードバック |
+| --- | --- |
+| 各問いを先に評価してから複合条件を判定する | どの問いが真偽を決めたか言葉で示させる |
+| `=` と `==`、未満と以下を混同する | 保存・比較・境界の三欄へ戻して19、20、21を試す |
+
+## 補充と任意発展
+
+補充では単純な二分岐と一つの境界だけを扱います。任意発展では二条件の真偽四組を比較し、同値な言い換えを検討します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.programming.conditionals.v1` > `考え方のモデル` | Information I includes expressing algorithms independently of a single programming syntax and using programming to evaluate and improve a process. | standard | `src.mext.information.commentary2018.v1`; PDF pp. 39-41 / printed pp. 31-33, Information I (3) A(b), B(b), and commentary. | 2026-07-24; AI source review; `supported` | The branch model, synthetic rules, Python realization, boundary examples, and timing are project-authored and require human review. |
+
+本文末の独立転移20分と確認5分は、2時限に含めません。授業後の自学課題または別時限で25分を確保します。
 
 ## 50分授業の到達点と判断
 
