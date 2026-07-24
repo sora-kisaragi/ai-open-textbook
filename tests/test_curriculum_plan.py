@@ -880,7 +880,7 @@ def test_unit_d_network_security_contracts() -> None:
         elif ".internet.web." in problem["id"]:
             expected_revision = 3
         else:
-            expected_revision = 2
+            expected_revision = 3
         assert answer["revision"] == expected_revision
         assert answer["status"] == "draft"
         assert answer["review_status"] == "needs_human_review"
@@ -994,7 +994,7 @@ def test_unit_d_data_foundation_and_investigation_contracts() -> None:
     }
     for answer_id in changed_answer_ids:
         answer = answers[answer_id]
-        assert answer["revision"] == 2
+        assert answer["revision"] == 3
         assert answer["status"] == "draft"
         assert answer["review_status"] == "needs_human_review"
 

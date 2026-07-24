@@ -45,6 +45,34 @@ D7.O1は問いと表現の対応、D7.O2は観測範囲を含む慎重な文、D
 - **不確かさとアクセシビリティを改善する**（`prob.info1.data.visualization.interpretation.003.v1`）: D7.O3
 - **合成可視化の結論を批判的に評価する**（`prob.info1.data.visualization.interpretation.004.v1`）: D7.O1〜O3
 
+## 教材・準備物
+
+- 元値表、不完全な文字グラフ、紙または表計算の修正版テンプレート。
+- 軸、単位、欠測、系列、標本範囲、本文要約の点検票。
+
+## 期待される応答とフィードバック
+
+| 応答 | フィードバック |
+| --- | --- |
+| 実際の修正版グラフと等価本文を作る | 元値、欠測、軸、単位を成果物上で指さす |
+| 二日間の関連を毎日の因果へ広げる | 観測範囲と代替説明へ戻す |
+
+## フィードバックと再確認
+
+改善案を文章だけで答えた場合は、紙または表計算上のグラフを実際に修正し、同じ内容を本文で再現させます。
+
+## 補充と任意発展
+
+補充では一系列・三時点の図だけを扱います。任意発展では同じ元表を別の表現へ変え、問いへの適合を比較します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.data.visualization.interpretation.v1` > `考え方のモデル` | Visual information should not rely on color alone, and non-text content needs a text alternative serving the same purpose. | standard | `src.w3c.wcag22.v1`, Success Criteria 1.4.1 and 1.1.1. | 2026-07-24; AI source review; `supported` | This does not claim WCAG conformance; the graph, data, repair task, and interpretation rules are project-authored. |
+
+本文末の独立転移20分と確認5分は、2時限に含めません。
+
 ## 50分授業の到達点と判断
 
 | 時限 | 学習者の到達点 | 50分の区切り | 続行条件 |

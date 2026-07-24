@@ -40,7 +40,7 @@ def validation_errors(root: Path) -> list[str]:
 def test_validate_current_repository() -> None:
     errors, count = validate_ndjson.validate_repository(ROOT)
     assert errors == []
-    assert count == 1707
+    assert count == 1782
 
 
 def test_invalid_calendar_date_is_rejected(validation_root: Path) -> None:
@@ -142,7 +142,7 @@ def test_missing_revision_target_and_answer_counter_are_rejected(validation_root
 
     errors = validation_errors(validation_root)
     assert any("revision entity_id does not resolve" in error for error in errors)
-    assert any("answer revision must be 3" in error for error in errors)
+    assert any("answer revision must be 4" in error for error in errors)
 
 
 def test_cross_entity_revision_supersedes_is_rejected(validation_root: Path) -> None:
