@@ -54,6 +54,34 @@ RFC 1122は層構造の一般概念、RFC 9293はTCPの順序・欠落処理、R
 - **観察から障害層を診断する**（`prob.info1.networks.protocols.003.v1`）: D1.O3
 - **小規模ネットワークの経路と限界を説明する**（`prob.info1.networks.protocols.004.v1`）: D1.O1〜O3
 
+## 教材・準備物
+
+- 端末、スイッチ、ルーター、WAN、サーバーの役割カードと層別トレース表。
+- 経路図を使わない番号付きのテキスト経路と観察記録票。
+
+## 期待される応答とフィードバック
+
+| 応答 | フィードバック |
+| --- | --- |
+| 機器列と層の役割を分けて追う | LAN内、ネットワーク間、端末間の問いを別欄にする |
+| 一観察から一原因へ断定する | 成功済み、候補、次の観察を残す |
+
+## フィードバックと再確認
+
+誤答時は用語を追加せず、最後に成功した境界と最初の未確認を指さし、区別できる観察を一つ作らせます。
+
+## 補充と任意発展
+
+補充では端末・スイッチ・ルーターだけを扱います。任意発展では予備経路後も残る単一障害点を比較します。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.networks.protocols.v1` > `考え方のモデル` | The lesson separates local-link forwarding, internetwork routing, end-to-end transport, and application meaning as a bounded layered model. | technical | `src.ietf.rfc1122.v1`, Sections 1.1.2 and 1.1.3; `src.ietf.rfc9293.v1`, Sections 1 and 3.1. | 2026-07-24; AI source review; `supported` | Device order, classroom roles, traces, fault cases, and timing are project-authored simplifications and require human review. |
+
+本文末の独立転移20分と確認5分は、2時限に含めません。
+
 ## 50分授業の到達点と判断
 
 | 時限 | 学習者の到達点 | 50分の区切り | 続行条件 |
