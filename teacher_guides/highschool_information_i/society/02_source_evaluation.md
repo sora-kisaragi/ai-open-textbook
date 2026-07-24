@@ -25,6 +25,8 @@ A1のデータ・情報・メディアの区別を短い例で確認します。
 - 不確かさの記録: 10分
 - 練習と振り返り: 7分
 
+本文末の独立転移20分と確認5分は、この50分に含めません。授業後の自学課題として続けるか、別時限で25分を確保します。
+
 ## 想定される誤解
 
 - 発信者の肩書だけで内容の正しさを決める。
@@ -56,6 +58,30 @@ A1のデータ・情報・メディアの区別を短い例で確認します。
 | 時限 | 学習者の到達点 | 50分の区切り | 続行条件 |
 | --- | --- | --- | --- |
 | 第1時 | 主張と証拠を分け、関連性・最新性・発信者・裏づけから情報源を評価し、不確かさを記録する。 | 二つの情報源を比較し、確かめられない点を書いたところで止める。 | 評価語だけで終わらず、資料中の証拠と未確認事項をそれぞれ示せる。 |
+
+## 教材・準備物
+
+- 出所、更新日、観察方法が異なる三つの架空資料カード。
+- 「主張｜証拠｜関連性｜最新性｜発信者｜独立した裏づけ｜不確かさ」検証表。
+- 文字だけで比較できる読み上げ用資料と資料番号。
+
+## 期待される応答とフィードバック
+
+| 学習場面 | 期待される学習者応答 | フィードバック |
+| --- | --- | --- |
+| 準備チェック | 主張、観察記録、情報源の説明を分ける | 「誰が・いつ・どう記録したか」を問う |
+| 例題 | 前年記事は今年の開始時刻を直接支えないと述べる | 肩書だけの判断には対象時点を追加させる |
+| 独立転移 | 言えることと言えないことを別欄に残す | 共有数を独立した証拠数としていないか確認する |
+
+## 補充と任意発展
+
+補充では二資料だけを使い、主張・証拠・不明点を分けます。任意発展では、同じ一次記録を転載した三資料と、独立に観察した三資料を比較し、裏づけの意味を説明します。発展結果で到達判定を置き換えません。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.society.source.evaluation.v1` > `考え方のモデル` | Information I problem solving includes comparing and combining obtained information and making judgments on scientific grounds. | standard | `src.mext.highschool.curriculum2018.v1`; Information section, PDF pp. 191-193. `src.mext.information.commentary2018.v1`; PDF p. 32 / printed p. 24, Information I (1), discussion of visualizing obtained information for comparison and combination and using scientific grounds for judgment. | 2026-07-24; AI source review; `supported` | The four-question heuristic and reliability labels are project-authored scaffolds, not official or universally sufficient verification procedures. |
 
 ## レビュー上の注意
 

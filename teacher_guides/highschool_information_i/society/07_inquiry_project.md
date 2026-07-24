@@ -25,7 +25,7 @@
 - 第1時: 問いの限定15分、対象と関係者10分、提供ログの点検25分
 - 第2時: 証拠番号付き分析25分、技術と社会の相互作用15分、中間確認10分
 - 第3時: 候補比較15分、提案とリスク20分、限界と次の問い15分
-- 第4時（必要に応じて）: 報告の推敲20分、発表15分、相互評価と振り返り15分
+- 第4時: 報告の推敲20分、発表15分、相互評価と振り返り15分
 
 ## 想定される誤解
 
@@ -74,6 +74,49 @@
 | 第4時 | 調査結果を伝え、指摘を受けて結論・限界・次の問いを改訂する。 | 改訂前後の差と、残る限界を記録して提出できる状態で止める。 | 出所、限界、次に確かめる問いがあり、証拠を超えた断定が残っていない。 |
 
 任意の追加1時限は、発表後の詳しいフィードバックと再改訂に使います。
+
+## 教材・準備物
+
+- 架空告知E1〜E3、証拠ログ、三案比較票、修正履歴票。
+- 四時限のマイルストーン確認表と、個人データを集めない安全条件カード。
+- 画像を使わない資料本文、読み上げ用表、口頭または箇条書きで提出できる代替様式。
+
+## 期待される応答とフィードバック
+
+| 時限 | 期待される学習者応答 | フィードバック |
+| --- | --- | --- |
+| 1 | 誰の、どの場面の、何を確かめるかを限定する | 20分で証拠を集められない問いは対象・期間を縮める |
+| 2 | 主張をE番号へ対応付け、弱い証拠を残す | 番号のない断定は弱めるか追加確認へ回す |
+| 3 | 三案を同じ基準で比較し、反対案が有利な条件を示す | 提案先行ならA6比較表へ戻す |
+| 4 | 指摘前後の修正、限界、次の問いを記録する | 修正履歴がなければ一つの主張と証拠を再接続する |
+
+## 補充と任意発展
+
+補充では用意した問い1とE1〜E3だけを使い、問い・証拠・提案・限界の4欄を完成させます。任意発展では安全条件を保った別の問いを作り、どの証拠が必要かを事前登録します。実在する人への調査や個人データ収集へは拡張しません。
+
+## Unit A 累積チェックポイントの運用
+
+学習者用本文の架空ケースを個人で15分、確認5分で扱います。A1のデータ・情報・メディア、A2の主張と証拠、A3の権利・責任・プライバシー・リスク、A4の問題定義、A5の分解とモデル、A6の複数案評価、A7の限定した問い・限界・次の問いが一つにつながるかを確認します。
+
+| 観点 | 到達の目安 | 戻る先 |
+| --- | --- | --- |
+| 事実の区別 | 数えた人数、解釈、画像告知を混同しない | A1の例題 |
+| 証拠の評価 | 一度の観察の限界と追加確認を示す | A2の四つの問い |
+| 権利・責任・安全 | 関係者ごとの権利・責任・リスクと、行わないことを示す | A3の事前公開記録 |
+| 問題定義 | 現状、目標、関係者、制約、成功条件を分ける | A4の一枚テンプレート |
+| 分解とモデル | 要素の関係と除外した要素を示す | A5の分解図 |
+| 解決策評価 | 二案以上を同じ基準で比べ、再評価条件を示す | A6の比較表 |
+| 探究の範囲 | 限定した問い、証拠番号、限界、次の問いをつなぐ | A7の証拠ログ |
+
+七観点すべてが同じ問いへ接続し、A3の安全条件とA7の限界・次の問いが明記されていれば次へ進めます。
+一つでも不足する場合、または証拠を超えた断定があれば、表の戻り先で不足項目を修正させ、同じケースを再提出させます。
+これはUnit A内の累積的な検索練習であり、新しい個人データの収集課題にはしません。
+
+## Claim-level evidence ledger
+
+| Claim locator | Exact claim | Claim type | Evidence | Check | Scope note |
+| --- | --- | --- | --- | --- | --- |
+| `lesson.info1.society.inquiry.project.v1` > `4時限の必須マイルストーン` and `考え方のモデル` | Information I includes activities that discover and clarify problems, consider solutions, evaluate and improve problem solving, and share outcomes. | standard | `src.mext.highschool.curriculum2018.v1`; Information section, PDF pp. 191-193. `src.mext.information.commentary2018.v1`; PDF pp. 31-32 / printed pp. 23-24, Information I (1) content handling and A(a)/B(a), on problem discovery and clarification, solution consideration, reflection or evaluation followed by improvement, and sharing outcomes. | 2026-07-24; AI source review; `supported` | The four-period sequence, inquiry framing, fictional evidence log, question choices, safety conditions, and assessment form are project-authored and require human review. |
 
 ## レビュー上の注意
 
