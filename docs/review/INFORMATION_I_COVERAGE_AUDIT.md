@@ -2,54 +2,132 @@
 
 ## Method
 
-This table records 96 objective-level verdicts as three cells for each of the
-32 lessons. `Supported` means the referenced problem or criterion directly
-elicits the objective, while the second artifact requires a distinct
-application, synthesis, or performance observation. Structural link and
-criterion validity are checked separately by `validate_ndjson.py`.
+This table records one canonical row for each of the 96 objectives. `Supported`
+means the referenced problem or criterion directly elicits the objective, while
+the second artifact requires a distinct application, synthesis, or performance
+observation. `check_integration_contract.py` compares every row with the
+canonical objective ID, status, assessment items, and performance criteria.
+Structural link and criterion validity are checked separately by
+`validate_ndjson.py`.
 
-Two rows were downgraded to `partial`. D2.O1 has one direct artifact for
-distinguishing the Internet, Web, an information service, URI, and URL. D6.O2
-has direct numerical calculation evidence but no second artifact that requires
-calculating token frequencies. The non-measuring `.004` references were
-removed from those rows.
+One row remains `partial`. D6.O2 has direct numerical calculation evidence but
+no second artifact that requires calculating token frequencies. D2.O1 now has
+a direct distinction item and a changed-context synthesis item that explicitly
+distinguishes the Internet, Web, an information service, and a URL as a URI.
 
 ## Verdicts
 
-| Lesson | O1 | O2 | O3 | Evidence reviewed |
+| Lesson | Objective ID | Verdict | Assessment items | Performance criteria |
 | --- | --- | --- | --- | --- |
-| A1 Information and Media | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| A2 Source Evaluation | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| A3 Rights and Responsibility | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| A4 Problem Definition | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| A5 Decomposition and Modeling | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| A6 Solution Evaluation | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| A7 Inquiry Project | Supported | Supported | Supported | Items `.001`-`.003` plus rubric criteria `c1`, `c2`, and `c3` respectively |
-| B1 Communication Media | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| B2 Digital Representation | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| B3 Audience and Accessibility | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| B4 Information Structure | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| B5 Data Visualization | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| B6 Prototype and Usability | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| B7 Information Design Project | Supported | Supported | Supported | Items `.001`-`.003` plus rubric criteria `c1`, `c6`, and `c8` respectively |
-| C1 Computer Systems | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| C2 Variables | Supported | Supported | Supported | Independent items `.003`-`.008`; guided `.001` and `.002` are excluded from coverage |
-| C3 Conditionals | Supported | Supported | Supported | Independent tracing, creation, boundary, and transfer items `.001`-`.008` |
-| C4 Loops | Supported | Supported | Supported | Independent explanation, tracing, creation, boundary, and transfer items `.001`-`.008` |
-| C5 Collections and Strings | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| C6 Functions | Supported | Supported | Supported | Direct items `.001`-`.003` plus executable synthesis `.004` |
-| C7 Algorithms | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| C8 Modeling and Simulation | Supported | Supported | Supported | Direct items `.001`-`.003` plus deterministic synthesis `.004` |
-| C9 Programming Project | Supported | Supported | Supported | Items `.001`-`.003` plus criteria `c1`, `c2`, and `c5`-`c8` |
-| D1 Networks and Protocols | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| D2 Internet and Web Services | Partial | Supported | Supported | O1 retains direct item `.001`; O2 and O3 use direct items plus synthesis `.004` |
-| D3 Security | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| D4 Data Lifecycle | Supported | Supported | Supported | Items `.001`-`.003` plus integrated classification and planning item `.004`; `.002` also checks scale choice |
-| D5 Data Cleaning | Supported | Supported | Supported | Direct items `.001`-`.003` plus tabular and text synthesis `.004` |
-| D6 Descriptive Analysis | Supported | Partial | Supported | O2 retains numerical calculation item `.002`; O1 and O3 use direct items plus synthesis `.004` |
-| D7 Visualization Interpretation | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| D8 Databases and Queries | Supported | Supported | Supported | Direct items `.001`-`.003` plus synthesis `.004` |
-| D9 Data Investigation Project | Supported | Supported | Supported | Items `.001`-`.003` plus criteria covering ethics, reproducibility, evidence, provenance, transformation, independent checks, bounded conclusions, limits, sensitivity, and revision |
+| A1 | `obj.info1.society.information.media.001.v1` | Supported | `prob.info1.society.information.media.001.v1`<br>`prob.info1.society.information.media.004.v1` | None |
+| A1 | `obj.info1.society.information.media.002.v1` | Supported | `prob.info1.society.information.media.002.v1`<br>`prob.info1.society.information.media.004.v1` | None |
+| A1 | `obj.info1.society.information.media.003.v1` | Supported | `prob.info1.society.information.media.003.v1`<br>`prob.info1.society.information.media.004.v1` | None |
+| A2 | `obj.info1.society.source.evaluation.001.v1` | Supported | `prob.info1.society.source.evaluation.001.v1`<br>`prob.info1.society.source.evaluation.004.v1` | None |
+| A2 | `obj.info1.society.source.evaluation.002.v1` | Supported | `prob.info1.society.source.evaluation.002.v1`<br>`prob.info1.society.source.evaluation.004.v1` | None |
+| A2 | `obj.info1.society.source.evaluation.003.v1` | Supported | `prob.info1.society.source.evaluation.003.v1`<br>`prob.info1.society.source.evaluation.004.v1` | None |
+| A3 | `obj.info1.society.rights.responsibility.001.v1` | Supported | `prob.info1.society.rights.responsibility.001.v1`<br>`prob.info1.society.rights.responsibility.004.v1` | None |
+| A3 | `obj.info1.society.rights.responsibility.002.v1` | Supported | `prob.info1.society.rights.responsibility.002.v1`<br>`prob.info1.society.rights.responsibility.004.v1` | None |
+| A3 | `obj.info1.society.rights.responsibility.003.v1` | Supported | `prob.info1.society.rights.responsibility.003.v1`<br>`prob.info1.society.rights.responsibility.004.v1` | None |
+| A4 | `obj.info1.society.problem.definition.001.v1` | Supported | `prob.info1.society.problem.definition.001.v1`<br>`prob.info1.society.problem.definition.004.v1` | None |
+| A4 | `obj.info1.society.problem.definition.002.v1` | Supported | `prob.info1.society.problem.definition.002.v1`<br>`prob.info1.society.problem.definition.004.v1` | None |
+| A4 | `obj.info1.society.problem.definition.003.v1` | Supported | `prob.info1.society.problem.definition.003.v1`<br>`prob.info1.society.problem.definition.004.v1` | None |
+| A5 | `obj.info1.society.decomposition.modeling.001.v1` | Supported | `prob.info1.society.decomposition.modeling.001.v1`<br>`prob.info1.society.decomposition.modeling.004.v1` | None |
+| A5 | `obj.info1.society.decomposition.modeling.002.v1` | Supported | `prob.info1.society.decomposition.modeling.002.v1`<br>`prob.info1.society.decomposition.modeling.004.v1` | None |
+| A5 | `obj.info1.society.decomposition.modeling.003.v1` | Supported | `prob.info1.society.decomposition.modeling.003.v1`<br>`prob.info1.society.decomposition.modeling.004.v1` | None |
+| A6 | `obj.info1.society.solution.evaluation.001.v1` | Supported | `prob.info1.society.solution.evaluation.001.v1`<br>`prob.info1.society.solution.evaluation.004.v1` | None |
+| A6 | `obj.info1.society.solution.evaluation.002.v1` | Supported | `prob.info1.society.solution.evaluation.002.v1`<br>`prob.info1.society.solution.evaluation.004.v1` | None |
+| A6 | `obj.info1.society.solution.evaluation.003.v1` | Supported | `prob.info1.society.solution.evaluation.003.v1`<br>`prob.info1.society.solution.evaluation.004.v1` | None |
+| A7 | `obj.info1.society.inquiry.project.001.v1` | Supported | `prob.info1.society.inquiry.project.001.v1` | `rubric.prob.info1.society.inquiry.project.004.v1#c1` |
+| A7 | `obj.info1.society.inquiry.project.002.v1` | Supported | `prob.info1.society.inquiry.project.002.v1` | `rubric.prob.info1.society.inquiry.project.004.v1#c2` |
+| A7 | `obj.info1.society.inquiry.project.003.v1` | Supported | `prob.info1.society.inquiry.project.003.v1` | `rubric.prob.info1.society.inquiry.project.004.v1#c3` |
+| B1 | `obj.info1.design.communication.media.001.v1` | Supported | `prob.info1.design.communication.media.001.v1`<br>`prob.info1.design.communication.media.004.v1` | None |
+| B1 | `obj.info1.design.communication.media.002.v1` | Supported | `prob.info1.design.communication.media.002.v1`<br>`prob.info1.design.communication.media.004.v1` | None |
+| B1 | `obj.info1.design.communication.media.003.v1` | Supported | `prob.info1.design.communication.media.003.v1`<br>`prob.info1.design.communication.media.004.v1` | None |
+| B2 | `obj.info1.design.digital.representation.001.v1` | Supported | `prob.info1.design.digital.representation.001.v1`<br>`prob.info1.design.digital.representation.004.v1` | None |
+| B2 | `obj.info1.design.digital.representation.002.v1` | Supported | `prob.info1.design.digital.representation.002.v1`<br>`prob.info1.design.digital.representation.004.v1` | None |
+| B2 | `obj.info1.design.digital.representation.003.v1` | Supported | `prob.info1.design.digital.representation.003.v1`<br>`prob.info1.design.digital.representation.004.v1` | None |
+| B3 | `obj.info1.design.audience.accessibility.001.v1` | Supported | `prob.info1.design.audience.accessibility.001.v1`<br>`prob.info1.design.audience.accessibility.004.v1` | None |
+| B3 | `obj.info1.design.audience.accessibility.002.v1` | Supported | `prob.info1.design.audience.accessibility.002.v1`<br>`prob.info1.design.audience.accessibility.004.v1` | None |
+| B3 | `obj.info1.design.audience.accessibility.003.v1` | Supported | `prob.info1.design.audience.accessibility.003.v1`<br>`prob.info1.design.audience.accessibility.004.v1` | None |
+| B4 | `obj.info1.design.information.structure.001.v1` | Supported | `prob.info1.design.information.structure.001.v1`<br>`prob.info1.design.information.structure.004.v1` | None |
+| B4 | `obj.info1.design.information.structure.002.v1` | Supported | `prob.info1.design.information.structure.002.v1`<br>`prob.info1.design.information.structure.004.v1` | None |
+| B4 | `obj.info1.design.information.structure.003.v1` | Supported | `prob.info1.design.information.structure.003.v1`<br>`prob.info1.design.information.structure.004.v1` | None |
+| B5 | `obj.info1.design.data.visualization.001.v1` | Supported | `prob.info1.design.data.visualization.001.v1`<br>`prob.info1.design.data.visualization.004.v1` | None |
+| B5 | `obj.info1.design.data.visualization.002.v1` | Supported | `prob.info1.design.data.visualization.002.v1`<br>`prob.info1.design.data.visualization.004.v1` | None |
+| B5 | `obj.info1.design.data.visualization.003.v1` | Supported | `prob.info1.design.data.visualization.003.v1`<br>`prob.info1.design.data.visualization.004.v1` | None |
+| B6 | `obj.info1.design.prototype.usability.001.v1` | Supported | `prob.info1.design.prototype.usability.001.v1`<br>`prob.info1.design.prototype.usability.004.v1` | None |
+| B6 | `obj.info1.design.prototype.usability.002.v1` | Supported | `prob.info1.design.prototype.usability.002.v1`<br>`prob.info1.design.prototype.usability.004.v1` | None |
+| B6 | `obj.info1.design.prototype.usability.003.v1` | Supported | `prob.info1.design.prototype.usability.003.v1`<br>`prob.info1.design.prototype.usability.004.v1` | None |
+| B7 | `obj.info1.design.project.001.v1` | Supported | `prob.info1.design.project.001.v1` | `rubric.prob.info1.design.project.004.v1#c1` |
+| B7 | `obj.info1.design.project.002.v1` | Supported | `prob.info1.design.project.002.v1` | `rubric.prob.info1.design.project.004.v1#c6` |
+| B7 | `obj.info1.design.project.003.v1` | Supported | `prob.info1.design.project.003.v1` | `rubric.prob.info1.design.project.004.v1#c8` |
+| C1 | `obj.info1.programming.computer.systems.001.v1` | Supported | `prob.info1.programming.computer.systems.001.v1`<br>`prob.info1.programming.computer.systems.004.v1` | None |
+| C1 | `obj.info1.programming.computer.systems.002.v1` | Supported | `prob.info1.programming.computer.systems.002.v1`<br>`prob.info1.programming.computer.systems.004.v1` | None |
+| C1 | `obj.info1.programming.computer.systems.003.v1` | Supported | `prob.info1.programming.computer.systems.003.v1`<br>`prob.info1.programming.computer.systems.004.v1` | None |
+| C2 | `obj.info1.programming.variables.001.v1` | Supported | `prob.info1.variables.003.v1`<br>`prob.info1.variables.004.v1`<br>`prob.info1.variables.008.v1` | None |
+| C2 | `obj.info1.programming.variables.002.v1` | Supported | `prob.info1.variables.005.v1`<br>`prob.info1.variables.007.v1`<br>`prob.info1.variables.008.v1` | None |
+| C2 | `obj.info1.programming.variables.003.v1` | Supported | `prob.info1.variables.006.v1`<br>`prob.info1.variables.007.v1`<br>`prob.info1.variables.008.v1` | None |
+| C3 | `obj.info1.programming.conditionals.001.v1` | Supported | `prob.info1.conditionals.001.v1`<br>`prob.info1.conditionals.004.v1`<br>`prob.info1.conditionals.007.v1`<br>`prob.info1.conditionals.008.v1` | None |
+| C3 | `obj.info1.programming.conditionals.002.v1` | Supported | `prob.info1.conditionals.002.v1`<br>`prob.info1.conditionals.004.v1`<br>`prob.info1.conditionals.006.v1`<br>`prob.info1.conditionals.008.v1` | None |
+| C3 | `obj.info1.programming.conditionals.003.v1` | Supported | `prob.info1.conditionals.003.v1`<br>`prob.info1.conditionals.005.v1`<br>`prob.info1.conditionals.007.v1`<br>`prob.info1.conditionals.008.v1` | None |
+| C4 | `obj.info1.programming.loops.001.v1` | Supported | `prob.info1.loops.001.v1`<br>`prob.info1.loops.007.v1`<br>`prob.info1.loops.008.v1` | None |
+| C4 | `obj.info1.programming.loops.002.v1` | Supported | `prob.info1.loops.002.v1`<br>`prob.info1.loops.003.v1`<br>`prob.info1.loops.005.v1`<br>`prob.info1.loops.008.v1` | None |
+| C4 | `obj.info1.programming.loops.003.v1` | Supported | `prob.info1.loops.004.v1`<br>`prob.info1.loops.006.v1`<br>`prob.info1.loops.007.v1`<br>`prob.info1.loops.008.v1` | None |
+| C5 | `obj.info1.programming.collections.strings.001.v1` | Supported | `prob.info1.programming.collections.strings.001.v1`<br>`prob.info1.programming.collections.strings.004.v1` | None |
+| C5 | `obj.info1.programming.collections.strings.002.v1` | Supported | `prob.info1.programming.collections.strings.002.v1`<br>`prob.info1.programming.collections.strings.004.v1` | None |
+| C5 | `obj.info1.programming.collections.strings.003.v1` | Supported | `prob.info1.programming.collections.strings.003.v1`<br>`prob.info1.programming.collections.strings.004.v1` | None |
+| C6 | `obj.info1.programming.functions.001.v1` | Supported | `prob.info1.programming.functions.001.v1`<br>`prob.info1.programming.functions.004.v1` | None |
+| C6 | `obj.info1.programming.functions.002.v1` | Supported | `prob.info1.programming.functions.002.v1`<br>`prob.info1.programming.functions.004.v1` | None |
+| C6 | `obj.info1.programming.functions.003.v1` | Supported | `prob.info1.programming.functions.003.v1`<br>`prob.info1.programming.functions.004.v1` | None |
+| C7 | `obj.info1.programming.algorithms.001.v1` | Supported | `prob.info1.programming.algorithms.001.v1`<br>`prob.info1.programming.algorithms.004.v1` | None |
+| C7 | `obj.info1.programming.algorithms.002.v1` | Supported | `prob.info1.programming.algorithms.002.v1`<br>`prob.info1.programming.algorithms.004.v1` | None |
+| C7 | `obj.info1.programming.algorithms.003.v1` | Supported | `prob.info1.programming.algorithms.003.v1`<br>`prob.info1.programming.algorithms.004.v1` | None |
+| C8 | `obj.info1.programming.modeling.simulation.001.v1` | Supported | `prob.info1.programming.modeling.simulation.001.v1`<br>`prob.info1.programming.modeling.simulation.004.v1` | None |
+| C8 | `obj.info1.programming.modeling.simulation.002.v1` | Supported | `prob.info1.programming.modeling.simulation.002.v1`<br>`prob.info1.programming.modeling.simulation.004.v1` | None |
+| C8 | `obj.info1.programming.modeling.simulation.003.v1` | Supported | `prob.info1.programming.modeling.simulation.003.v1`<br>`prob.info1.programming.modeling.simulation.004.v1` | None |
+| C9 | `obj.info1.programming.project.001.v1` | Supported | `prob.info1.programming.project.001.v1` | `rubric.prob.info1.programming.project.004.v1#c1_validation`<br>`rubric.prob.info1.programming.project.004.v1#c2_fifo_ordering`<br>`rubric.prob.info1.programming.project.004.v1#c5_executable_evidence` |
+| C9 | `obj.info1.programming.project.002.v1` | Supported | `prob.info1.programming.project.002.v1` | `rubric.prob.info1.programming.project.004.v1#c6_test_classes` |
+| C9 | `obj.info1.programming.project.003.v1` | Supported | `prob.info1.programming.project.003.v1` | `rubric.prob.info1.programming.project.004.v1#c7_requirement_evaluation`<br>`rubric.prob.info1.programming.project.004.v1#c8_limitations_retest` |
+| D1 | `obj.info1.networks.protocols.001.v1` | Supported | `prob.info1.networks.protocols.001.v1`<br>`prob.info1.networks.protocols.004.v1` | None |
+| D1 | `obj.info1.networks.protocols.002.v1` | Supported | `prob.info1.networks.protocols.002.v1`<br>`prob.info1.networks.protocols.004.v1` | None |
+| D1 | `obj.info1.networks.protocols.003.v1` | Supported | `prob.info1.networks.protocols.003.v1`<br>`prob.info1.networks.protocols.004.v1` | None |
+| D2 | `obj.info1.networks.internet.web.001.v1` | Supported | `prob.info1.networks.internet.web.001.v1`<br>`prob.info1.networks.internet.web.004.v1` | None |
+| D2 | `obj.info1.networks.internet.web.002.v1` | Supported | `prob.info1.networks.internet.web.002.v1`<br>`prob.info1.networks.internet.web.004.v1` | None |
+| D2 | `obj.info1.networks.internet.web.003.v1` | Supported | `prob.info1.networks.internet.web.003.v1`<br>`prob.info1.networks.internet.web.004.v1` | None |
+| D3 | `obj.info1.networks.security.001.v1` | Supported | `prob.info1.networks.security.001.v1`<br>`prob.info1.networks.security.004.v1` | None |
+| D3 | `obj.info1.networks.security.002.v1` | Supported | `prob.info1.networks.security.002.v1`<br>`prob.info1.networks.security.004.v1` | None |
+| D3 | `obj.info1.networks.security.003.v1` | Supported | `prob.info1.networks.security.003.v1`<br>`prob.info1.networks.security.004.v1` | None |
+| D4 | `obj.info1.data.lifecycle.001.v1` | Supported | `prob.info1.data.lifecycle.001.v1`<br>`prob.info1.data.lifecycle.002.v1`<br>`prob.info1.data.lifecycle.004.v1` | None |
+| D4 | `obj.info1.data.lifecycle.002.v1` | Supported | `prob.info1.data.lifecycle.002.v1`<br>`prob.info1.data.lifecycle.004.v1` | None |
+| D4 | `obj.info1.data.lifecycle.003.v1` | Supported | `prob.info1.data.lifecycle.003.v1`<br>`prob.info1.data.lifecycle.004.v1` | None |
+| D5 | `obj.info1.data.cleaning.001.v1` | Supported | `prob.info1.data.cleaning.001.v1`<br>`prob.info1.data.cleaning.004.v1` | None |
+| D5 | `obj.info1.data.cleaning.002.v1` | Supported | `prob.info1.data.cleaning.002.v1`<br>`prob.info1.data.cleaning.004.v1` | None |
+| D5 | `obj.info1.data.cleaning.003.v1` | Supported | `prob.info1.data.cleaning.003.v1`<br>`prob.info1.data.cleaning.004.v1` | None |
+| D6 | `obj.info1.data.descriptive.analysis.001.v1` | Supported | `prob.info1.data.descriptive.analysis.001.v1`<br>`prob.info1.data.descriptive.analysis.004.v1` | None |
+| D6 | `obj.info1.data.descriptive.analysis.002.v1` | Partial | `prob.info1.data.descriptive.analysis.002.v1` | None |
+| D6 | `obj.info1.data.descriptive.analysis.003.v1` | Supported | `prob.info1.data.descriptive.analysis.003.v1`<br>`prob.info1.data.descriptive.analysis.004.v1` | None |
+| D7 | `obj.info1.data.visualization.interpretation.001.v1` | Supported | `prob.info1.data.visualization.interpretation.001.v1`<br>`prob.info1.data.visualization.interpretation.004.v1` | None |
+| D7 | `obj.info1.data.visualization.interpretation.002.v1` | Supported | `prob.info1.data.visualization.interpretation.002.v1`<br>`prob.info1.data.visualization.interpretation.004.v1` | None |
+| D7 | `obj.info1.data.visualization.interpretation.003.v1` | Supported | `prob.info1.data.visualization.interpretation.003.v1`<br>`prob.info1.data.visualization.interpretation.004.v1` | None |
+| D8 | `obj.info1.data.databases.queries.001.v1` | Supported | `prob.info1.data.databases.queries.001.v1`<br>`prob.info1.data.databases.queries.004.v1` | None |
+| D8 | `obj.info1.data.databases.queries.002.v1` | Supported | `prob.info1.data.databases.queries.002.v1`<br>`prob.info1.data.databases.queries.004.v1` | None |
+| D8 | `obj.info1.data.databases.queries.003.v1` | Supported | `prob.info1.data.databases.queries.003.v1`<br>`prob.info1.data.databases.queries.004.v1` | None |
+| D9 | `obj.info1.data.investigation.project.001.v1` | Supported | `prob.info1.data.investigation.project.001.v1` | `rubric.prob.info1.data.investigation.project.004.v1#c1_question_ethics` |
+| D9 | `obj.info1.data.investigation.project.002.v1` | Supported | `prob.info1.data.investigation.project.002.v1` | `rubric.prob.info1.data.investigation.project.004.v1#c2_reproducible_workflow`<br>`rubric.prob.info1.data.investigation.project.004.v1#c3_accessible_evidence`<br>`rubric.prob.info1.data.investigation.project.004.v1#c6_provenance_dictionary`<br>`rubric.prob.info1.data.investigation.project.004.v1#c7_transformation_log`<br>`rubric.prob.info1.data.investigation.project.004.v1#c8_independent_check` |
+| D9 | `obj.info1.data.investigation.project.003.v1` | Supported | `prob.info1.data.investigation.project.003.v1` | `rubric.prob.info1.data.investigation.project.004.v1#c4_bounded_conclusion`<br>`rubric.prob.info1.data.investigation.project.004.v1#c5_limits_improvement`<br>`rubric.prob.info1.data.investigation.project.004.v1#c9_sensitivity_results`<br>`rubric.prob.info1.data.investigation.project.004.v1#c10_presentation_revision` |
+
+## Pilot Task-to-Rubric Semantic Bindings
+
+These rows are review evidence for the Issue 91 synthesis tasks. They do not
+change the canonical `performance_criterion_refs` contract, which is reserved
+for records whose problem `question_type` is `performance_task`.
+
+| Objective | Synthesis task evidence | Scoring evidence |
+| --- | --- | --- |
+| B5.O2 | The supplied defective display requires the learner to identify a misleading encoding and an inaccessible color-only encoding, then repair them. | `rubric.prob.info1.design.data.visualization.004.v1#c1` |
+| C1.O2 | Four named events require an event-by-event application-state trace, with OS-mediated resources in a separate column. | `rubric.prob.info1.programming.computer.systems.004.v1#c1` |
+| D2.O2 | Observations A-C require separate DNS and Web communications with local network, router, IP, transport, TLS, HTTP, and service-processing roles. | `rubric.prob.info1.networks.internet.web.004.v1#c3` |
+| D2.O3 | Observations D-E require success evidence, bounded candidates, unknowns, a next check, and possible user impact. | `rubric.prob.info1.networks.internet.web.004.v1#c3` |
 
 ## Review Boundary
 

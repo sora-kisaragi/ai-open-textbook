@@ -101,6 +101,7 @@ def sample_root(tmp_path: Path) -> Path:
             "canonical_answer": "SECRET_ANSWER_TOKEN",
             "acceptable_answers": ["SECRET_ACCEPTABLE_TOKEN"],
             "explanation": "教師用の説明です。",
+            "hints": ["SECRET_HINT_ONE", "SECRET_HINT_TWO"],
             "verification_evidence": [{"method": "test", "expected": "secret", "result": "passed"}],
             "status": "human_review_requested",
         }],
@@ -119,7 +120,11 @@ def sample_root(tmp_path: Path) -> Path:
             "id": rubric_id,
             "type": "rubric",
             "problem_id": problem_id,
-            "criteria": [{"id": "c1", "description": "SECRET_RUBRIC_TOKEN", "points": 1}],
+            "criteria": [{
+                "id": "SECRET_CRITERION_ID",
+                "description": "SECRET_RUBRIC_TOKEN",
+                "points": 37,
+            }],
             "status": "human_review_requested",
         }],
     )
@@ -138,13 +143,25 @@ def sample_root(tmp_path: Path) -> Path:
     lesson_body.parent.mkdir(parents=True)
     lesson_body.write_text(
         "# 変数と代入\n\n<script>alert('unsafe')</script>\n\n"
+        "![値が変数へ保存される流れ](figure:models/assignment-flow.svg)\n\n"
         "## 比較\n\n| 案 | 点 |\n| --- | ---: |\n| A | 2 |\n\n## 練習\n\n"
         "- `prob.info1.variables.001.v1`: 内部ID付きの一覧。\n",
         encoding="utf-8",
     )
     teacher = tmp_path / "teacher_guides" / "highschool_information_i" / "programming" / "fixture_lesson.md"
     teacher.parent.mkdir(parents=True)
-    teacher.write_text("# 教師用ガイド\n\n指導用の内容です。\n", encoding="utf-8")
+    teacher.write_text(
+        "# 教師用ガイド\n\n"
+        "![変数への代入を板書する順序](figure:models/assignment-flow.svg)\n",
+        encoding="utf-8",
+    )
+    figure = tmp_path / "site/assets/figures/models/assignment-flow.svg"
+    figure.parent.mkdir(parents=True)
+    figure.write_text(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 10">'
+        '<title>Assignment flow fixture</title><rect width="20" height="10"/></svg>',
+        encoding="utf-8",
+    )
     return tmp_path
 
 
@@ -178,6 +195,7 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
 
     assert "SECRET_ANSWER_TOKEN" not in learner
     assert "SECRET_ACCEPTABLE_TOKEN" not in learner
+    assert "SECRET_HINT_ONE" not in learner
     assert "SECRET_RUBRIC_TOKEN" not in learner
     assert "prob.info1.variables.001.v1" not in learner
     assert "練習 1" in learner
@@ -191,6 +209,7 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert "説明、比較、分析、制作、コードなどの課題" in learner
     assert "SECRET_ANSWER_TOKEN" not in book
     assert "SECRET_ACCEPTABLE_TOKEN" not in book
+    assert "SECRET_HINT_ONE" not in book
     assert "SECRET_RUBRIC_TOKEN" not in book
     assert "prob.info1.variables.001.v1" not in book
     assert 'id="lesson-programming-variables"' in book
@@ -200,13 +219,31 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert 'href="self-study/index.html"' in index
     assert "SECRET_ANSWER_TOKEN" in self_study
     assert "SECRET_ACCEPTABLE_TOKEN" in self_study
+    assert "SECRET_HINT_ONE" in self_study
+    assert "SECRET_HINT_TWO" in self_study
+    assert self_study.count('class="hint-reveal"') == 2
     assert "SECRET_RUBRIC_TOKEN" not in self_study
+    assert "問題文で求められた対象・条件・形式を確認した。" in self_study
+    assert "できたか確認（C2-1）" in self_study
+    assert "SECRET_CRITERION_ID" not in self_study
+    assert "37" not in self_study
     assert "prob.info1.variables.001.v1" not in self_study
     assert "ans.prob.info1.variables.001.v1" not in self_study
     assert '<details class="answer-reveal">' in self_study
     assert "<summary>解答例と解説を確認</summary>" in self_study
+    assert self_study.count('class="post-answer-retry"') == 1
+    assert "解答例を閉じて自分の解答を修正" in self_study
+    assert "学習者チェックでもう一度確かめて" in self_study
+    assert "すべて満たせたら次の練習へ進みます" in self_study
+    assert "修正してからもう一度確かめてください" in self_study
     assert "SECRET_ANSWER_TOKEN" in self_study_book
+    assert "SECRET_HINT_ONE" in self_study_book
     assert "SECRET_RUBRIC_TOKEN" not in self_study_book
+    assert "問題文で求められた対象・条件・形式を確認した。" in self_study_book
+    assert "できたか確認（C2-1）" in self_study_book
+    assert self_study_book.count('class="post-answer-retry"') == 1
+    assert "解答例を閉じて自分の解答を修正" in self_study_book
+    assert "SECRET_CRITERION_ID" not in self_study_book
     assert "Creative Commons Attribution 4.0 International" in book
     assert "Python Software Foundationから独立" in book
     assert 'id="book-imprint"' in book
@@ -214,6 +251,12 @@ def test_build_is_offline_deterministic_and_separates_answers(sample_root: Path)
     assert "activities/b7_keyboard_start.html" in first_snapshot
     assert "activities/b7_keyboard_confirm.html" in first_snapshot
     assert "activities/b7_keyboard_complete.html" in first_snapshot
+    assert "assets/figures/models/assignment-flow.svg" in first_snapshot
+    assert 'src="../assets/figures/models/assignment-flow.svg"' in learner
+    assert 'src="../../assets/figures/models/assignment-flow.svg"' in self_study
+    assert 'src="../assets/figures/models/assignment-flow.svg"' in teacher
+    assert 'src="assets/figures/models/assignment-flow.svg"' in book
+    assert 'src="../assets/figures/models/assignment-flow.svg"' in self_study_book
     coverage_report = json.loads(first_snapshot["reports/semantic-coverage-audit.json"])
     balance_report = json.loads(first_snapshot["reports/unit-balance-report.json"])
     assert coverage_report["row_count"] == 1
@@ -287,6 +330,37 @@ def test_canonical_answer_uses_prose_or_code_rendering_by_answer_type() -> None:
     assert "print(&#x27;&lt;safe&gt;&#x27;)" in code
 
 
+@pytest.mark.parametrize(
+    "target",
+    ("figure:../secret.svg", "figure:/absolute.svg", "figure:model.png", "figure:"),
+)
+def test_figure_target_rejects_unsafe_or_non_svg_paths(target: str) -> None:
+    with pytest.raises(build_static_site.SiteBuildError, match="invalid figure target"):
+        build_static_site.figure_asset_reference(target, "..")
+
+
+@pytest.mark.parametrize(
+    "payload, message",
+    (
+        ('<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>', "active SVG element"),
+        ('<svg xmlns="http://www.w3.org/2000/svg"><image href="https://example.test/a.png"/></svg>', "external SVG reference"),
+        ('<svg xmlns="http://www.w3.org/2000/svg"><rect onclick="alert(1)"/></svg>', "SVG event attributes"),
+        ('<?xml-stylesheet href="https://example.test/a.css"?><svg xmlns="http://www.w3.org/2000/svg"/>', "processing instructions"),
+        ('<svg xmlns="http://www.w3.org/2000/svg"><style>.x{fill:u\\72l(https://example.test/a)}</style></svg>', "CSS escapes"),
+    ),
+)
+def test_svg_asset_rejects_active_or_external_content(
+    tmp_path: Path,
+    payload: str,
+    message: str,
+) -> None:
+    path = tmp_path / "unsafe.svg"
+    path.write_text(payload, encoding="utf-8")
+
+    with pytest.raises(build_static_site.SiteBuildError, match=message):
+        build_static_site.validate_svg_asset(path)
+
+
 def test_source_bibliography_omits_deprecated_sources() -> None:
     sources = [
         {
@@ -342,11 +416,11 @@ def test_repository_audit_reports_cover_all_objectives_and_route_periods() -> No
 
     assert coverage["row_count"] == 96
     assert sum(coverage["support_counts"].values()) == 96
-    assert coverage["support_counts"]["partial"] == 2
+    assert coverage["support_counts"]["partial"] == 1
     assert coverage["support_counts"]["unsupported"] == 0
-    assert [unit["mandatory_class_periods"] for unit in balance["units"]] == [10, 12, 21, 22]
-    assert balance["mandatory_periods"] == 65
-    assert balance["recommended_extension_periods"] == 5
+    assert [unit["mandatory_class_periods"] for unit in balance["units"]] == [11, 12, 21, 22]
+    assert balance["mandatory_periods"] == 66
+    assert balance["recommended_extension_periods"] == 4
     assert balance["recommended_total_periods"] == 70
 
 

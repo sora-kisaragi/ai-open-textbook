@@ -16,6 +16,13 @@
     "problem_id": {"type": "string", "pattern": "^prob\\.[a-z0-9]+(?:\\.[a-z0-9]+)*\\.v[1-9][0-9]*$"},
     "canonical_answer": {"type": "string", "minLength": 1},
     "acceptable_answers": {"$ref": "#/$defs/strings"},
+    "hints": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
     "answer_type": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
     "explanation": {"type": "string", "minLength": 1},
     "review_status": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},

@@ -28,6 +28,19 @@ CSS_IMPORT = re.compile(r"@import\s+(?:url\(\s*)?['\"]?([^'\"\s;)]+)", re.IGNORE
 LOW_INFORMATION_SENSITIVE_VALUE = re.compile(
     r"^(?:(?:[+-]?\d+(?:\.\d+)?)(?:\s+[+-]?\d+(?:\.\d+)?)*|True|False|None)$"
 )
+SENSITIVE_ATTRIBUTE_NAME = re.compile(
+    r"(?:^|[-_:])(?:answer|hint|rubric|criterion|criteria|points?|score|verification)(?:$|[-_:])",
+    re.IGNORECASE,
+)
+SENSITIVE_VALUE_CONTEXT = re.compile(
+    r"(?:answer|result|hint|rubric|criterion|criteria|points?|score|verification|解答|正解|ヒント|採点|配点)",
+    re.IGNORECASE,
+)
+LOW_INFORMATION_ALT = re.compile(
+    r"^(?:image|figure|diagram|photo|chart|graph|illustration|画像|図|写真|グラフ|チャート|イラスト)\s*[0-9]*$",
+    re.IGNORECASE,
+)
+FILENAME_ALT = re.compile(r"^(?:figure:)?[A-Za-z0-9][A-Za-z0-9._/-]*\.(?:svg|png|jpe?g|gif|webp)$", re.IGNORECASE)
 REVIEW_ONLY_CLASSES = frozenset(
     {
         "review-record",
@@ -36,6 +49,21 @@ REVIEW_ONLY_CLASSES = frozenset(
         "record-id",
         "teacher-copy",
         "rubric-list",
+    }
+)
+CLASSROOM_FORBIDDEN_TAGS = frozenset({"details", "summary"})
+CLASSROOM_FORBIDDEN_CLASSES = frozenset(
+    {
+        "acceptable-answer-list",
+        "answer-explanation",
+        "answer-feedback",
+        "answer-reveal",
+        "canonical-answer",
+        "canonical-answer-code",
+        "canonical-answer-prose",
+        "hint-body",
+        "hint-reveal",
+        "success-criteria",
     }
 )
 
@@ -52,14 +80,18 @@ class PageParser(HTMLParser):
         self.duplicate_ids: set[str] = set()
         self.references: list[tuple[str, str, str]] = []
         self.text_parts: list[str] = []
+        self.prose_text_parts: list[str] = []
         self.inline_css: list[str] = []
         self._style_depth = 0
+        self._literal_markup_exempt_depth = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = {name: value or "" for name, value in attrs}
         self.elements.append((tag, attributes))
         if tag == "style":
             self._style_depth += 1
+        if tag in {"code", "pre"}:
+            self._literal_markup_exempt_depth += 1
         if attributes.get("style"):
             self.inline_css.append(attributes["style"])
         element_id = attributes.get("id")
@@ -80,19 +112,33 @@ class PageParser(HTMLParser):
         self.handle_starttag(tag, attrs)
         if tag == "style":
             self._style_depth -= 1
+        if tag in {"code", "pre"}:
+            self._literal_markup_exempt_depth -= 1
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "style" and self._style_depth:
             self._style_depth -= 1
+        if tag in {"code", "pre"} and self._literal_markup_exempt_depth:
+            self._literal_markup_exempt_depth -= 1
 
     def handle_data(self, data: str) -> None:
         self.text_parts.append(data)
+        if not self._style_depth and not self._literal_markup_exempt_depth:
+            self.prose_text_parts.append(data)
         if self._style_depth:
             self.inline_css.append(data)
 
     @property
     def text(self) -> str:
         return "\n".join(self.text_parts)
+
+    @property
+    def prose_text(self) -> str:
+        return "\n".join(self.prose_text_parts)
+
+    @property
+    def attribute_values(self) -> list[str]:
+        return [value for _, attributes in self.elements for value in attributes.values() if value]
 
     def has(self, tag: str, *, element_id: str | None = None, css_class: str | None = None) -> bool:
         return self.count(tag, element_id=element_id, css_class=css_class) > 0
@@ -203,11 +249,24 @@ def resolve_local_reference(site: Path, page: Path, value: str) -> tuple[Path, s
     return target, unquote(parsed.fragment)
 
 
+def is_teacher_source_reference(site: Path, page: Path, tag: str, attribute: str, value: str) -> bool:
+    if tag != "a" or attribute != "href" or page.parent != site / "teacher":
+        return False
+    parsed = urlsplit(value)
+    if parsed.scheme or parsed.netloc or not parsed.path or "\\" in parsed.path:
+        return False
+    target = (page.parent / unquote(parsed.path)).resolve()
+    lessons = site.parents[1] / "lessons"
+    return target.is_relative_to(lessons) and target.suffix == ".md" and target.is_file()
+
+
 def verify_references(site: Path, pages: dict[Path, PageParser]) -> None:
     for page, parser in pages.items():
         for tag, attribute, value in parser.references:
             parsed = urlsplit(value)
             if parsed.scheme in {"http", "https"} and tag == "a" and attribute == "href":
+                continue
+            if is_teacher_source_reference(site, page, tag, attribute, value):
                 continue
             if parsed.scheme or parsed.netloc or value.startswith("//"):
                 raise SiteVerificationError(
@@ -227,6 +286,19 @@ def verify_references(site: Path, pages: dict[Path, PageParser]) -> None:
                     raise SiteVerificationError(
                         f"broken fragment in {page.relative_to(site)}: {value}"
                     )
+
+
+def verify_image_alt_text(site: Path, pages: dict[Path, PageParser]) -> None:
+    for page, parser in pages.items():
+        for tag, attrs in parser.elements:
+            if tag != "img":
+                continue
+            alt = normalize_text(attrs.get("alt", ""))
+            if not alt or LOW_INFORMATION_ALT.fullmatch(alt) or FILENAME_ALT.fullmatch(alt):
+                source = attrs.get("src", "")
+                raise SiteVerificationError(
+                    f"meaningful image alt text required in {page.relative_to(site)}: {source}"
+                )
 
 
 def verify_css_text(site: Path, source: Path, css: str) -> None:
@@ -252,6 +324,17 @@ def verify_css(site: Path, pages: dict[Path, PageParser]) -> None:
             verify_css_text(site, page, css)
 
 
+def verify_svg_assets(site: Path) -> None:
+    figures = site / "assets" / "figures"
+    if not figures.is_dir():
+        return
+    for figure in sorted(figures.rglob("*.svg")):
+        try:
+            build_static_site.validate_svg_asset(figure)
+        except build_static_site.SiteBuildError as exc:
+            raise SiteVerificationError(str(exc)) from exc
+
+
 def flatten_strings(value: object) -> list[str]:
     if isinstance(value, str):
         return [value]
@@ -267,36 +350,85 @@ def forbidden_values(
     *,
     include_answer_feedback: bool,
 ) -> list[tuple[str, str]]:
-    """Return values suitable for substring checks; structural checks cover low-information values."""
+    """Return sensitive values; the verifier handles low-information values contextually."""
     values: list[tuple[str, str]] = []
     for answer in by_type.get("answer", []):
         answer_id = str(answer.get("id", "answer"))
         fields = ["verification_evidence"]
         if include_answer_feedback:
-            fields.extend(("canonical_answer", "acceptable_answers", "explanation"))
+            fields.extend(("canonical_answer", "acceptable_answers", "explanation", "hints"))
         for field in fields:
             for value in flatten_strings(answer.get(field)):
                 normalized = normalize_text(value)
-                if normalized and not LOW_INFORMATION_SENSITIVE_VALUE.fullmatch(normalized):
+                if normalized:
                     values.append((f"{answer_id}.{field}", value))
     for rubric in by_type.get("rubric", []):
         rubric_id = str(rubric.get("id", "rubric"))
         for criterion in rubric.get("criteria", []) or []:
             if isinstance(criterion, dict):
-                description = criterion.get("description")
-                if isinstance(description, str) and normalize_text(description):
-                    values.append((f"{rubric_id}.criteria", description))
+                for field in ("id", "description", "points"):
+                    raw = criterion.get(field)
+                    if isinstance(raw, (str, int, float)) and normalize_text(str(raw)):
+                        values.append((f"{rubric_id}.criteria.{field}", str(raw)))
     return values
+
+
+def attribute_contains_value(attribute: str, value: str, *, low_information: bool) -> bool:
+    if not value:
+        return False
+    if not low_information:
+        return value in attribute
+    return bool(SENSITIVE_VALUE_CONTEXT.search(attribute)) and bool(
+        re.search(
+            rf"(?<![A-Za-z0-9]){re.escape(value)}(?![A-Za-z0-9])",
+            attribute,
+            re.IGNORECASE,
+        )
+    )
+
+
+def sensitive_token_occurrences(text: str, token: str) -> int:
+    """Count short review tokens as standalone learner-visible values."""
+    if not token:
+        return 0
+    if re.fullmatch(r"[A-Za-z0-9_]+", token):
+        return len(
+            re.findall(
+                rf"(?<![A-Za-z0-9_]){re.escape(token)}(?![A-Za-z0-9_])",
+                text,
+                re.IGNORECASE,
+            )
+        )
+    return text.count(token)
 
 
 def verify_learner_separation(
     learner_pages: dict[Path, PageParser],
     allowed_sources: dict[Path, str],
     forbidden_values: list[tuple[str, str]],
+    *,
+    forbidden_tags: frozenset[str] = frozenset(),
+    forbidden_classes: frozenset[str] = frozenset(),
 ) -> None:
     for page, parser in learner_pages.items():
         page_text = normalize_text(parser.text)
+        page_prose_text = normalize_text(parser.prose_text)
         allowed_text = normalize_text(allowed_sources[page])
+        attribute_values = [normalize_text(value) for value in parser.attribute_values]
+        attribute_text = "\n".join(attribute_values)
+        attribute_pairs = [
+            (name, normalize_text(value))
+            for _, attrs in parser.elements
+            for name, value in attrs.items()
+        ]
+        sensitive_attributes = sorted(
+            name for name, value in attribute_pairs if value and SENSITIVE_ATTRIBUTE_NAME.search(name)
+        )
+        if sensitive_attributes:
+            raise SiteVerificationError(
+                f"answer/rubric metadata attribute leaked into {page.name}: "
+                f"{', '.join(sensitive_attributes)}"
+            )
         review_classes = sorted(
             REVIEW_ONLY_CLASSES.intersection(
                 css_class
@@ -308,16 +440,47 @@ def verify_learner_separation(
             raise SiteVerificationError(
                 f"review-only structure leaked into {page.name}: {', '.join(review_classes)}"
             )
-        internal_id = INTERNAL_LEARNER_ID.search(page_text)
+        leaked_tags = sorted({tag for tag, _ in parser.elements if tag in forbidden_tags})
+        leaked_classes = sorted(
+            forbidden_classes.intersection(
+                css_class
+                for _, attrs in parser.elements
+                for css_class in attrs.get("class", "").split()
+            )
+        )
+        if leaked_tags or leaked_classes:
+            structures = [*(f"<{tag}>" for tag in leaked_tags), *leaked_classes]
+            raise SiteVerificationError(
+                f"answer/hint/success-criteria structure leaked into {page.name}: "
+                f"{', '.join(structures)}"
+            )
+        internal_id = INTERNAL_LEARNER_ID.search(f"{page_text}\n{attribute_text}")
         if internal_id:
             raise SiteVerificationError(
                 f"internal answer/rubric/problem id leaked into {page.name}: {internal_id.group(0)}"
             )
         for source, raw_value in forbidden_values:
             value = normalize_text(raw_value)
-            if value in allowed_text:
-                continue
-            if value and value in page_text:
+            low_information = len(value) < 8 or bool(
+                LOW_INFORMATION_SENSITIVE_VALUE.fullmatch(value)
+            )
+            attribute_match = any(
+                attribute_contains_value(attribute, value, low_information=low_information)
+                for attribute in attribute_values
+            )
+            countable_low_information = len(value) == 1 or bool(
+                LOW_INFORMATION_SENSITIVE_VALUE.fullmatch(value)
+            )
+            if low_information and countable_low_information:
+                text_match = sensitive_token_occurrences(
+                    page_prose_text,
+                    value,
+                ) > sensitive_token_occurrences(allowed_text, value)
+            elif low_information:
+                text_match = False
+            else:
+                text_match = value not in allowed_text and value in page_text
+            if value and (attribute_match or text_match):
                 raise SiteVerificationError(f"teacher-only value from {source} leaked into {page.name}")
 
 
@@ -391,6 +554,10 @@ def verify(root: Path) -> tuple[int, int, int, int]:
 
     pages = {path: parse_page(path) for path in sorted(expected_html)}
     for path, parser in pages.items():
+        if "**" in parser.prose_text:
+            raise SiteVerificationError(
+                f"unrendered Markdown emphasis delimiter in {path.relative_to(site)}"
+            )
         forbidden_tags = sorted({tag for tag, _ in parser.elements if tag in FORBIDDEN_RUNTIME_TAGS})
         if forbidden_tags:
             raise SiteVerificationError(
@@ -417,6 +584,7 @@ def verify(root: Path) -> tuple[int, int, int, int]:
         [("body", None, "contents-page"), ("main", "main", None), ("div", None, "curriculum-units")],
     )
     included_units = {curriculum[str(lesson["id"])].unit_id for lesson in lessons}
+    unit_labels = {curriculum[str(lesson["id"])].order[:1] for lesson in lessons}
     if index_parser.count("section", css_class="curriculum-unit") != len(included_units):
         raise SiteVerificationError("index.html: curriculum unit count does not match source data")
 
@@ -464,6 +632,8 @@ def verify(root: Path) -> tuple[int, int, int, int]:
     all_self_study_allowed_sources: list[str] = []
     problems = by_type.get("problem", [])
     answer_count = 0
+    hint_count = 0
+    success_criteria_count = 0
     rendered_answer_refs: list[str] = []
     lesson_answer_reveals: list[str] = []
     for index, (lesson, slug) in enumerate(zip(lessons, slugs, strict=True)):
@@ -541,15 +711,32 @@ def verify(root: Path) -> tuple[int, int, int, int]:
             for problem in linked_problems
             for answer_ref in problem.get("answer_refs", []) or []
         ]
+        linked_hint_count = sum(
+            len(answer.get("hints", []) or []) for answer in linked_answers
+        )
+        linked_success_criteria_count = len(linked_problems)
         if self_study_parser.count("details", css_class="answer-reveal") != len(linked_answers):
             raise SiteVerificationError(f"{self_study_path.name}: answer reveal count is incomplete")
-        if self_study_parser.count("summary") != len(linked_answers):
-            raise SiteVerificationError(f"{self_study_path.name}: each answer reveal requires a summary")
+        if self_study_parser.count("details", css_class="hint-reveal") != linked_hint_count:
+            raise SiteVerificationError(f"{self_study_path.name}: staged hint count is incomplete")
+        if self_study_parser.count("section", css_class="success-criteria") != linked_success_criteria_count:
+            raise SiteVerificationError(f"{self_study_path.name}: success criteria count is incomplete")
+        if self_study_parser.count("summary") != len(linked_answers) + linked_hint_count:
+            raise SiteVerificationError(f"{self_study_path.name}: each hint and answer reveal requires a summary")
         answer_count += len(linked_answers)
+        hint_count += linked_hint_count
+        success_criteria_count += linked_success_criteria_count
         rendered_answer_refs.extend(str(answer["id"]) for answer in linked_answers)
         lesson_answer_reveals.extend(answer_reveal_texts(self_study_path))
         body_path = build_static_site.repository_path(root, lesson["body_ref"], "body_ref")
-        allowed = body_path.read_text(encoding="utf-8") + "\n" + "\n".join(linked_questions)
+        practice_labels = "\n".join(str(number) for number in range(1, len(linked_problems) + 1))
+        allowed = "\n".join(
+            (
+                body_path.read_text(encoding="utf-8"),
+                "\n".join(linked_questions),
+                practice_labels,
+            )
+        )
         feedback = "\n".join(
             value
             for answer in linked_answers
@@ -558,20 +745,43 @@ def verify(root: Path) -> tuple[int, int, int, int]:
                     "canonical_answer": answer.get("canonical_answer"),
                     "acceptable_answers": answer.get("acceptable_answers", []),
                     "explanation": answer.get("explanation"),
+                    "hints": answer.get("hints", []),
                 }
             )
+        )
+        criteria = "\n".join(
+            criterion
+            for problem in linked_problems
+            for criterion in build_static_site.learner_success_criteria(problem)
         )
         mistakes = "\n".join(
             str(item)
             for problem in linked_problems
             for item in problem.get("common_mistakes", []) or []
         )
+        self_study_labels = "\n".join(
+            [
+                *(
+                    f"{curriculum[str(lesson['id'])].order}-{number}"
+                    for number in range(1, len(linked_problems) + 1)
+                ),
+                *(
+                    str(number)
+                    for answer in linked_answers
+                    for number in range(1, len(answer.get("hints", []) or []) + 1)
+                ),
+            ]
+        )
         learner_parsers[learner_path] = learner_parser
         allowed_sources[learner_path] = allowed
         all_allowed_sources.append(allowed)
         self_study_parsers[self_study_path] = self_study_parser
-        self_study_allowed_sources[self_study_path] = "\n".join((allowed, feedback, mistakes))
-        all_self_study_allowed_sources.append("\n".join((allowed, feedback, mistakes)))
+        self_study_allowed_sources[self_study_path] = "\n".join(
+            (allowed, feedback, mistakes, criteria, self_study_labels)
+        )
+        all_self_study_allowed_sources.append(
+            "\n".join((allowed, feedback, mistakes, criteria, self_study_labels))
+        )
 
     book_parser = pages[book_path]
     require_structure(
@@ -598,7 +808,24 @@ def verify(root: Path) -> tuple[int, int, int, int]:
         if source.get("status") not in {"deprecated", "superseded"}
         for field in ("title", "issuer", "publication_date", "accessed_at", "url")
     )
-    allowed_sources[book_path] = "\n".join([*all_allowed_sources, bibliography_metadata])
+    allowed_sources[book_path] = "\n".join(
+        [*all_allowed_sources, bibliography_metadata, *sorted(unit_labels)]
+    )
+    learner_parsers[index_path] = index_parser
+    allowed_sources[index_path] = "\n".join(
+        [
+            *(
+                str(value)
+                for lesson in lessons
+                for value in (
+                    lesson.get("title", ""),
+                    lesson.get("unit", ""),
+                    curriculum[str(lesson["id"])].order,
+                )
+            ),
+            *(unit_label for unit_label in sorted(unit_labels) for _ in range(2)),
+        ]
+    )
 
     self_study_book_path = (site / "self-study" / "book.html").resolve()
     self_study_book_parser = pages[self_study_book_path]
@@ -616,8 +843,14 @@ def verify(root: Path) -> tuple[int, int, int, int]:
         raise SiteVerificationError("self-study/book.html: lesson count does not match source data")
     if self_study_book_parser.count("details", css_class="answer-reveal") != answer_count:
         raise SiteVerificationError("self-study/book.html: answer reveal count is incomplete")
-    if self_study_book_parser.count("summary") != answer_count:
-        raise SiteVerificationError("self-study/book.html: each answer reveal requires a summary")
+    if self_study_book_parser.count("details", css_class="hint-reveal") != hint_count:
+        raise SiteVerificationError("self-study/book.html: staged hint count is incomplete")
+    if self_study_book_parser.count("section", css_class="success-criteria") != success_criteria_count:
+        raise SiteVerificationError("self-study/book.html: success criteria count is incomplete")
+    if self_study_book_parser.count("summary") != answer_count + hint_count:
+        raise SiteVerificationError(
+            "self-study/book.html: each hint and answer reveal requires a summary"
+        )
     expected_answer_refs = sorted(str(answer["id"]) for answer in by_type.get("answer", []))
     if sorted(rendered_answer_refs) != expected_answer_refs:
         raise SiteVerificationError(
@@ -640,12 +873,16 @@ def verify(root: Path) -> tuple[int, int, int, int]:
         build_static_site.build_unit_balance_report(curriculum_document),
     )
 
+    verify_image_alt_text(site.resolve(), pages)
     verify_references(site.resolve(), pages)
     verify_css(site.resolve(), pages)
+    verify_svg_assets(site.resolve())
     verify_learner_separation(
         learner_parsers,
         allowed_sources,
         forbidden_values(by_type, include_answer_feedback=True),
+        forbidden_tags=CLASSROOM_FORBIDDEN_TAGS,
+        forbidden_classes=CLASSROOM_FORBIDDEN_CLASSES,
     )
     verify_learner_separation(
         self_study_parsers,

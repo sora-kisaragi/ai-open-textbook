@@ -27,7 +27,7 @@ def test_repository_satisfies_integration_contract() -> None:
     assert failures == []
     assert stats.lessons == 32
     assert stats.transfer_probes == 32
-    assert stats.scheduled_periods == 65
+    assert stats.scheduled_periods == 66
     assert stats.coverage_rows == 96
     assert stats.machine_checked_answers == 22
 
@@ -57,12 +57,46 @@ def test_schedule_must_cover_mandatory_periods(integration_root: Path) -> None:
 def test_coverage_audit_must_record_all_objectives(integration_root: Path) -> None:
     path = integration_root / "docs/review/INFORMATION_I_COVERAGE_AUDIT.md"
     text = path.read_text(encoding="utf-8")
-    text = text.replace("| Supported | Supported | Supported |", "| Missing | Supported | Supported |", 1)
+    text = text.replace("| Supported |", "| Missing |", 1)
     path.write_text(text, encoding="utf-8")
 
     failures, _ = check_integration_contract.check_repository(integration_root)
 
-    assert any("coverage audit records 95" in failure for failure in failures)
+    assert any("coverage audit row 1" in failure for failure in failures)
+
+
+def test_coverage_audit_rejects_wrong_objective_with_same_row_count(
+    integration_root: Path,
+) -> None:
+    path = integration_root / "docs/review/INFORMATION_I_COVERAGE_AUDIT.md"
+    text = path.read_text(encoding="utf-8")
+    text = text.replace(
+        "obj.info1.society.information.media.001.v1",
+        "obj.info1.society.information.media.999.v1",
+        1,
+    )
+    path.write_text(text, encoding="utf-8")
+
+    failures, _ = check_integration_contract.check_repository(integration_root)
+
+    assert any("coverage audit row 1" in failure for failure in failures)
+
+
+def test_coverage_audit_rejects_wrong_evidence_with_same_row_count(
+    integration_root: Path,
+) -> None:
+    path = integration_root / "docs/review/INFORMATION_I_COVERAGE_AUDIT.md"
+    text = path.read_text(encoding="utf-8")
+    text = text.replace(
+        "prob.info1.society.information.media.001.v1",
+        "prob.info1.society.information.media.999.v1",
+        1,
+    )
+    path.write_text(text, encoding="utf-8")
+
+    failures, _ = check_integration_contract.check_repository(integration_root)
+
+    assert any("coverage audit row 1" in failure for failure in failures)
 
 
 def test_unreviewed_machine_claim_is_rejected(integration_root: Path) -> None:

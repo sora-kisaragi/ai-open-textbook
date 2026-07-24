@@ -16,15 +16,15 @@ remain open for the final human gate.
 ## Integrated Contract
 
 - 32 learner lessons each include one language-independent transfer probe.
-- 32 teacher guides cover all 65 mandatory 50-minute periods. Every period has
+- 32 teacher guides cover all 66 mandatory 50-minute periods. Every period has
   a learner outcome, stopping point, and observable continue condition.
-- Mandatory unit periods are A=10, B=12, C=21, and D=22. Their shares are 15.4%, 18.5%, 32.3%, and 33.8%.
+- Mandatory unit periods are A=11, B=12, C=21, and D=22. Their shares are 16.7%, 18.2%, 31.8%, and 33.3%.
 - A7, B7, C9, and D9 remain the four multi-session performance tasks. Each retains one optional feedback and revision period.
-- The recommended classroom route remains 70 periods: 65 mandatory, four
-  project extensions, and one cumulative diagnostic and reteaching period.
+- The recommended classroom route is 70 periods: 66 mandatory and four project
+  extensions. Diagnosis and targeted reteaching are embedded in lesson routes.
 - All 96 objective coverage entries received a semantic evidence review. The
-  audit retains 94 `complete` entries and downgrades D2.O1 and D6.O2 to
-  `partial` until a second direct assessment artifact exists. The per-objective
+  audit retains 95 `complete` entries and keeps D6.O2 `partial` until a second
+  direct assessment artifact exists. The per-objective
   record is in `docs/review/INFORMATION_I_COVERAGE_AUDIT.md`.
 - Machine verification is required for code answers and `predict_output`
   answers. Eight additional integrated responses are allowed only because
@@ -46,16 +46,16 @@ lesson pages, 32 teacher pages, 140 self-study answer reveals, and two complete
 book views. Representative transfer and teacher-schedule sections were
 inspected at 1440 x 1000 and 390 x 844 without horizontal page overflow.
 
-The classroom PDF passed at 205 A4 pages with no answer feedback. The self-study
-PDF passed at 280 A4 pages with 140 answer-feedback sections. Representative C9
-and D9 pages were rendered with Poppler and visually checked. A print orphan in
-which the D9 transfer heading was separated from its paragraph was corrected by
-keeping level-two headings with their following content.
+The classroom PDF passed at 228 A4 pages with no answer feedback. The self-study
+PDF passed at 313 A4 pages with 140 answer-feedback sections. Representative
+pilot and project pages were rendered with Poppler and visually checked. The D9
+transfer-heading orphan and a D2 self-study feedback orphan were corrected and
+re-rendered with their related content kept together.
 
 ## Final Human Gate
 
 Human maintainers must decide whether the stacked roadmap is acceptable,
-whether the 65-period sequence is workable, whether transfer tasks and stopping
+whether the 66-period sequence is workable, whether transfer tasks and stopping
 points fit the intended learners, whether assessment and copyright decisions
 are appropriate, and whether lifecycle status should advance. No lifecycle
 status is advanced by this dossier.

@@ -28,10 +28,11 @@ CURRICULUM_PATH = Path("curriculum/highschool_information_i.curriculum.json")
 CURRICULUM_SCHEMA = "curriculum.schema.json"
 VERSION_RE = re.compile(r"^(?P<family>.+)\.v(?P<version>[1-9][0-9]*)$")
 REVISION_DATE_RE = re.compile(r"^rev\.(?P<date>[0-9]{8})\.[0-9]{4}$")
+SUSPICIOUS_QUESTION_MARK_RUN = re.compile(r"\?{8,}")
 LESSON_ID_DIGEST = "3e70077afec6375a2fd09ac48ac74ababf69a1bde2cdae916a9145daff5805f5"
 OBJECTIVE_ID_DIGEST = "c516448693d76e035d8720de968f5dd5eff10a4711cf5d1703539b9479589c47"
 EXPECTED_UNIT_PERIODS = {
-    "mext.info1.1": 10,
+    "mext.info1.1": 11,
     "mext.info1.2": 12,
     "mext.info1.3": 21,
     "mext.info1.4": 22,
@@ -123,9 +124,72 @@ def json_path(parts: Iterable[object]) -> str:
 
 
 def validate_schema(errors: list[str], record: dict, schema: dict) -> None:
+    value = public_value(record)
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
-    for failure in sorted(validator.iter_errors(public_value(record)), key=lambda item: list(item.absolute_path)):
+    for failure in sorted(validator.iter_errors(value), key=lambda item: list(item.absolute_path)):
         add_error(errors, record, f"schema {json_path(failure.absolute_path)}: {failure.message}")
+
+
+def check_answer_hints(errors: list[str], records: list[dict]) -> None:
+    for answer in (record for record in records if record.get("type") == "answer"):
+        if "hints" not in answer:
+            continue
+        hints = answer.get("hints")
+        if not isinstance(hints, list) or len(hints) != 2:
+            add_error(errors, answer, "hints must contain exactly two strings when present")
+            continue
+        for index, hint in enumerate(hints):
+            if not isinstance(hint, str) or not hint.strip():
+                add_error(errors, answer, f"hints[{index}] must be a non-empty string")
+        if all(isinstance(hint, str) for hint in hints) and len(set(hints)) != len(hints):
+            add_error(errors, answer, "hints must contain two distinct strings")
+
+
+def check_suspicious_text_encoding(errors: list[str], records: list[dict]) -> None:
+    """Reject replacement-like question-mark runs that can hide encoding loss."""
+
+    def walk(value: object, path: str) -> Iterable[tuple[str, str]]:
+        if isinstance(value, str):
+            yield path, value
+        elif isinstance(value, list):
+            for index, item in enumerate(value):
+                yield from walk(item, f"{path}[{index}]")
+        elif isinstance(value, dict):
+            for key, item in value.items():
+                if not str(key).startswith("_"):
+                    yield from walk(item, f"{path}.{key}")
+
+    for record in records:
+        for path, value in walk(record, "$"):
+            if "\ufffd" in value:
+                add_error(errors, record, f"{path} contains a Unicode replacement character; check text encoding")
+            if SUSPICIOUS_QUESTION_MARK_RUN.search(value):
+                add_error(
+                    errors,
+                    record,
+                    f"{path} contains eight or more consecutive question marks; check text encoding",
+                )
+
+
+def check_markdown_text_encoding(errors: list[str], root: Path, records: list[dict]) -> None:
+    paths: set[Path] = set()
+    for lesson in (record for record in records if record.get("type") == "lesson"):
+        body_ref = lesson.get("body_ref")
+        if not isinstance(body_ref, str):
+            continue
+        body_path = root / body_ref
+        paths.add(body_path)
+        relative = Path(body_ref)
+        if relative.parts and relative.parts[0] == "lessons":
+            paths.add(root / "teacher_guides" / Path(*relative.parts[1:]))
+    for path in sorted(paths):
+        if not path.is_file():
+            continue
+        value = path.read_text(encoding="utf-8")
+        if "\ufffd" in value:
+            errors.append(f"{path}: contains a Unicode replacement character; check text encoding")
+        if SUSPICIOUS_QUESTION_MARK_RUN.search(value):
+            errors.append(f"{path}: contains eight or more consecutive question marks; check text encoding")
 
 
 def load_schema(root: Path, filename: str) -> dict:
@@ -503,17 +567,8 @@ def check_curriculum(
     if lesson_allocations != lesson_range_extensions:
         add_error(errors, curriculum, "lesson extension allocations do not match instructional time ranges")
 
-    cumulative_periods = sum(
-        allocation.get("periods", 0)
-        for allocation in allocations
-        if isinstance(allocation, dict)
-        and allocation.get("kind") == "cumulative"
-        and isinstance(allocation.get("periods", 0), int)
-    )
-    if cumulative_periods != 1:
-        add_error(errors, curriculum, "the classroom route must include one cumulative diagnostic period")
-    if isinstance(recommended_periods, int) and period_totals[1] + cumulative_periods != recommended_periods:
-        add_error(errors, curriculum, "recommended classroom total must include lesson and cumulative extensions")
+    if isinstance(recommended_periods, int) and period_totals[1] != recommended_periods:
+        add_error(errors, curriculum, "recommended classroom total must match lesson maxima")
 
     for problem in (record for record in records if record.get("type") == "problem"):
         for objective_ref in problem.get("objective_refs", []) or []:
@@ -616,6 +671,9 @@ def validate_repository(root: Path) -> tuple[list[str], int]:
 
     check_curriculum(errors, root, curriculum, records, by_id)
     check_typed_record_graph(errors, records, by_id)
+    check_answer_hints(errors, records)
+    check_suspicious_text_encoding(errors, [*records, curriculum])
+    check_markdown_text_encoding(errors, root, records)
     check_repository_paths(errors, root, records)
     check_supersession(errors, records, by_id)
     check_revisions(errors, records, by_id)

@@ -163,8 +163,8 @@ def test_time_and_assessment_baselines() -> None:
     }
     route = curriculum["classroom_route"]
     assert route["period_minutes"] == 50
-    assert route["mandatory_periods"] == 65
-    assert route["recommended_extension_periods"] == 5
+    assert route["mandatory_periods"] == 66
+    assert route["recommended_extension_periods"] == 4
     assert route["recommended_total_periods"] == 70
     assert period_minimum == route["mandatory_periods"]
 
@@ -176,7 +176,7 @@ def test_time_and_assessment_baselines() -> None:
         for unit in curriculum["units"]
     }
     assert unit_periods == {
-        "mext.info1.1": 10,
+        "mext.info1.1": 11,
         "mext.info1.2": 12,
         "mext.info1.3": 21,
         "mext.info1.4": 22,
@@ -187,7 +187,7 @@ def test_time_and_assessment_baselines() -> None:
         assert 0.15 <= share <= 0.35
 
     allocations = route["extension_allocations"]
-    assert sum(allocation["periods"] for allocation in allocations) == 5
+    assert sum(allocation["periods"] for allocation in allocations) == 4
     lesson_allocations = {
         allocation["lesson_ref"]: allocation["periods"]
         for allocation in allocations
@@ -199,23 +199,9 @@ def test_time_and_assessment_baselines() -> None:
         "lesson.info1.programming.project.v1": 1,
         "lesson.info1.data.investigation.project.v1": 1,
     }
-    assert [
-        allocation for allocation in allocations
-        if allocation["kind"] == "cumulative"
-    ] == [{
-        "kind": "cumulative",
-        "periods": 1,
-        "purpose": "Cumulative diagnostic and targeted reteaching across all four units.",
-    }]
+    assert all(allocation["kind"] == "lesson" for allocation in allocations)
     assert period_maximum == period_minimum + sum(lesson_allocations.values())
-    assert route["recommended_total_periods"] == (
-        period_maximum
-        + sum(
-            allocation["periods"]
-            for allocation in allocations
-            if allocation["kind"] == "cumulative"
-        )
-    )
+    assert route["recommended_total_periods"] == period_maximum
     for lesson in lessons:
         minimum, maximum = lesson["instructional_time"]["class_periods_50_min"]
         assert maximum - minimum == lesson_allocations.get(lesson["lesson_id"], 0)
@@ -395,14 +381,11 @@ def test_time_and_assessment_baselines() -> None:
         for lesson in unit_d_lessons
         for entry in lesson["assessment_coverage"]
     }
-    assert sum(status == "complete" for status in unit_d_statuses.values()) == 25
+    assert sum(status == "complete" for status in unit_d_statuses.values()) == 26
     assert {
         objective_id for objective_id, status in unit_d_statuses.items()
         if status == "partial"
-    } == {
-        "obj.info1.networks.internet.web.001.v1",
-        "obj.info1.data.descriptive.analysis.002.v1",
-    }
+    } == {"obj.info1.data.descriptive.analysis.002.v1"}
 
     d9 = next(lesson for lesson in unit_d_lessons if lesson["order"] == "D9")
     assert {
@@ -509,6 +492,8 @@ def test_unit_c_review_contracts() -> None:
     lessons = {
         record["id"]: record for record in load_collection("lessons.ndjson")
     }
+    assert "lesson.info1.programming.collections.strings.v1" in planned["C6"]["depends_on"]
+    assert "C5: Collections and Strings." in planned["C6"]["prerequisites"]
     problems = {
         record["id"]: record for record in load_collection("problems.ndjson")
     }
@@ -760,6 +745,21 @@ def test_unit_c_review_contracts() -> None:
     ]["source_refs"]
 
 
+def test_b7_requires_both_visualization_and_prototyping() -> None:
+    curriculum = load_curriculum()
+    unit_b = next(unit for unit in curriculum["units"] if unit["area"] == "mext.info1.2")
+    b7 = next(lesson for lesson in unit_b["lessons"] if lesson["order"] == "B7")
+
+    assert b7["prerequisites"] == [
+        "B5: Data Visualization and Misleading Presentation.",
+        "B6: Prototyping and Usability Evaluation.",
+    ]
+    assert b7["depends_on"] == [
+        "lesson.info1.design.data.visualization.v1",
+        "lesson.info1.design.prototype.usability.v1",
+    ]
+
+
 def test_unit_d_network_security_contracts() -> None:
     curriculum = load_curriculum()
     unit_d = next(
@@ -816,7 +816,7 @@ def test_unit_d_network_security_contracts() -> None:
     for term in (
         "https://library.example.test/books/B204?view=summary",
         "DNS", "192.0.2.24", "スイッチ", "ルーター", "伝送制御",
-        "TLS", "証明書", "HTTP要求", "データベース", "表示",
+            "TLS", "証明書", "HTTP要求", "サービス内処理", "表示",
     ):
         assert term in d2_trace
     d2_diagnosis = " ".join([
@@ -864,10 +864,24 @@ def test_unit_d_network_security_contracts() -> None:
     assert "supersedes SP 800-63B" in sources["src.nist.sp800.63b4.v1"]["notes"]
     assert "planned revision" in sources["src.nist.fips1804.v1"]["notes"]
 
+    d2_rubric = rubrics["rubric.prob.info1.networks.internet.web.004.v1"]
+    assert [criterion["id"] for criterion in d2_rubric["criteria"]] == ["c1", "c2", "c3"]
+    assert sum(criterion["points"] for criterion in d2_rubric["criteria"]) == 3
+
     for problem in unit_d_problems:
         answer = answers[problem["answer_refs"][0]]
         rubric = rubrics[problem["rubric_refs"][0]]
-        assert answer["revision"] == 2
+        if problem["id"] == "prob.info1.networks.internet.web.004.v1":
+            expected_revision = 7
+        elif problem["id"] == "prob.info1.networks.internet.web.002.v1":
+            expected_revision = 5
+        elif problem["id"] == "prob.info1.networks.internet.web.003.v1":
+            expected_revision = 4
+        elif ".internet.web." in problem["id"]:
+            expected_revision = 3
+        else:
+            expected_revision = 2
+        assert answer["revision"] == expected_revision
         assert answer["status"] == "draft"
         assert answer["review_status"] == "needs_human_review"
         assert "verification_status" not in answer
@@ -884,7 +898,7 @@ def test_unit_d_network_security_contracts() -> None:
     ]
     learner_text = "\n".join(path.read_text(encoding="utf-8") for path in learner_paths)
     assert "Python" not in learner_text
-    assert "実在するネットワークを許可なく調査" in learner_text
+    assert "許可のないネットワーク調査は行いません" in learner_text
     assert "実システムを許可なく調査" in learner_text
 
 

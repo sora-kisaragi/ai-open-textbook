@@ -373,6 +373,16 @@ a:hover {
   overflow-wrap: anywhere;
 }
 
+.lesson-article img,
+.teacher-copy img,
+.practice-item img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto;
+}
+
 .lesson-article code:not(pre code),
 .teacher-copy code:not(pre code),
 .practice-item code:not(pre code),
@@ -447,6 +457,44 @@ pre code {
   background: #f7faf8;
 }
 
+.hint-reveal {
+  margin-top: 0.85rem;
+  border-left: 4px solid var(--blue);
+  background: var(--blue-soft);
+}
+
+.hint-reveal summary {
+  padding: 0.7rem 0.9rem;
+  color: #244c6e;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hint-body {
+  padding: 0 0.9rem 0.8rem;
+}
+
+.hint-body > :last-child {
+  margin-bottom: 0;
+}
+
+.success-criteria {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border-left: 4px solid var(--amber);
+  background: var(--amber-soft);
+}
+
+.success-criteria h4 {
+  margin: 0 0 0.45rem;
+  font-size: 1rem;
+}
+
+.success-criteria ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
 .answer-reveal summary {
   padding: 0.85rem 1rem;
   color: var(--green);
@@ -471,6 +519,13 @@ pre code {
 
 .answer-feedback pre {
   margin-top: 0.45rem;
+}
+
+.post-answer-retry {
+  margin-top: 0.85rem;
+  padding: 0.9rem 1rem;
+  border-left: 4px solid var(--green);
+  background: #eef7f1;
 }
 
 .canonical-answer-prose {
@@ -899,12 +954,43 @@ th {
     padding-left: 0;
   }
 
-  .self-study-book details.answer-reveal > :not(summary) {
+  .self-study-book details.answer-reveal > :not(summary),
+  .self-study-book details.hint-reveal > :not(summary) {
     display: block !important;
   }
 
-  .self-study-book details.answer-reveal summary {
+  .self-study-book details.answer-reveal summary,
+  .self-study-book details.hint-reveal summary {
     display: none;
+  }
+
+  .self-study-book .practice-item {
+    padding: 1rem;
+  }
+
+  .self-study-book .answer-feedback {
+    padding-bottom: 0.7rem;
+    font-size: 10pt;
+    line-height: 1.65;
+  }
+
+  .self-study-book .answer-feedback h4 {
+    margin: 0.6rem 0 0.3rem;
+    break-after: avoid;
+  }
+
+  .self-study-book .answer-feedback h4 + * {
+    break-before: avoid;
+  }
+
+  .self-study-book .answer-feedback ul {
+    break-inside: avoid;
+  }
+
+  .self-study-book .post-answer-retry {
+    break-before: avoid-page;
+    page-break-before: avoid;
+    break-inside: avoid;
   }
 
   .lesson-article h2,
@@ -954,6 +1040,11 @@ th {
     padding-top: 0;
     padding-bottom: 0;
     break-before: page;
+  }
+
+  .book-lesson .lesson-article h1 {
+    font-size: 23pt;
+    line-height: 1.25;
   }
 
   .book-lesson .practice-section {

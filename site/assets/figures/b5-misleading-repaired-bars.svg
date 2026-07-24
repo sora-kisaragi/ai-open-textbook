@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="700" viewBox="0 0 1120 700" role="img" aria-labelledby="title desc">
+  <title id="title">誤解を招く棒グラフと修正した棒グラフの比較</title>
+  <desc id="desc">左は、学習サイト42人、校内放送24人、教室掲示18人を15人から45人の切り取り軸で示し、分母と限界を省いたグラフ。右は、教室掲示18人中20人で90パーセント、学習サイト42人中50人で84パーセント、校内放送24人中30人で80パーセントを0から100パーセントの軸、直接ラベル、模様、限界の注記で示す修正版。</desc>
+  <defs>
+    <pattern id="slash" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#333" stroke-width="3"/>
+    </pattern>
+    <pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="2" fill="#333"/>
+      <circle cx="9" cy="9" r="2" fill="#333"/>
+    </pattern>
+    <pattern id="horizontal" width="10" height="10" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="3" x2="10" y2="3" stroke="#333" stroke-width="2"/>
+    </pattern>
+    <style>
+      .main-title { font: 700 25px sans-serif; fill: #111; }
+      .panel-title { font: 700 21px sans-serif; fill: #111; }
+      .axis { stroke: #222; stroke-width: 2.5; }
+      .grid { stroke: #aaa; stroke-width: 1; stroke-dasharray: 4 4; }
+      .tick { font: 14px sans-serif; fill: #111; }
+      .label { font: 15px sans-serif; fill: #111; }
+      .value { font: 700 15px sans-serif; fill: #111; }
+      .note { font: 14px sans-serif; fill: #111; }
+      .bar { stroke: #222; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <rect width="1120" height="700" fill="#fff"/>
+  <text x="560" y="36" text-anchor="middle" class="main-title">同じ合成データに対する軸・順序・ラベルの違い</text>
+
+  <rect x="24" y="60" width="520" height="610" rx="12" fill="#fafafa" stroke="#222" stroke-width="3" stroke-dasharray="10 7"/>
+  <text x="284" y="92" text-anchor="middle" class="panel-title">A　誤解を招く例</text>
+  <text x="284" y="124" text-anchor="middle" class="panel-title">学習サイトが最も効果的</text>
+
+  <text x="63" y="157" class="label">確認できた人数</text>
+  <line x1="78" y1="170" x2="78" y2="530" class="axis"/>
+  <line x1="78" y1="530" x2="512" y2="530" class="axis"/>
+
+  <line x1="78" y1="170" x2="512" y2="170" class="grid"/>
+  <line x1="78" y1="290" x2="512" y2="290" class="grid"/>
+  <line x1="78" y1="410" x2="512" y2="410" class="grid"/>
+  <line x1="78" y1="530" x2="512" y2="530" class="grid"/>
+  <text x="68" y="175" text-anchor="end" class="tick">45</text>
+  <text x="68" y="295" text-anchor="end" class="tick">35</text>
+  <text x="68" y="415" text-anchor="end" class="tick">25</text>
+  <text x="68" y="535" text-anchor="end" class="tick">15</text>
+
+  <rect x="125" y="206" width="90" height="324" fill="#555" class="bar"/>
+  <rect x="265" y="422" width="90" height="108" fill="#888" class="bar"/>
+  <rect x="405" y="494" width="90" height="36" fill="#bbb" class="bar"/>
+  <text x="170" y="558" text-anchor="middle" class="label">学習サイト</text>
+  <text x="310" y="558" text-anchor="middle" class="label">校内放送</text>
+  <text x="450" y="558" text-anchor="middle" class="label">教室掲示</text>
+  <text x="284" y="600" text-anchor="middle" class="note">人数の多い順・分母なし・15から始まる軸</text>
+  <text x="284" y="624" text-anchor="middle" class="note">直接値なし・条件や限界の注記なし</text>
+
+  <rect x="576" y="60" width="520" height="610" rx="12" fill="#fff" stroke="#222" stroke-width="3"/>
+  <text x="836" y="92" text-anchor="middle" class="panel-title">B　修正例</text>
+  <text x="836" y="124" text-anchor="middle" class="panel-title">案内方法別・確認できた割合</text>
+  <text x="836" y="148" text-anchor="middle" class="note">授業用合成データ</text>
+
+  <text x="632" y="156" class="label">割合（%）</text>
+  <line x1="632" y1="170" x2="632" y2="530" class="axis"/>
+  <line x1="632" y1="530" x2="1072" y2="530" class="axis"/>
+
+  <line x1="632" y1="170" x2="1072" y2="170" class="grid"/>
+  <line x1="632" y1="242" x2="1072" y2="242" class="grid"/>
+  <line x1="632" y1="314" x2="1072" y2="314" class="grid"/>
+  <line x1="632" y1="386" x2="1072" y2="386" class="grid"/>
+  <line x1="632" y1="458" x2="1072" y2="458" class="grid"/>
+  <line x1="632" y1="530" x2="1072" y2="530" class="grid"/>
+  <text x="622" y="175" text-anchor="end" class="tick">100</text>
+  <text x="622" y="247" text-anchor="end" class="tick">80</text>
+  <text x="622" y="319" text-anchor="end" class="tick">60</text>
+  <text x="622" y="391" text-anchor="end" class="tick">40</text>
+  <text x="622" y="463" text-anchor="end" class="tick">20</text>
+  <text x="622" y="535" text-anchor="end" class="tick">0</text>
+
+  <rect x="675" y="206" width="90" height="324" fill="url(#slash)" class="bar"/>
+  <rect x="825" y="227.6" width="90" height="302.4" fill="url(#dots)" class="bar"/>
+  <rect x="975" y="242" width="70" height="288" fill="url(#horizontal)" class="bar"/>
+  <text x="720" y="195" text-anchor="middle" class="value">18/20 = 90%</text>
+  <text x="870" y="216" text-anchor="middle" class="value">42/50 = 84%</text>
+  <text x="1010" y="231" text-anchor="middle" class="value">24/30 = 80%</text>
+  <text x="720" y="558" text-anchor="middle" class="label">教室掲示</text>
+  <text x="870" y="558" text-anchor="middle" class="label">学習サイト</text>
+  <text x="1010" y="558" text-anchor="middle" class="label">校内放送</text>
+  <text x="836" y="590" text-anchor="middle" class="note">元表の項目順。棒は斜線・点・横線でも区別。</text>
+  <text x="836" y="614" text-anchor="middle" class="note">各方法1回・参加者群が異なるため、原因比較や一般化の根拠はない。</text>
+  <text x="836" y="644" text-anchor="middle" class="note">割合、分母、目盛り、順序、ラベル、限界を明示。</text>
+</svg>

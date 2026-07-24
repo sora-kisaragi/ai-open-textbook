@@ -2,9 +2,9 @@
 
 Status: `draft`
 Review status: `needs_human_review`
-Tracking: #59, #74
+Tracking: #59, #74, #91
 Baseline date: 2026-07-14
-Evidence updated: 2026-07-22
+Evidence updated: 2026-07-23
 
 ## Purpose
 
@@ -24,11 +24,11 @@ for the autonomous Draft PR stack.
 | Problem records | 2 | 140 | At least 140 |
 | Answer records | 2 | 140 | One resolving answer per problem |
 | Rubric records | 2 | 140 | One resolving rubric per problem |
-| Source records | 1 generic draft | 18 active draft records plus 1 deprecated legacy record | Distinct claim-appropriate primary sources |
+| Source records | 1 generic draft | 35 active draft records plus 2 deprecated legacy records | Distinct claim-appropriate primary sources |
 | Executable evidence | 2 answers | 32 lesson blocks, 10 problem blocks, and 7 code-answer variants checked | Every deterministic executable example and answer |
 | Offline learner pages | 1 | 32 with complete navigation | 32 plus complete navigation |
 | Offline teacher/reviewer pages | 1 | 32 with source and revision context | 32 plus complete navigation |
-| Print/PDF workflow | Print CSS QA only | Reproducible 183-page A4 learner PDF | Reproducible full-book PDF with visual QA |
+| Print/PDF workflow | Print CSS QA only | Reproducible 228-page classroom and 313-page self-study A4 PDFs | Reproducible full-book PDFs with visual QA |
 
 The canonical curriculum lesson objects are the maintained requirements source.
 They avoid 32 duplicated Markdown documents drifting away from validated IDs,
@@ -79,16 +79,16 @@ is age-appropriate.
 
 | Measure | Planning total |
 | --- | ---: |
-| Mandatory classroom periods (50 minutes) | 65 |
-| Recommended extension periods | 5 |
+| Mandatory classroom periods (50 minutes) | 66 |
+| Recommended extension periods | 4 |
 | Recommended classroom route | 70 |
-| Self-study time | 2,665-4,200 minutes |
+| Self-study time | 2,735-4,260 minutes |
 | Multi-session performance tasks | 4 |
 
-The mandatory unit allocations are 9 periods for Unit A, 12 for Unit B, 21 for
-Unit C, and 23 for Unit D. The four performance tasks are A7, B7, C9, and D9;
-each has one recommended extension period for feedback and revision. The fifth
-extension period supports cumulative diagnosis and targeted reteaching. These
+The mandatory unit allocations are 11 periods for Unit A, 12 for Unit B, 21 for
+Unit C, and 22 for Unit D. The four performance tasks are A7, B7, C9, and D9;
+each has one recommended extension period for feedback and revision. Diagnosis
+and targeted reteaching remain embedded in lesson stopping and recovery rules. These
 routes are design inputs for teacher review and learner trials, not official
 allocations or evidence that the planned workload is age-appropriate. Ordinary
 lesson assessment is included, while school events and local examinations

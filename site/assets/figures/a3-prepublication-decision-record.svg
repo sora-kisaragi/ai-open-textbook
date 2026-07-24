@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640" role="img" aria-labelledby="title desc">
+  <title id="title">公開前の判断記録の流れ</title>
+  <desc id="desc">対象と公開行為を決めた後、プライバシー、著作権・ライセンス・出所表示、安全・責任の三つを別々に確認する。根拠、未確認事項、担当者、見直し日を記録し、公開、修正して公開、保留のいずれかを選ぶ流れ。</desc>
+  <defs>
+    <pattern id="diagonal" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#555" stroke-width="2"/>
+    </pattern>
+    <pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1.8" fill="#555"/>
+      <circle cx="9" cy="9" r="1.8" fill="#555"/>
+    </pattern>
+    <pattern id="horizontal" width="10" height="10" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="3" x2="10" y2="3" stroke="#555" stroke-width="2"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#222"/>
+    </marker>
+    <style>
+      .heading { font: 700 25px sans-serif; fill: #111; }
+      .box-title { font: 700 20px sans-serif; fill: #111; }
+      .center-title { font: 700 18px sans-serif; fill: #111; }
+      .body { font: 16px sans-serif; fill: #111; }
+      .small { font: 14px sans-serif; fill: #222; }
+      .outline { stroke: #222; stroke-width: 3; }
+      .arrow { stroke: #222; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="960" height="640" fill="#fff"/>
+  <text x="480" y="38" text-anchor="middle" class="heading">公開前の判断記録</text>
+
+  <rect x="275" y="62" width="410" height="72" rx="12" fill="#fff" class="outline"/>
+  <text x="480" y="91" text-anchor="middle" class="box-title">1　対象と行為を決める</text>
+  <text x="480" y="118" text-anchor="middle" class="body">何を・どこへ・誰に・どのように公開するか</text>
+
+  <path d="M480 134 L480 172" class="arrow"/>
+  <path d="M480 154 L165 154 L165 185" class="arrow"/>
+  <path d="M480 154 L795 154 L795 185" class="arrow"/>
+
+  <rect x="40" y="185" width="250" height="190" rx="12" fill="url(#diagonal)" class="outline"/>
+  <rect x="51" y="196" width="228" height="168" rx="8" fill="#fff" stroke="#222" stroke-width="2"/>
+  <text x="165" y="229" text-anchor="middle" class="box-title">2A　プライバシー</text>
+  <text x="70" y="264" class="body">誰のどの情報か</text>
+  <text x="70" y="293" class="body">どこまで広がるか</text>
+  <text x="70" y="322" class="body">起こり得る害は何か</text>
+  <text x="70" y="351" class="small">必要性・情報を減らす方法</text>
+
+  <rect x="355" y="185" width="250" height="190" rx="12" fill="url(#dots)" class="outline" stroke-dasharray="10 6"/>
+  <rect x="366" y="196" width="228" height="168" rx="8" fill="#fff" stroke="#222" stroke-width="2" stroke-dasharray="10 6"/>
+  <text x="480" y="226" text-anchor="middle" class="center-title">2B　著作権・ライセンス</text>
+  <text x="480" y="251" text-anchor="middle" class="center-title">・出所表示</text>
+  <text x="385" y="286" class="body">どの表現と利用行為か</text>
+  <text x="385" y="315" class="body">根拠と条件は何か</text>
+  <text x="385" y="344" class="small">許諾・例外・表示・改変</text>
+
+  <rect x="670" y="185" width="250" height="190" rx="12" fill="url(#horizontal)" class="outline"/>
+  <rect x="681" y="196" width="228" height="168" rx="8" fill="#fff" stroke="#222" stroke-width="5"/>
+  <text x="795" y="229" text-anchor="middle" class="box-title">2C　安全・責任</text>
+  <text x="700" y="264" class="body">公開範囲は適切か</text>
+  <text x="700" y="293" class="body">内容は正確か</text>
+  <text x="700" y="322" class="body">誰が訂正・削除するか</text>
+  <text x="700" y="351" class="small">技術の詳細はD3へ</text>
+
+  <path d="M165 375 L165 416 L480 416 L480 437" class="arrow"/>
+  <path d="M480 375 L480 437" class="arrow"/>
+  <path d="M795 375 L795 416 L480 416" fill="none" stroke="#222" stroke-width="3"/>
+
+  <rect x="195" y="437" width="570" height="72" rx="12" fill="#f4f4f4" class="outline"/>
+  <text x="480" y="467" text-anchor="middle" class="box-title">3　判断記録にまとめる</text>
+  <text x="480" y="494" text-anchor="middle" class="body">根拠・未確認事項・担当者・見直し日</text>
+
+  <path d="M480 509 L480 544" class="arrow"/>
+
+  <rect x="95" y="552" width="220" height="56" rx="28" fill="#fff" class="outline"/>
+  <text x="205" y="587" text-anchor="middle" class="box-title">公開</text>
+  <rect x="370" y="552" width="220" height="56" rx="28" fill="#f4f4f4" class="outline"/>
+  <text x="480" y="587" text-anchor="middle" class="box-title">修正して公開</text>
+  <rect x="645" y="552" width="220" height="56" rx="28" fill="#fff" class="outline" stroke-dasharray="10 6"/>
+  <text x="755" y="587" text-anchor="middle" class="box-title">保留</text>
+
+  <path d="M480 544 L205 544 L205 552" fill="none" stroke="#222" stroke-width="3"/>
+  <path d="M480 544 L480 552" fill="none" stroke="#222" stroke-width="3"/>
+  <path d="M480 544 L755 544 L755 552" fill="none" stroke="#222" stroke-width="3"/>
+</svg>

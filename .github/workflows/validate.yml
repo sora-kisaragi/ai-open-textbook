@@ -33,6 +33,8 @@ jobs:
         run: uv run python scripts/check_revision_history.py --base-ref "${{ github.event.before }}"
       - name: Validate canonical data and curriculum
         run: uv run python scripts/validate_ndjson.py
+      - name: Audit lesson depth
+        run: uv run python scripts/audit_lesson_depth.py --format text
       - name: Build SQLite index
         run: uv run python scripts/build_sqlite_index.py
       - name: Check runnable examples

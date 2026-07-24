@@ -12,8 +12,9 @@ import shutil
 import sys
 import tempfile
 import time
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from string import Template
 
 from markdown_it import MarkdownIt
@@ -34,6 +35,20 @@ ACTIVITY_PAGES = (
     Path("activities/b7_keyboard_start.html"),
     Path("activities/b7_keyboard_confirm.html"),
     Path("activities/b7_keyboard_complete.html"),
+)
+FIGURE_NAME_PART = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
+SVG_URL_REFERENCE = re.compile(r"url\(\s*(['\"]?)(.*?)\1\s*\)", re.IGNORECASE)
+SVG_FORBIDDEN_ELEMENTS = frozenset(
+    {
+        "animate",
+        "animatemotion",
+        "animatetransform",
+        "foreignobject",
+        "iframe",
+        "object",
+        "script",
+        "set",
+    }
 )
 
 
@@ -58,7 +73,79 @@ def escape(value: object) -> str:
     return html.escape(str(value), quote=True)
 
 
-def markdown_renderer() -> MarkdownIt:
+def figure_asset_reference(source: str, asset_prefix: str) -> str:
+    """Map a safe figure URI to the generated asset tree."""
+    if not source.startswith("figure:"):
+        return source
+    name = source.removeprefix("figure:")
+    path = PurePosixPath(name)
+    if (
+        not name
+        or path.is_absolute()
+        or path.suffix.lower() != ".svg"
+        or any(part in {"", ".", ".."} or not FIGURE_NAME_PART.fullmatch(part) for part in path.parts)
+    ):
+        raise SiteBuildError(f"invalid figure target: {source}")
+    return (PurePosixPath(asset_prefix) / "assets" / "figures" / path).as_posix()
+
+
+def xml_local_name(name: str) -> str:
+    return name.rsplit("}", 1)[-1]
+
+
+def validate_svg_asset(path: Path) -> None:
+    """Reject active content and non-local references in a textbook SVG."""
+    try:
+        source = path.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise SiteBuildError(f"cannot read SVG asset: {path}") from exc
+    if re.search(r"<!\s*(?:DOCTYPE|ENTITY)\b", source, re.IGNORECASE):
+        raise SiteBuildError(f"SVG declarations are not allowed: {path}")
+    if re.search(r"<\?(?!xml(?:\s|\?>))", source, re.IGNORECASE):
+        raise SiteBuildError(f"SVG processing instructions are not allowed: {path}")
+    try:
+        root = ET.fromstring(source)
+    except ET.ParseError as exc:
+        raise SiteBuildError(f"invalid SVG asset {path}: {exc}") from exc
+    if xml_local_name(root.tag) != "svg":
+        raise SiteBuildError(f"SVG asset must have an svg root element: {path}")
+
+    for element in root.iter():
+        element_name = xml_local_name(element.tag).lower()
+        if element_name in SVG_FORBIDDEN_ELEMENTS:
+            raise SiteBuildError(f"active SVG element is not allowed in {path}: {element_name}")
+        for raw_name, raw_value in element.attrib.items():
+            name = xml_local_name(raw_name).lower()
+            value = raw_value.strip()
+            if name.startswith("on"):
+                raise SiteBuildError(f"SVG event attributes are not allowed in {path}: {name}")
+            if name in {"href", "src"} and value and not value.startswith("#"):
+                raise SiteBuildError(f"external SVG reference is not allowed in {path}: {value}")
+            if "javascript:" in value.lower():
+                raise SiteBuildError(f"javascript SVG value is not allowed in {path}: {name}")
+            if name == "style" and "\\" in value:
+                raise SiteBuildError(f"SVG CSS escapes are not allowed in {path}")
+            for match in SVG_URL_REFERENCE.finditer(value):
+                if not match.group(2).strip().startswith("#"):
+                    raise SiteBuildError(
+                        f"external SVG URL is not allowed in {path}: {match.group(2).strip()}"
+                    )
+        if element_name == "style":
+            css = "".join(element.itertext())
+            if "\\" in css:
+                raise SiteBuildError(f"SVG CSS escapes are not allowed in {path}")
+            if "/*" in css or "*/" in css:
+                raise SiteBuildError(f"SVG CSS comments are not allowed in {path}")
+            if re.search(r"@import\b|expression\s*\(|javascript:", css, re.IGNORECASE):
+                raise SiteBuildError(f"active SVG style is not allowed in {path}")
+            for match in SVG_URL_REFERENCE.finditer(css):
+                if not match.group(2).strip().startswith("#"):
+                    raise SiteBuildError(
+                        f"external SVG style URL is not allowed in {path}: {match.group(2).strip()}"
+                    )
+
+
+def markdown_renderer(asset_prefix: str = "") -> MarkdownIt:
     renderer = MarkdownIt(
         "commonmark",
         {
@@ -76,6 +163,16 @@ def markdown_renderer() -> MarkdownIt:
 
     renderer.add_render_rule("table_open", table_open)
     renderer.add_render_rule("table_close", table_close)
+
+    default_image = renderer.renderer.rules["image"]
+
+    def image_rule(_renderer, tokens, index, options, env) -> str:
+        token = tokens[index]
+        source = token.attrGet("src") or ""
+        token.attrSet("src", figure_asset_reference(source, asset_prefix))
+        return default_image(tokens, index, options, env)
+
+    renderer.add_render_rule("image", image_rule)
     return renderer
 
 
@@ -373,21 +470,128 @@ def render_canonical_answer(md: MarkdownIt, answer: dict) -> str:
     return f'<pre class="canonical-answer canonical-answer-code"><code>{escape(canonical)}</code></pre>'
 
 
+def answer_hints(answer: dict) -> list[str]:
+    hints = answer.get("hints")
+    if hints is None:
+        return []
+    if (
+        not isinstance(hints, list)
+        or len(hints) != 2
+        or any(not isinstance(hint, str) or not hint.strip() for hint in hints)
+    ):
+        raise SiteBuildError(
+            f"answer hints must contain exactly two non-empty strings: {answer.get('id')}"
+        )
+    return hints
+
+
+def learner_success_criteria(problem: dict) -> list[str]:
+    """Return answer-neutral checks suitable before hints and worked answers."""
+    learner_checks = problem.get("learner_checks")
+    if learner_checks is not None:
+        if (
+            not isinstance(learner_checks, list)
+            or not 2 <= len(learner_checks) <= 4
+            or any(not isinstance(item, str) or not item.strip() for item in learner_checks)
+            or len(set(learner_checks)) != len(learner_checks)
+        ):
+            raise SiteBuildError(
+                f"problem learner_checks must contain two to four unique non-empty strings: "
+                f"{problem.get('id')}"
+            )
+        return learner_checks
+    question_type = str(problem.get("question_type", ""))
+    if question_type in {"short_code", "sql", "error_correction", "test_design"}:
+        specific = "処理を小さな手順に分け、各手順の入力・変化・出力を確かめた。"
+    elif question_type in {
+        "calculation",
+        "predict_output",
+        "sequence",
+        "trace",
+        "trace_table",
+    }:
+        specific = "途中の値や状態を順に記録し、最終結果までつながることを確かめた。"
+    elif question_type in {
+        "analysis",
+        "comparison",
+        "conclusion",
+        "diagnosis",
+        "evaluation",
+        "explanation",
+        "extended_response",
+        "integrated_response",
+        "interpretation",
+        "schema_analysis",
+        "sensitivity_analysis",
+    }:
+        specific = "観察できる事実と推測を分け、結論を根拠と限界に結び付けた。"
+    elif question_type in {
+        "creation",
+        "design",
+        "documentation",
+        "performance_task",
+        "planning",
+        "procedure",
+        "project_plan",
+        "structured_procedure",
+        "workflow",
+    }:
+        specific = "目的・対象・条件を明確にし、手順または成果物と確かめ方を示した。"
+    elif question_type in {
+        "classification",
+        "identification",
+        "multiple_choice",
+        "representation_choice",
+        "selection",
+    }:
+        specific = "選んだものが条件に合う理由を、選ばなかったものとの違いから説明した。"
+    else:
+        specific = "答えだけでなく、根拠または途中の考え方を示した。"
+    return [
+        "問題文で求められた対象・条件・形式を確認した。",
+        specific,
+    ]
+
+
+def render_success_criteria(
+    md: MarkdownIt,
+    problem: dict,
+    practice_label: str,
+) -> str:
+    descriptions = learner_success_criteria(problem)
+    items = "".join(f"<li>{md.renderInline(description)}</li>" for description in descriptions)
+    return (
+        '<section class="success-criteria" aria-label="できたか確認">'
+        f"<h4>できたか確認（{escape(practice_label)}）</h4>"
+        f"<ul>{items}</ul></section>"
+    )
+
+
 def render_self_study_practices(
     md: MarkdownIt,
     problems: list[dict],
     by_id: dict[str, dict],
     id_prefix: str = "self-study-practice",
+    practice_label_prefix: str = "",
 ) -> str:
     blocks = []
     for number, problem in enumerate(problems, start=1):
         question = md.render(str(problem.get("question", "")))
         section_id = f"{id_prefix}-{number}"
+        practice_label = f"{practice_label_prefix}-{number}" if practice_label_prefix else str(number)
+        success_criteria = render_success_criteria(md, problem, practice_label)
         answer_reveals = []
         for answer in (
             require_reference(by_id, ref, "answer", "answer_refs")
             for ref in problem.get("answer_refs", []) or []
         ):
+            hint_reveals = "".join(
+                '<details class="hint-reveal">'
+                f"<summary>ヒント {stage} を確認</summary>"
+                f'<div class="hint-body">{md.render(hint)}</div>'
+                "</details>"
+                for stage, hint in enumerate(answer_hints(answer), start=1)
+            )
             acceptable = answer.get("acceptable_answers", []) or []
             acceptable_html = ""
             if acceptable:
@@ -404,7 +608,8 @@ def render_self_study_practices(
                     + render_list(mistakes, css_class="common-mistake-list")
                 )
             answer_reveals.append(
-                '<details class="answer-reveal">'
+                hint_reveals
+                + '<details class="answer-reveal">'
                 "<summary>解答例と解説を確認</summary>"
                 '<div class="answer-feedback">'
                 "<h4>解答例</h4>"
@@ -414,16 +619,23 @@ def render_self_study_practices(
                 f'<div class="answer-explanation">{explanation}</div>'
                 f"{mistakes_html}"
                 "</div></details>"
+                '<div class="post-answer-retry" role="note">'
+                "<strong>確認後の再挑戦:</strong> 解答例を閉じて自分の解答を修正し、"
+                "問題の学習者チェックでもう一度確かめてください。"
+                "すべて満たせたら次の練習へ進みます。不足があれば対応するヒントや本文へ戻り、"
+                "修正してからもう一度確かめてください。"
+                "</div>"
             )
         blocks.append(
             '<section class="practice-item self-study-practice" aria-labelledby="{}">'
             '<p class="section-kicker">練習 {}</p>'
-            '<h3 id="{}">自分で考えてみよう</h3>{}{}'
+            '<h3 id="{}">自分で考えてみよう</h3>{}{}{}'
             "</section>".format(
                 section_id,
                 number,
                 section_id,
                 question,
+                success_criteria,
                 "".join(answer_reveals),
             )
         )
@@ -702,21 +914,38 @@ def write_site(
     by_type: dict[str, list[dict]],
     curriculum: dict[str, CurriculumPosition],
 ) -> None:
-    md = markdown_renderer()
+    learner_md = markdown_renderer("..")
+    self_study_md = markdown_renderer("../..")
+    teacher_md = markdown_renderer("..")
+    book_md = markdown_renderer("")
+    self_study_book_md = markdown_renderer("..")
     assets = destination / "assets"
     lesson_dir = destination / "lessons"
     teacher_dir = destination / "teacher"
     self_study_dir = destination / "self-study"
     self_study_lesson_dir = self_study_dir / "lessons"
-    assets.mkdir(parents=True)
     lesson_dir.mkdir(parents=True)
     teacher_dir.mkdir(parents=True)
     self_study_lesson_dir.mkdir(parents=True)
 
-    stylesheet = root / "site" / "assets" / "styles.css"
+    assets_source = root / "site" / "assets"
+    stylesheet = assets_source / "styles.css"
     if not stylesheet.is_file():
         raise SiteBuildError(f"missing site asset: {stylesheet.relative_to(root)}")
-    shutil.copyfile(stylesheet, assets / "styles.css")
+    figures_source = assets_source / "figures"
+    allowed_assets = {stylesheet.resolve()}
+    if figures_source.is_dir():
+        for figure in sorted(figures_source.rglob("*.svg")):
+            validate_svg_asset(figure)
+            allowed_assets.add(figure.resolve())
+    unexpected_assets = sorted(
+        asset.relative_to(assets_source).as_posix()
+        for asset in assets_source.rglob("*")
+        if asset.is_file() and asset.resolve() not in allowed_assets
+    )
+    if unexpected_assets:
+        raise SiteBuildError(f"unsupported site asset(s): {', '.join(unexpected_assets)}")
+    shutil.copytree(assets_source, assets)
     activities_source = root / "site" / "activities"
     if not activities_source.is_dir():
         raise SiteBuildError(f"missing site activities: {activities_source.relative_to(root)}")
@@ -747,9 +976,6 @@ def write_site(
         )
         body_path = repository_path(root, lesson["body_ref"], "body_ref")
         body_source = body_path.read_text(encoding="utf-8")
-        lesson_html = render_without_practice_ids(md, body_source)
-        practice_html = render_practices(md, linked_problems)
-        self_study_practice_html = render_self_study_practices(md, linked_problems, by_id)
         slug = slug_for_lesson(lesson)
         if slug in output_slugs:
             raise SiteBuildError(f"duplicate lesson output slug: {slug}")
@@ -762,9 +988,7 @@ def write_site(
                 "problems": linked_problems,
                 "slug": slug,
                 "page_title": page_title,
-                "lesson_html": lesson_html,
-                "practice_html": practice_html,
-                "self_study_practice_html": self_study_practice_html,
+                "body_source": body_source,
             }
         )
 
@@ -800,8 +1024,11 @@ def write_site(
                 "subject": escape(lesson.get("subject", "")),
                 "unit": escape(lesson.get("unit", "")),
                 "curriculum_order": escape(position.order),
-                "lesson_html": str(view["lesson_html"]),
-                "practice_html": str(view["practice_html"]),
+                "lesson_html": render_without_practice_ids(
+                    learner_md,
+                    str(view["body_source"]),
+                ),
+                "practice_html": render_practices(learner_md, linked_problems),
                 "previous_link": navigation_link(index - 1, "prev"),
                 "next_link": navigation_link(index + 1, "next"),
             },
@@ -816,8 +1043,16 @@ def write_site(
                 "subject": escape(lesson.get("subject", "")),
                 "unit": escape(lesson.get("unit", "")),
                 "curriculum_order": escape(position.order),
-                "lesson_html": str(view["lesson_html"]),
-                "practice_html": str(view["self_study_practice_html"]),
+                "lesson_html": render_without_practice_ids(
+                    self_study_md,
+                    str(view["body_source"]),
+                ),
+                "practice_html": render_self_study_practices(
+                    self_study_md,
+                    linked_problems,
+                    by_id,
+                    practice_label_prefix=position.order,
+                ),
                 "previous_link": navigation_link(index - 1, "prev"),
                 "next_link": navigation_link(index + 1, "next"),
             },
@@ -832,8 +1067,13 @@ def write_site(
         body_ref = Path(str(lesson["body_ref"]))
         teacher_ref = Path("teacher_guides", *body_ref.parts[1:])
         teacher_path = repository_path(root, teacher_ref.as_posix(), "teacher guide")
-        teacher_html = render_without_leading_h1(md, teacher_path.read_text(encoding="utf-8"))
-        review_html = "".join(render_review_problem(md, problem, by_id) for problem in linked_problems)
+        teacher_html = render_without_leading_h1(
+            teacher_md,
+            teacher_path.read_text(encoding="utf-8"),
+        )
+        review_html = "".join(
+            render_review_problem(teacher_md, problem, by_id) for problem in linked_problems
+        )
         entity_ids = {lesson_id}
         for problem in linked_problems:
             entity_ids.add(str(problem["id"]))
@@ -925,7 +1165,7 @@ def write_site(
                 f'{escape(position.order)} {escape(page_title)}</a></li>'
             )
             book_practices = render_practices(
-                md,
+                book_md,
                 view["problems"],
                 id_prefix=f"book-{slug}-practice",
             )
@@ -934,22 +1174,25 @@ def write_site(
                 '<header class="book-lesson-meta">'
                 f'<p>{escape(position.order)} / {escape(display_unit)}</p>'
                 "</header>"
-                f'<div class="lesson-article">{view["lesson_html"]}</div>'
+                '<div class="lesson-article">'
+                f'{render_without_practice_ids(book_md, str(view["body_source"]))}</div>'
                 '<section class="practice-section" aria-label="練習">'
                 f"{book_practices}</section></article>"
             )
             self_study_book_practices = render_self_study_practices(
-                md,
+                self_study_book_md,
                 view["problems"],
                 by_id,
                 id_prefix=f"self-study-book-{slug}-practice",
+                practice_label_prefix=position.order,
             )
             self_study_book_articles.append(
                 f'<article class="book-lesson" id="lesson-{escape(slug)}">'
                 '<header class="book-lesson-meta">'
                 f'<p>{escape(position.order)} / {escape(display_unit)}</p>'
                 "</header>"
-                f'<div class="lesson-article">{view["lesson_html"]}</div>'
+                '<div class="lesson-article">'
+                f'{render_without_practice_ids(self_study_book_md, str(view["body_source"]))}</div>'
                 '<section class="practice-section" aria-label="練習">'
                 f"{self_study_book_practices}</section></article>"
             )
